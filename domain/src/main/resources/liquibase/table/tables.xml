@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- indexing on directoryName; unique on directoryseqnum -->
+
+    <changeSet author="jh3389" id="table1">
+
+        <createTable schemaName="foobar" tableName="LEVEL1">
+            <column name="DirectorySeqNum" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="DIRECTORYNAME" type="VARCHAR(50)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+
+            <column name="PARENT" type="VARCHAR(50)"/>
+            <column name="TIELINE" type="VARCHAR(50)"/>
+            <column name="ADDRESS" type="VARCHAR(50)"/>
+            <column name="MAILCODE" type="VARCHAR(50)"/>
+            <column name="PHONETYPE" type="VARCHAR(50)"/>
+            <column name="PHONENUMBER" type="VARCHAR(50)"/>
+
+        </createTable>
+
+    </changeSet>
+
+
+    <changeSet author="jh3389" id="createIndex-level1">
+        <createIndex catalogName="foobar"
+                     indexName="idx_level1"
+                     schemaName="foobar"
+                     tableName="LEVEL1"
+                     tablespace="A String"
+                     unique="true">
+            <column name="DIRECTORYNAME" type="varchar(50)"/>
+        </createIndex>
+    </changeSet>
+
+
+</databaseChangeLog>
