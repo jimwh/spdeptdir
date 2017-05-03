@@ -28,3 +28,4 @@ logs/
 .target/
 .classpath/
 .project/
+*/target/
