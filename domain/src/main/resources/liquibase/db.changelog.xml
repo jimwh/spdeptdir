@@ -6,4 +6,6 @@
 
     <include file="src/main/resources/liquibase/table/tables.xml"/>
 
+    <include file="src/main/resources/liquibase/data/load-level1-data.xml"/>
+
 </databaseChangeLog>

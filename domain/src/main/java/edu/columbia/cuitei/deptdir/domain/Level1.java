@@ -5,14 +5,15 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import javax.persistence.Table;
 
 @Entity
+//@Table(name="LEVEL1")
 public class Level1 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
-    private Integer directorySeqNum;
+    private Integer id;
 
     @Column(nullable = false)
     private String  directoryName;
@@ -24,12 +25,9 @@ public class Level1 {
     private String phoneType;
     private String phoneNumber;
 
-
-    public Integer getDirectorySeqNum() {
-        return directorySeqNum;
+    public Integer getId() {
+        return id;
     }
-
-    // public void setDirectorySeqNum(int id) { this.directorySeqNum = id; }
 
     public String getDirectoryName() {
         return directoryName;
@@ -44,7 +42,6 @@ public class Level1 {
     public void setParent(Integer parent) {
         this.parent = parent;
     }
-
 
     public String getTieLine() {
         return tieLine;

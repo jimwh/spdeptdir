@@ -19,7 +19,6 @@ public class DeptDirController {
     @Resource private Level1Service level1Service;
 
     @GetMapping("/deptdir")
-    // public List<Level1> getDeptDir() {
     public Map<String, String> getDeptDir() {
         log.info("dude ...");
         List<Level1> level1List = level1Service.findAll();
@@ -27,6 +26,13 @@ public class DeptDirController {
             log.info("directoryName={}", level1.getDirectoryName());
         }
         log.info("size={}", level1List.size());
+        //
+        Level1 one = level1Service.findById(1);
+        log.info("findById: id={}", one.getId());
+        //
+        Level1 oneByName = level1Service.findByDirectoryName("foome1");
+        log.info("findByDirectoryName: name={}", oneByName.getDirectoryName());
+
 
         Map<String,String> map = new HashMap<String,String>();
         map.put("foo", "bar");

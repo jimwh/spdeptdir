@@ -10,21 +10,21 @@
 
     <changeSet author="jh3389" id="table1">
 
-        <createTable schemaName="foobar" tableName="LEVEL1">
-            <column name="DirectorySeqNum" type="INT" autoIncrement="true">
+        <createTable schemaName="foobar" tableName="level1">
+            <column name="ID" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
-            <column name="DIRECTORYNAME" type="VARCHAR(50)">
+            <column name="DIRECTORY_NAME" type="VARCHAR(50)">
                 <constraints unique="true" nullable="false"/>
             </column>
 
             <column name="PARENT" type="VARCHAR(50)"/>
-            <column name="TIELINE" type="VARCHAR(50)"/>
+            <column name="TIE_LINE" type="VARCHAR(50)"/>
             <column name="ADDRESS" type="VARCHAR(50)"/>
-            <column name="MAILCODE" type="VARCHAR(50)"/>
-            <column name="PHONETYPE" type="VARCHAR(50)"/>
-            <column name="PHONENUMBER" type="VARCHAR(50)"/>
+            <column name="MAIL_CODE" type="VARCHAR(50)"/>
+            <column name="PHONE_TYPE" type="VARCHAR(50)"/>
+            <column name="PHONE_NUMBER" type="VARCHAR(50)"/>
 
         </createTable>
 
@@ -35,10 +35,10 @@
         <createIndex catalogName="foobar"
                      indexName="idx_level1"
                      schemaName="foobar"
-                     tableName="LEVEL1"
+                     tableName="level1"
                      tablespace="A String"
                      unique="true">
-            <column name="DIRECTORYNAME" type="varchar(50)"/>
+            <column name="DIRECTORY_NAME" type="varchar(50)"/>
         </createIndex>
     </changeSet>
 

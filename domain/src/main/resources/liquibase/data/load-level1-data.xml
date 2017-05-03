@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="jh3389" id="remove-level1-auto-id">
+        <sql>ALTER TABLE level1 CHANGE id id INT(10) UNSIGNED NOT NULL</sql>
+    </changeSet>
+
+    <!--
+    <changeSet author="jh3389" id="load-level1-data">
+
+        <loadData schemaName="foobar"
+                  encoding="UTF-8"
+                  file="src/main/resources/liquibase/data/Level1Data-04252017.txt"
+                  separator=";"
+                  tableName="level1">
+
+            <column name="ID" type="INT" />
+            <column name="DIRECTORY_NAME" type="VARCHAR(50)" />
+            <column name="PARENT" type="VARCHAR(50)"/>
+            <column name="TIE_LINE" type="VARCHAR(50)"/>
+            <column name="ADDRESS" type="VARCHAR(50)"/>
+            <column name="MAIL_CODE" type="VARCHAR(50)"/>
+            <column name="PHONE_TYPE" type="VARCHAR(50)"/>
+            <column name="PHONE_NUMBER" type="VARCHAR(50)"/>
+        </loadData>
+    </changeSet>
+    -->
+
+
+</databaseChangeLog>
