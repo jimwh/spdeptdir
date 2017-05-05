@@ -5,5 +5,5 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 interface Level2Repository extends JpaRepository<Level2, Integer> {
-    List<Level2> findAllByDirectoryName(String name);
+    List<Level2> findByDirectoryName(String name);
 }

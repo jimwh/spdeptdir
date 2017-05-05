@@ -22,17 +22,21 @@ public class DeptDirController {
     public Map<String, String> getDeptDir() {
         log.info("dude ...");
         List<Level1> level1List = level1Service.findAll();
-        for(Level1 level1: level1List) {
-            log.info("directoryName={}", level1.getDirectoryName());
+        if( !level1List.isEmpty() ) {
+            for (Level1 level1 : level1List) {
+                log.info("directoryName={}", level1.getDirectoryName());
+            }
+            log.info("size={}", level1List.size());
         }
-        log.info("size={}", level1List.size());
         //
         Level1 one = level1Service.findById(273606);
-        log.info("findById: id={}", one.getId());
+        if(one != null) {
+            log.info("findById: id={}", one.getId());
+        }
         //
-        Level1 oneByName = level1Service.findByDirectoryName("foome1");
-        if(oneByName!=null) {
-            log.info("findByDirectoryName: name={}", oneByName.getDirectoryName());
+        List<Level1> oneList = level1Service.findByDirectoryName("foome1");
+        if( !oneList.isEmpty() ) {
+            log.info("findByDirectoryName: name={}", oneList.get(0).getDirectoryName());
         }
 
         Map<String,String> map = new HashMap<String,String>();

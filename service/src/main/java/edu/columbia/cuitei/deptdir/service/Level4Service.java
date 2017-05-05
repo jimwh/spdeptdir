@@ -1,6 +1,6 @@
 package edu.columbia.cuitei.deptdir.service;
 
-import edu.columbia.cuitei.deptdir.domain.Level1;
+import edu.columbia.cuitei.deptdir.domain.Level4;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -10,27 +10,27 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class Level1Service {
+public class Level4Service {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Resource(name="level1Repository")
-    private Level1Repository level1Repository;
+    @Resource
+    private Level4Repository level4Repository;
 
     @Transactional
-    public List<Level1> findAll() {
-        return level1Repository.findAll();
+    public List<Level4> findAll() {
+        return level4Repository.findAll();
     }
 
     @Transactional
-    public Level1 findById(Integer id) {
-        return level1Repository.findOne(id);
+    public Level4 findById(Integer id) {
+        return level4Repository.findOne(id);
     }
 
     @Transactional
-    public List<Level1> findByDirectoryName(String name) {
-        return level1Repository.findByDirectoryName(name);
+    public List<Level4> findByDirectoryName(String name) {
+        return level4Repository.findByDirectoryName(name);
     }
 
     public boolean hasJdbcTemplate() {
