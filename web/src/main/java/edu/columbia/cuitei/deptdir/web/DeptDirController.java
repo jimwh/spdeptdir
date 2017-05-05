@@ -27,16 +27,19 @@ public class DeptDirController {
         }
         log.info("size={}", level1List.size());
         //
-        Level1 one = level1Service.findById(1);
+        Level1 one = level1Service.findById(273606);
         log.info("findById: id={}", one.getId());
         //
         Level1 oneByName = level1Service.findByDirectoryName("foome1");
-        log.info("findByDirectoryName: name={}", oneByName.getDirectoryName());
-
+        if(oneByName!=null) {
+            log.info("findByDirectoryName: name={}", oneByName.getDirectoryName());
+        }
 
         Map<String,String> map = new HashMap<String,String>();
         map.put("foo", "bar");
         map.put("fred", "gary");
+
+        log.info("hasJdbcTemplate={}", level1Service.hasJdbcTemplate());
         return map;
     }
 }

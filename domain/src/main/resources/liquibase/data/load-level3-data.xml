@@ -5,12 +5,12 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <changeSet author="jh3389" id="load-level1-data">
+    <changeSet author="jh3389" id="load-level3-data">
         <loadData schemaName="foobar"
                   encoding="UTF-8"
-                  file="src/main/resources/liquibase/data/Level1Data-05032017.txt"
+                  file="src/main/resources/liquibase/data/Level3Data-05032017.txt"
                   separator="|"
-                  tableName="level1">
+                  tableName="level3">
             <column name="id" type="NUMERIC" />
             <column name="directory_name" type="STRING" />
             <column name="parent"  type="NUMERIC"/>

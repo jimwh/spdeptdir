@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- indexing on directory_name -->
+    <changeSet author="jh3389" id="alter-level1" >
+        <sql>ALTER TABLE level1 MODIFY id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY</sql>
+    </changeSet>
+
+    <changeSet author="jh3389" id="sequence-level1" >
+        <sql>ALTER TABLE level1 AUTO_INCREMENT=691450</sql>
+    </changeSet>
+
+    <changeSet author="jh3389" id="directory_name_level1">
+        <createIndex catalogName="foobar"
+                     indexName="directory_name_level1"
+                     schemaName="foobar"
+                     tableName="level1"
+                     unique="false">
+            <column name="directory_name" type="VARCHAR(150)"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

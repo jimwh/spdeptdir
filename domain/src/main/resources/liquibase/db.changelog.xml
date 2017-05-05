@@ -4,8 +4,20 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <include file="src/main/resources/liquibase/table/tables.xml"/>
-
+    <include file="src/main/resources/liquibase/table/level1_table.xml"/>
     <include file="src/main/resources/liquibase/data/load-level1-data.xml"/>
+    <include file="src/main/resources/liquibase/table/level1_index.xml"/>
+
+    <include file="src/main/resources/liquibase/table/level2_table.xml"/>
+    <include file="src/main/resources/liquibase/data/load-level2-data.xml"/>
+    <include file="src/main/resources/liquibase/table/level2_index.xml"/>
+
+    <include file="src/main/resources/liquibase/table/level3_table.xml"/>
+    <include file="src/main/resources/liquibase/data/load-level3-data.xml"/>
+    <include file="src/main/resources/liquibase/table/level3_index.xml"/>
+
+    <include file="src/main/resources/liquibase/table/level4_table.xml"/>
+    <include file="src/main/resources/liquibase/data/load-level4-data.xml"/>
+    <include file="src/main/resources/liquibase/table/level4_index.xml"/>
 
 </databaseChangeLog>

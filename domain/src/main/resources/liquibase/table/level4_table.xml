@@ -5,19 +5,15 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
-    <!-- indexing on directory_name -->
-    <changeSet author="jh3389" id="table1">
-        <createTable schemaName="foobar" tableName="level1">
-            <column name="ID" type="INT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+    <!-- no key, no index for loading data purpose -->
+    <changeSet author="jh3389" id="table4">
+        <createTable schemaName="foobar" tableName="level4">
+            <column name="ID" type="INT">
+                <constraints unique="true" nullable="false"/>
             </column>
-
             <column name="directory_name" type="VARCHAR(150)">
                 <constraints nullable="false"/>
             </column>
-            <!--
-                <constraints unique="true" nullable="false"/>
-            -->
             <column name="parent" type="INT"/>
             <column name="tie_line" type="VARCHAR(50)"/>
             <column name="address" type="VARCHAR(50)"/>
@@ -26,17 +22,5 @@
             <column name="phone_number" type="VARCHAR(50)"/>
         </createTable>
     </changeSet>
-
-    <changeSet author="jh3389" id="createIndex-level1">
-        <createIndex catalogName="foobar"
-                     indexName="idx_level1"
-                     schemaName="foobar"
-                     tableName="level1"
-                     tablespace="A String"
-                     unique="false">
-            <column name="directory_name" type="VARCHAR(150)"/>
-        </createIndex>
-    </changeSet>
-
 
 </databaseChangeLog>
