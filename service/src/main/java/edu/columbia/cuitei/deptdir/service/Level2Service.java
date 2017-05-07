@@ -14,7 +14,7 @@ class Level2Service {
 
     @Transactional
     List<Level2> findByDirectoryNameLike(String name) {
-        return level2Repository.findAllByDirectoryNameLike(name);
+        return level2Repository.findByDirectoryNameLike(name);
     }
 
 }

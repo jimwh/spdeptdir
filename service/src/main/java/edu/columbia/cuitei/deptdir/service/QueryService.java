@@ -23,18 +23,19 @@ public class QueryService {
     @Resource private Level4Service level4Service;
 
     public Map<String,String>getDude() {
+        String searchTerm="%arts%";
+        search(searchTerm);
+
         Map<String,String> map = new HashMap<>();
         map.put("foo", "bar");
         map.put("fred", "gary");
 
         log.info("hasJdbcTemplate={}", level1Service.hasJdbcTemplate());
-
-        getMap();
         return map;
     }
 
-    private Map<String,String>getMap() {
-        String searchTerm="arts";
+    private Map<String,String>search(String searchTerm) {
+
         List<Level2> level2List=level2Service.findByDirectoryNameLike(searchTerm);
         if( !level2List.isEmpty() ) {
             log.info("level2 directory_name like {}, level2List.size={}", searchTerm, level2List.size());
