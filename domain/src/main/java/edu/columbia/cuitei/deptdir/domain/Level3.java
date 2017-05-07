@@ -11,8 +11,7 @@ public class Level3 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
-    private Integer directorySeqNum;
+    private Integer id;
 
     @Column(nullable = false)
     private String  directoryName;
@@ -25,11 +24,9 @@ public class Level3 {
     private String phoneNumber;
 
 
-    public Integer getDirectorySeqNum() {
-        return directorySeqNum;
+    public Integer getId() {
+        return id;
     }
-
-    // public void setDirectorySeqNum(int id) { this.directorySeqNum = id; }
 
     public String getDirectoryName() {
         return directoryName;
