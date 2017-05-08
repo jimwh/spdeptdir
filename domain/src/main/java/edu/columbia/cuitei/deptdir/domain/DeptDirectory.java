@@ -39,7 +39,7 @@ public class DeptDirectory {
     }
     public void setId(Integer id) { this.id=id; }
 
-    String getDirectoryName() {
+    public String getDirectoryName() {
         return directoryName;
     }
     public void setDirectoryName(String directoryName) {
@@ -53,7 +53,7 @@ public class DeptDirectory {
         this.parent = parent;
     }
 
-    String getTieLine() { return tieLine; }
+    public String getTieLine() { return tieLine; }
     public void setTieLine(String tieLine) {
         this.tieLine = tieLine;
     }
@@ -65,21 +65,21 @@ public class DeptDirectory {
         this.address = address;
     }
 
-    String getMailCode() {
+    public String getMailCode() {
         return mailCode;
     }
     public void setMailCode(String mailCode) {
         this.mailCode = mailCode;
     }
 
-    String getPhoneType() {
+    public String getPhoneType() {
         return phoneType;
     }
     public void setPhoneType(String phoneType) {
         this.phoneType = phoneType;
     }
 
-    String getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
     public void setPhoneNumber(String phoneNumber) {
@@ -87,7 +87,7 @@ public class DeptDirectory {
     }
 
     private transient String level;
-    String getLevel() {return level;}
+    public String getLevel() {return level;}
     public void setLevel(String level) { this.level= level;}
 
 }

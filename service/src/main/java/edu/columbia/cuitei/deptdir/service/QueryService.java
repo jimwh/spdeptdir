@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -58,9 +56,17 @@ public class QueryService {
 
         List<Level3> level3List = level3Service.findAllByParentIn(level2IdList);
         List<Integer> level3IdList = new ArrayList<>();
+        Map<Integer, List<DeptDirectory>> level2IdLevel3Map = new HashMap<>();
         if( !level3List.isEmpty() ) {
             log.info("level3.size={} from level2IdList.size={}", level3List.size(),level2IdList.size());
             for(Level3 level3: level3List) {
+                Integer parent = level3.getParent();
+                List<DeptDirectory> list = level2IdLevel3Map.get(parent);
+                if( list== null ) {
+                    list = new ArrayList<>();
+                }
+                list.add(level3);
+                level2IdLevel3Map.put(parent, list);
                 level3IdList.add(level3.getId());
             }
         }
@@ -77,7 +83,13 @@ public class QueryService {
             deptDirectoryList.add(level1);
             List<DeptDirectory> level2Data=level1IdLevel2Map.get(level1.getId());
             if( level2Data != null ) {
-                deptDirectoryList.addAll(level2Data);
+                for(DeptDirectory level2: level2Data) {
+                    List<DeptDirectory> level3ListData = level2IdLevel3Map.get(level2.getId());
+                    deptDirectoryList.add(level2);
+                    if( level3ListData != null ) {
+                        deptDirectoryList.addAll(level3ListData);
+                    }
+                }
             }
         }
 
@@ -87,7 +99,7 @@ public class QueryService {
 
     private void printData(List<DeptDirectory> list) {
         for(DeptDirectory d: list) {
-            log.info("foo={}", d.toString());
+            log.info("{}", d.toString());
         }
     }
 }
