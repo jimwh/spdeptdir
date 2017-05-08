@@ -21,7 +21,7 @@ class Level3Service {
     }
 
     @Transactional
-    List<Level3> findAllByParent(List<Integer> list) {
+    List<Level3> findAllByParentIn(List<Integer> list) {
         return level3Repository.findAllByParentIn(list);
     }
 

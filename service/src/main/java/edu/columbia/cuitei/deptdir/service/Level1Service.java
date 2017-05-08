@@ -3,16 +3,11 @@ package edu.columbia.cuitei.deptdir.service;
 import edu.columbia.cuitei.deptdir.domain.Level1;
 import java.util.List;
 import javax.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 class Level1Service {
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     @Resource(name="level1Repository")
     private Level1Repository level1Repository;
@@ -28,17 +23,11 @@ class Level1Service {
     }
 
     @Transactional
-    public Level1 findById(Integer id) {
-        return level1Repository.findOne(id);
-    }
+    public Level1 findById(Integer id) { return level1Repository.findOne(id); }
 
     @Transactional
     public List<Level1> findByDirectoryName(String name) {
         return level1Repository.findByDirectoryName(name);
-    }
-
-    boolean hasJdbcTemplate() {
-        return jdbcTemplate!=null;
     }
 
 }

@@ -1,97 +1,26 @@
 package edu.columbia.cuitei.deptdir.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
-public class Level4 {
+public class Level4 extends DeptDirectory {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private static final String LEVEL = "LEVEL4";
+    public String getLevel() { return LEVEL; }
+    public void setLevel(String level) { super.setLevel(LEVEL); }
 
-    @Column(nullable = false)
-    private String  directoryName;
-
-    private Integer parent;
-    private String tieLine;
-    private String address;
-    private String mailCode;
-    private String phoneType;
-    private String phoneNumber;
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    // public void setDirectorySeqNum(int id) { this.directorySeqNum = id; }
-
-    public String getDirectoryName() {
-        return directoryName;
-    }
-    public void setDirectoryName(String directoryName) {
-        this.directoryName = directoryName;
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(LEVEL).append("|")
+                .append(getId()).append("|")
+                .append(getDirectoryName()).append("|")
+                .append(getParent()).append("|")
+                .append(getTieLine()).append("|")
+                .append(getAddress()).append("|")
+                .append(getMailCode()).append("|")
+                .append(getPhoneType()).append("|")
+                .append(getPhoneNumber());
+        return sb.toString();
     }
 
-    public Integer getParent() {
-        return parent;
-    }
-    public void setParent(Integer parent) {
-        this.parent = parent;
-    }
-
-
-    public String getTieLine() {
-        return tieLine;
-    }
-    public void setTieLine(String tieLine) {
-        this.tieLine = tieLine;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getMailCode() {
-        return mailCode;
-    }
-    public void setMailCode(String mailCode) {
-        this.mailCode = mailCode;
-    }
-
-    public String getPhoneType() {
-        return phoneType;
-    }
-    public void setPhoneType(String phoneType) {
-        this.phoneType = phoneType;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    /*
-    public static DeptDirectory GetDeptDirectory(Level3 level3) {
-        DeptDirectory deptDirectory=new DeptDirectory();
-        deptDirectory.setId(level3.getId());
-        deptDirectory.setDirectoryName(level3.getDirectoryName());
-        deptDirectory.setTieLine(level3.getTieLine());
-        deptDirectory.setAddress(level3.getAddress());
-        deptDirectory.setParent(level3.getParent());
-        deptDirectory.setMailCode(level3.getMailCode());
-        deptDirectory.setPhoneType(level3.getPhoneType());
-        deptDirectory.setPhoneNumber(level3.getPhoneNumber());
-        return deptDirectory;
-    }
-    */
 }

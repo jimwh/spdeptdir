@@ -13,28 +13,33 @@ public class DeptDirectory {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column
+    @Column(nullable = false)
     private String  directoryName;
+
     @Column
     private Integer parent;
+
     @Column
     private String tieLine;
+
     @Column
     private String address;
+
     @Column
     private String mailCode;
+
     @Column
     private String phoneType;
+
     @Column
     private String phoneNumber;
 
     public Integer getId() {
         return id;
     }
-    public void setId(Integer id) {
-        this.id=id;
-    }
-    public String getDirectoryName() {
+    public void setId(Integer id) { this.id=id; }
+
+    String getDirectoryName() {
         return directoryName;
     }
     public void setDirectoryName(String directoryName) {
@@ -48,9 +53,7 @@ public class DeptDirectory {
         this.parent = parent;
     }
 
-    public String getTieLine() {
-        return tieLine;
-    }
+    String getTieLine() { return tieLine; }
     public void setTieLine(String tieLine) {
         this.tieLine = tieLine;
     }
@@ -62,25 +65,29 @@ public class DeptDirectory {
         this.address = address;
     }
 
-    public String getMailCode() {
+    String getMailCode() {
         return mailCode;
     }
     public void setMailCode(String mailCode) {
         this.mailCode = mailCode;
     }
 
-    public String getPhoneType() {
+    String getPhoneType() {
         return phoneType;
     }
     public void setPhoneType(String phoneType) {
         this.phoneType = phoneType;
     }
 
-    public String getPhoneNumber() {
+    String getPhoneNumber() {
         return phoneNumber;
     }
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    private transient String level;
+    String getLevel() {return level;}
+    public void setLevel(String level) { this.level= level;}
 
 }

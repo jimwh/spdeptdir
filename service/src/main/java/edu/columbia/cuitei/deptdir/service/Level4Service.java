@@ -22,4 +22,9 @@ class Level4Service {
         return level4Repository.findOne(id);
     }
 
+    @Transactional
+    List<Level4> findAllByParentIn(List<Integer> list) {
+        return level4Repository.findAllByParentIn(list);
+    }
+
 }
