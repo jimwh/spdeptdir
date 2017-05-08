@@ -1,35 +1,39 @@
 package edu.columbia.cuitei.deptdir.domain;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-@Entity
-public class Level4 {
+@MappedSuperclass
+public class DeptDirectory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column
     private String  directoryName;
-
+    @Column
     private Integer parent;
+    @Column
     private String tieLine;
+    @Column
     private String address;
+    @Column
     private String mailCode;
+    @Column
     private String phoneType;
+    @Column
     private String phoneNumber;
-
 
     public Integer getId() {
         return id;
     }
-
-    // public void setDirectorySeqNum(int id) { this.directorySeqNum = id; }
-
+    public void setId(Integer id) {
+        this.id=id;
+    }
     public String getDirectoryName() {
         return directoryName;
     }
@@ -43,7 +47,6 @@ public class Level4 {
     public void setParent(Integer parent) {
         this.parent = parent;
     }
-
 
     public String getTieLine() {
         return tieLine;
@@ -80,18 +83,4 @@ public class Level4 {
         this.phoneNumber = phoneNumber;
     }
 
-    /*
-    public static DeptDirectory GetDeptDirectory(Level3 level3) {
-        DeptDirectory deptDirectory=new DeptDirectory();
-        deptDirectory.setId(level3.getId());
-        deptDirectory.setDirectoryName(level3.getDirectoryName());
-        deptDirectory.setTieLine(level3.getTieLine());
-        deptDirectory.setAddress(level3.getAddress());
-        deptDirectory.setParent(level3.getParent());
-        deptDirectory.setMailCode(level3.getMailCode());
-        deptDirectory.setPhoneType(level3.getPhoneType());
-        deptDirectory.setPhoneNumber(level3.getPhoneNumber());
-        return deptDirectory;
-    }
-    */
 }

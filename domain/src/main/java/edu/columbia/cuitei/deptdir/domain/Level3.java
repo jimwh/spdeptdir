@@ -78,4 +78,18 @@ public class Level3 {
         this.phoneNumber = phoneNumber;
     }
 
+    /*
+    public DeptDirectory GetDeptDirectory() {
+        DeptDirectory deptDirectory=new DeptDirectory();
+        deptDirectory.setId(this.id);
+        deptDirectory.setDirectoryName(this.getDirectoryName());
+        deptDirectory.setTieLine(getTieLine());
+        deptDirectory.setAddress(getAddress());
+        deptDirectory.setParent(getParent());
+        deptDirectory.setMailCode(getMailCode());
+        deptDirectory.setPhoneType(getPhoneType());
+        deptDirectory.setPhoneNumber(getPhoneNumber());
+        return deptDirectory;
+    }
+    */
 }

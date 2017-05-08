@@ -1,20 +1,17 @@
 package edu.columbia.cuitei.deptdir.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Table;
 
 @Entity
-//@Table(name="LEVEL1")
-public class Level1 {
+public class Level1 extends DeptDirectory{
 
+    /*
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    */
 
+    /*
     @Column(nullable = false)
     private String  directoryName;
 
@@ -24,7 +21,8 @@ public class Level1 {
     private String mailCode;
     private String phoneType;
     private String phoneNumber;
-
+    */
+    /*
     public Integer getId() {
         return id;
     }
@@ -77,5 +75,20 @@ public class Level1 {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    */
 
+    /*
+    public DeptDirectory GetDeptDirectory() {
+        DeptDirectory deptDirectory=new DeptDirectory();
+        deptDirectory.setId(getId());
+        deptDirectory.setDirectoryName(getDirectoryName());
+        deptDirectory.setTieLine(getTieLine());
+        deptDirectory.setAddress(getAddress());
+        deptDirectory.setParent(getParent());
+        deptDirectory.setMailCode(getMailCode());
+        deptDirectory.setPhoneType(getPhoneType());
+        deptDirectory.setPhoneNumber(getPhoneNumber());
+        return deptDirectory;
+    }
+    */
 }

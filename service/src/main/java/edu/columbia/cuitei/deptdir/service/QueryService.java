@@ -1,5 +1,6 @@
 package edu.columbia.cuitei.deptdir.service;
 
+import edu.columbia.cuitei.deptdir.domain.DeptDirectory;
 import edu.columbia.cuitei.deptdir.domain.Level1;
 import edu.columbia.cuitei.deptdir.domain.Level2;
 import edu.columbia.cuitei.deptdir.domain.Level3;
@@ -47,14 +48,24 @@ public class QueryService {
             level2Parent.add(level2.getParent());
             level2IdList.add(level2.getId());
         }
-        List<Level1> list=level1Service.findAll(level2Parent);
-        if( !list.isEmpty() ) {
-            log.info("level1.size={} from level2Parent.size={}", list.size(),level2Parent.size());
+
+        List<DeptDirectory> deptDirectoryList = new ArrayList<>();
+
+        List<Level1> level1List=level1Service.findAll(level2Parent);
+        if( !level1List.isEmpty() ) {
+            log.info("level1.size={} from level2Parent.size={}", level1List.size(),level2Parent.size());
+            deptDirectoryList.addAll(level1List);
         }
 
         List<Level3> level3List = level3Service.findAllByParent(level2IdList);
         if( !level3List.isEmpty() ) {
             log.info("level3.size={} from level2IdList.size={}", level3List.size(),level2IdList.size());
+        }
+
+        if( !deptDirectoryList.isEmpty() ) {
+            for(DeptDirectory deptDirectory: deptDirectoryList) {
+                log.info("id={}, directoryName={}", deptDirectory.getId(),deptDirectory.getDirectoryName());
+            }
         }
         return new HashMap<>();
     }

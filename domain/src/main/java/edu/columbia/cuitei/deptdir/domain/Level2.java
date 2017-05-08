@@ -78,4 +78,18 @@ public class Level2 {
         this.phoneNumber = phoneNumber;
     }
 
+    /*
+    public static DeptDirectory GetDeptDirectory(Level2 level2) {
+        DeptDirectory deptDirectory=new DeptDirectory();
+        deptDirectory.setId(level2.getId());
+        deptDirectory.setDirectoryName(level2.getDirectoryName());
+        deptDirectory.setTieLine(level2.getTieLine());
+        deptDirectory.setAddress(level2.getAddress());
+        deptDirectory.setParent(level2.getParent());
+        deptDirectory.setMailCode(level2.getMailCode());
+        deptDirectory.setPhoneType(level2.getPhoneType());
+        deptDirectory.setPhoneNumber(level2.getPhoneNumber());
+        return deptDirectory;
+    }
+    */
 }
