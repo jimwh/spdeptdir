@@ -70,11 +70,23 @@ public class QueryService {
                 level3IdList.add(level3.getId());
             }
         }
+        log.info("level3IdList.size={}, id={}", level3IdList.size(), level3IdList.toArray());
 
-        log.info("level3IdList.size={}", level3IdList.size());
         List<Level4> level4List = level4Service.findAllByParentIn(level3IdList);
+        Map<Integer, List<DeptDirectory>> level3IdLevel4Map = new HashMap<>();
+        List<Integer> level4IdList = new ArrayList<>();
         if( !level4List.isEmpty() ) {
             log.info("level4.size={}", level4List.size());
+            for(Level4 level4: level4List) {
+                level4IdList.add(level4.getId());
+                Integer parent = level4.getParent();
+                List<DeptDirectory> list = level3IdLevel4Map.get(parent);
+                if( list== null ) {
+                    list = new ArrayList<>();
+                }
+                list.add(level4);
+                level3IdLevel4Map.put(parent, list);
+            }
         }
 
         //
@@ -87,13 +99,20 @@ public class QueryService {
                     List<DeptDirectory> level3ListData = level2IdLevel3Map.get(level2.getId());
                     deptDirectoryList.add(level2);
                     if( level3ListData != null ) {
-                        deptDirectoryList.addAll(level3ListData);
+                        for(DeptDirectory level3: level3ListData) {
+                            deptDirectoryList.add(level3);
+                            List<DeptDirectory> level4ListData = level3IdLevel4Map.get(level3.getId());
+                            if( level4ListData != null ) {
+                                deptDirectoryList.addAll(level4ListData);
+                            }
+                        }
                     }
                 }
             }
         }
 
         printData(deptDirectoryList);
+        log.info("rows={}", deptDirectoryList.size());
         return deptDirectoryList;
     }
 

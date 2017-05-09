@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Department Directory</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css"  href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="icon" type="image/png" href="images/favicon-crown.png" />
+    <link href="../static/css/deptdir.css" th:href="@{css/deptdir.css}" rel="stylesheet" />
+    <style>
+        .navbar{ background-color: #2d2a62 }
+    </style>
+</head>
+
+<body>
+
+<script type="text/javascript"  src="webjars/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="www.columbia.edu">CU Home</a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="https://directory.columbia.edu/people/">Directory Home</a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="https://search.sites.columbia.edu/">Web Site Search</a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="http://www.columbia.edu/content/contact-us.html">Help</a>
+        </div>
+    </div>
+</nav>
+
+
+
+<!--
+<div id="navbar" class="navbar navbar-default" role="navigation">
+
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav"><li><a href="../static"> Home </a></li>
+        </ul>
+    </div>
+
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"  data-target=".navbar-collapse">
+            <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="https://www.columbia.edu">Department Directory</a>
+    </div>
+</div>
+-->
+
+<div>
+    <a href="http://www.columbia.edu/">
+        <img src="http://www.columbia.edu/images/cu_logo.gif"
+             width="353" height="49" alt="Columbia University in the City of New York"
+             title="Columbia University in the City of New York" border="0" />
+    </a>
+</div>
+
+<div class="jumbotron">
+    <h1>Home</h1>
+    <p>Some static content</p>
+    <p>
+        <a class="btn btn-lg btn-primary" href="#navbar" role="button">Go &raquo;</a>
+    </p>
+</div>
+
+
+</body>
+</html>
