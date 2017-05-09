@@ -60,7 +60,7 @@
                             <url>${databaseConnectionUrl}</url>
                             <username>${databaseUserName}</username>
                             <password>${databasePassword}</password>
-                            <skip>${liquibase.skip}</skip>
+                            <!--<skip>${liquibase.skip}</skip>-->
                         </configuration>
                         <goals>
                             <goal>update</goal>
