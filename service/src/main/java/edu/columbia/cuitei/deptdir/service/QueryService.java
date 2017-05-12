@@ -28,6 +28,7 @@ public class QueryService {
 
     public List<DeptDirectory> search(String searchTerm) {
 
+        // 1. find all level2 by directory name
         List<Level2> level2List=level2Service.findByDirectoryNameLike(searchTerm);
         if( !level2List.isEmpty() ) {
             log.info("level2 directory_name like {}, level2List.size={}", searchTerm, level2List.size());
@@ -49,11 +50,15 @@ public class QueryService {
             level1IdLevel2Map.put(parent, temp);
         }
 
-        List<Level1> level1List=level1Service.findAll(level2Parent);
+        // 2. find all level1 by id column that is level2's parent column
+        log.info("level2Parent={}", level2Parent.toString());
+        // List<Level1> level1List=level1Service.findAll(level2Parent);
+        List<Level1> level1List=level1Service.getListByListId(level2Parent);
         if( !level1List.isEmpty() ) {
             log.info("level1.size={} from level2Parent.size={}", level1List.size(),level2Parent.size());
         }
 
+        // 3. find all level3 by level3's parent which is level2 id
         List<Level3> level3List = level3Service.findAllByParentIn(level2IdList);
         List<Integer> level3IdList = new ArrayList<>();
         Map<Integer, List<DeptDirectory>> level2IdLevel3Map = new HashMap<>();
@@ -70,8 +75,9 @@ public class QueryService {
                 level3IdList.add(level3.getId());
             }
         }
-        log.info("level3IdList.size={}, id={}", level3IdList.size(), level3IdList.toArray());
 
+        // 4. find all level4 by level4 parent column which is level3 id
+        log.info("level3IdList.size={}, id={}", level3IdList.size(), level3IdList.toArray());
         List<Level4> level4List = level4Service.findAllByParentIn(level3IdList);
         Map<Integer, List<DeptDirectory>> level3IdLevel4Map = new HashMap<>();
         List<Integer> level4IdList = new ArrayList<>();
@@ -89,7 +95,7 @@ public class QueryService {
             }
         }
 
-        //
+        // 5. create a dept dir list
         List<DeptDirectory> deptDirectoryList = new ArrayList<>();
         for(Level1 level1: level1List) {
             deptDirectoryList.add(level1);

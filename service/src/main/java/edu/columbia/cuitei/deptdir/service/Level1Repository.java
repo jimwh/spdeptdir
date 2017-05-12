@@ -1,10 +1,14 @@
 package edu.columbia.cuitei.deptdir.service;
 
 import edu.columbia.cuitei.deptdir.domain.Level1;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 interface Level1Repository extends JpaRepository<Level1, Integer> {
-    List<Level1> findByDirectoryName(String name);
 
+    @Query(value = "SELECT * FROM level1 WHERE id IN (:listOfId) ORDER BY directory_name", nativeQuery = true)
+    List<Level1> getListByIdList(@Param("listOfId") List<Integer> listOfId);
 }

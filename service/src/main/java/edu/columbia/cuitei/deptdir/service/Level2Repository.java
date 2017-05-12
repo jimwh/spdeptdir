@@ -14,5 +14,5 @@ interface Level2Repository extends JpaRepository<Level2, Integer> {
      * @param searchTerm String with leading and trailing '%'
      * @return List of Level2
      */
-    List<Level2> findByDirectoryNameLike(String searchTerm);
+    List<Level2> findByDirectoryNameLikeOrderByDirectoryName(String searchTerm);
 }

@@ -3,6 +3,7 @@ package edu.columbia.cuitei.deptdir.service;
 import edu.columbia.cuitei.deptdir.domain.Level1;
 import java.util.List;
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,21 +14,19 @@ class Level1Service {
     private Level1Repository level1Repository;
 
     @Transactional
-    public List<Level1> findAll() {
-        return level1Repository.findAll();
-    }
-
-    @Transactional
     List<Level1> findAll(List<Integer> list) {
         return level1Repository.findAll(list);
     }
 
+    /*
     @Transactional
-    public Level1 findById(Integer id) { return level1Repository.findOne(id); }
-
+    List<Level1> getListByListId(List<Integer> list) {
+        return level1Repository.getListByIdList(list);
+    }
+    */
     @Transactional
-    public List<Level1> findByDirectoryName(String name) {
-        return level1Repository.findByDirectoryName(name);
+    List<Level1> getListByListId(List<Integer> s) {
+        return level1Repository.getListByIdList(s);
     }
 
 }
