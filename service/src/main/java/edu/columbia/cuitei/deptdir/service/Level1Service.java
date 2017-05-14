@@ -14,19 +14,8 @@ class Level1Service {
     private Level1Repository level1Repository;
 
     @Transactional
-    List<Level1> findAll(List<Integer> list) {
-        return level1Repository.findAll(list);
-    }
-
-    /*
-    @Transactional
     List<Level1> getListByListId(List<Integer> list) {
         return level1Repository.getListByIdList(list);
-    }
-    */
-    @Transactional
-    List<Level1> getListByListId(List<Integer> s) {
-        return level1Repository.getListByIdList(s);
     }
 
 }

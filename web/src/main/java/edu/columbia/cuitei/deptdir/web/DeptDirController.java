@@ -18,7 +18,7 @@ public class DeptDirController {
     private static final Logger log = LoggerFactory.getLogger(DeptDirController.class);
     @Resource private QueryService queryService;
 
-    @GetMapping(value = "/deptdir/search/{term}")
+    @GetMapping(value = "/api/deptdir/search/{term}")
     @ResponseBody
     public List<DeptDirectory> getDeptDir(@PathVariable("term") String term) {
         log.info("term = {}", term);
