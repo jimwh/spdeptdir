@@ -17,14 +17,20 @@ function fire_ajax_submit() {
         timeout: 600000,
         success: function (data) {
 
+            /*
             var json = "<h4>Search Results</h4><pre>"
                 + JSON.stringify(data, null, 4) + "</pre>";
             $('#feedback').html(json);
+            */
+
+            for (var i=0; i<data.length; i++) {
+                var row = $('<tr class="active"><td>' + data[i].directoryName+ '' +'</td></tr>');
+                $('#myTable').append(row);
+            }
+
 
             console.log("SUCCESS : ", data);
-
             $("#btn-search").prop("disabled", false);
-
         },
         error: function (e) {
 
