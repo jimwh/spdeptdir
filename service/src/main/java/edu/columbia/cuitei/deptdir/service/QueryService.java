@@ -28,6 +28,8 @@ public class QueryService {
 
     public List<DeptDirectory> search(String searchTerm) {
 
+        List<Level1> topLikeList=level1Service.findByDirectoryNameLike(searchTerm);
+        //
         // 1. find all level2 by directory name
         List<Level2> level2List=level2Service.findByDirectoryNameLike(searchTerm);
         if( !level2List.isEmpty() ) {

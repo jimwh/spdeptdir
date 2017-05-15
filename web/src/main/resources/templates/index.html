@@ -7,7 +7,12 @@
     <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="icon" type="image/png" href="../images/favicon-crown.png"/>
     <link href="../css/deptdir.css" th:href="@{css/deptdir.css}" rel="stylesheet"/>
+
     <style>
+        .container{
+            /* force override */
+            width: 950px !important;
+        }
         .navbar {
             background-color: #2d2a62
         }
@@ -57,6 +62,7 @@
 <script type="text/javascript" src="webjars/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/deptdir.js"></script>
 
+<div class="container">
 <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
 
@@ -74,13 +80,14 @@
         </div>
     </div>
 </nav>
-
+</div>
 
 <div class="container-fluid text-center">
     <div class="row content">
-        <div class="col-sm-2 sidenav"></div>
 
-        <div class="col-sm-8 text-left">
+        <!--<div class="col-sm-2 sidenav"></div>-->
+
+        <div class="col-md-12 text-left">
 
             <div>
                 <a href="http://www.columbia.edu/">
@@ -117,6 +124,7 @@
             </form>
 
             <div id="feedback"></div>
+
             <table class="table" id="myTable"></table>
 
 
@@ -124,7 +132,8 @@
 
         </div>
 
-        <div class="col-sm-2 sidenav"></div>
+        <!-- <div class="col-sm-2 sidenav"></div> -->
+
     </div>
 </div>
 

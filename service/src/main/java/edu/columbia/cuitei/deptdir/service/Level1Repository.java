@@ -11,4 +11,6 @@ interface Level1Repository extends JpaRepository<Level1, Integer> {
 
     @Query(value = "SELECT * FROM level1 WHERE id IN (:listOfId) ORDER BY directory_name", nativeQuery = true)
     List<Level1> getListByIdList(@Param("listOfId") List<Integer> listOfId);
+
+    List<Level1> findByDirectoryNameLikeOrderByDirectoryName(String searchTerm);
 }

@@ -18,4 +18,10 @@ class Level1Service {
         return level1Repository.getListByIdList(list);
     }
 
+    @Transactional
+    List<Level1> findByDirectoryNameLike(String name) {
+        return level1Repository.findByDirectoryNameLikeOrderByDirectoryName(name);
+    }
+
+
 }
