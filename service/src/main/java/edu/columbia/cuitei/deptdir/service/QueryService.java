@@ -5,13 +5,13 @@ import edu.columbia.cuitei.deptdir.domain.Level1;
 import edu.columbia.cuitei.deptdir.domain.Level2;
 import edu.columbia.cuitei.deptdir.domain.Level3;
 import edu.columbia.cuitei.deptdir.domain.Level4;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -27,20 +27,21 @@ public class QueryService {
     @Resource private Level4Service level4Service;
 
     public List<DeptDirectory> search(String searchTerm) {
-
-        List<Level1> topLikeList=level1Service.findByDirectoryNameLike(searchTerm);
-        //
-        // 1. find all level2 by directory name
-        List<Level2> level2List=level2Service.findByDirectoryNameLike(searchTerm);
-        if( !level2List.isEmpty() ) {
-            log.info("level2 directory_name like {}, level2List.size={}", searchTerm, level2List.size());
+        // 1. find from level1 first
+        final List<Level1> topLikeList=level1Service.findByDirectoryNameLike(searchTerm);
+        final Set<Integer> level2ParentId=new TreeSet<>();
+        for(Level1 level1: topLikeList) {
+            level2ParentId.add(level1.getId());
         }
-        List<Integer>level2Parent=new ArrayList<>();
-        List<Integer>level2IdList=new ArrayList<>();
-        Map<Integer, List<DeptDirectory>> level1IdLevel2Map = new HashMap<>();
+        log.info("level1ParentId.size={}", level2ParentId.size());
+        //
+        // 2. find all level2 by directory name
+        final Set<Integer>level2IdList=new TreeSet<>();
+        final Map<Integer, List<DeptDirectory>> level1IdLevel2Map = new HashMap<>();
+        final List<Level2> level2List=level2Service.findByDirectoryNameLike(searchTerm);
         for(Level2 level2: level2List) {
             Integer parent=level2.getParent();
-            level2Parent.add(level2.getParent());
+            level2ParentId.add(level2.getParent());
             level2IdList.add(level2.getId());
             List<DeptDirectory> temp = level1IdLevel2Map.get(parent);
             if( temp == null ) {
@@ -53,15 +54,15 @@ public class QueryService {
         }
 
         // 2. find all level1 by id column that is level2's parent column
-        log.info("level2Parent={}", level2Parent.toString());
+        // log.info("level2Parent={}", level2Parent.toString());
         // List<Level1> level1List=level1Service.findAll(level2Parent);
-        List<Level1> level1List=level1Service.getListByListId(level2Parent);
+        final List<Level1> level1List=level1Service.getListByListId(new ArrayList<Integer>(level2ParentId));
         if( !level1List.isEmpty() ) {
-            log.info("level1.size={} from level2Parent.size={}", level1List.size(),level2Parent.size());
+            log.info("level1.size={} from level2Parent.size={}", level1List.size(),level2ParentId.size());
         }
 
         // 3. find all level3 by level3's parent which is level2 id
-        List<Level3> level3List = level3Service.findAllByParentIn(level2IdList);
+        List<Level3> level3List = level3Service.findAllByParentIn(new ArrayList<Integer>(level2IdList));
         List<Integer> level3IdList = new ArrayList<>();
         Map<Integer, List<DeptDirectory>> level2IdLevel3Map = new HashMap<>();
         if( !level3List.isEmpty() ) {

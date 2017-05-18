@@ -65,14 +65,15 @@ function fire_ajax_submit( searchTerm ) {
                 }
                 // var row = $('<tr class="active"><td>' + gap + data[i].directoryName + '</td></tr>');
                 // var row = $('<tr class="active"><td>' + gap + '</td></tr>');
-                var row = $(bg + gap + '</td></tr>');
-                $('#myTable').append(row);
+                // var row = $(bg + gap + '</td></tr>');
+                var row = bg + gap + '</td></tr>';
+                // $('#myTable').append(row);
                 //$('#myTable').html(row);
-                // html = html + row;
+                html = html + row;
 
             }
 
-            // $('#myTable').html(html);
+            $('#myTable').html(html);
 
             console.log("SUCCESS : ", data);
             $("#btn-search").prop("disabled", false);
