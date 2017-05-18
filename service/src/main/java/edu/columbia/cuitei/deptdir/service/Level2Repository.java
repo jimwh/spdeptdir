@@ -15,4 +15,6 @@ interface Level2Repository extends JpaRepository<Level2, Integer> {
      * @return List of Level2
      */
     List<Level2> findByDirectoryNameLikeOrderByDirectoryName(String searchTerm);
+
+    List<Level2> findAllByParentInOrderByDirectoryName(List<Integer> list);
 }

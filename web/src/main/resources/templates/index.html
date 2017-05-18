@@ -9,10 +9,11 @@
     <link href="../css/deptdir.css" th:href="@{css/deptdir.css}" rel="stylesheet"/>
 
     <style>
-        .container{
+        .container {
             /* force override */
             width: 950px !important;
         }
+
         .navbar {
             background-color: #2d2a62
         }
@@ -63,84 +64,114 @@
 <script type="text/javascript" src="../js/deptdir.js"></script>
 
 <div class="container">
-<nav class="navbar navbar-inverse" role="navigation">
-    <div class="container-fluid">
-
-        <div class="navbar-header">
-            <a class="navbar-brand" href="www.columbia.edu">CU Home</a>
-        </div>
-        <div class="navbar-header">
-            <a class="navbar-brand" href="https://directory.columbia.edu/people/">Directory Home</a>
-        </div>
-        <div class="navbar-header">
-            <a class="navbar-brand" href="https://search.sites.columbia.edu/">Web Site Search</a>
-        </div>
-        <div class="navbar-header">
-            <a class="navbar-brand" href="http://www.columbia.edu/content/contact-us.html">Help</a>
-        </div>
-    </div>
-</nav>
-</div>
-
-<div class="container-fluid text-center">
-    <div class="row content">
-
-        <!--<div class="col-sm-2 sidenav"></div>-->
-
-        <div class="col-md-12 text-left">
-
-            <div>
-                <a href="http://www.columbia.edu/">
-                    <img src="http://www.columbia.edu/images/cu_logo.gif"
-                         width="353" height="49" alt="Columbia University in the City of New York"
-                         title="Columbia University in the City of New York" border="0"/>
-                </a>
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="www.columbia.edu">CU Home</a>
             </div>
 
-            <div style="background-color:#e5e5e5;">
-                <a href="#">
-                    <img class="img-responsive" src="../images/directory.gif"
-                         width="111" height="37" alt="Directories" title="Directories" border="0"/>
-                </a>
+            <!--
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="www.columbia.edu">CU Home</a></li>
+            </ul>
+            -->
+
+            <!--
+            <div class="navbar-nav navbar-right">
+                <a class="navbar-brand" href="https://directory.columbia.edu/people/">Directory Home</a>
+            </div>
+            <div class="navbar-nav navbar-right">
+                <a class="navbar-brand" href="https://search.sites.columbia.edu/">Web Site Search</a>
+            </div>
+            <div class="navbar-nav navbar-right">
+                <a class="navbar-brand" href="http://www.columbia.edu/content/contact-us.html">Help</a>
+            </div>
+            -->
+
+            <div class="nav navbar-nav navbar-right">
+                <li><a href="https://directory.columbia.edu/people/">Directory Home</a></li>
+                <li><a href="https://search.sites.columbia.edu/">Web Site Search</a></li>
+                <li><a href="http://www.columbia.edu/content/contact-us.html">Help</a></li>
             </div>
 
-            <div style="margin: 0 12px 2px 12px;padding:0;
+        </div>
+
+    </nav>
+    <!--</div>-->
+
+    <div class="container-fluid text-center">
+        <div class="row content">
+
+            <!--<div class="col-sm-2 sidenav"></div>-->
+
+            <div class="col-md-12 text-left">
+
+                <div style="padding-top: 8px; padding-bottom: 8px;">
+                    <a href="http://www.columbia.edu/">
+                        <img src="http://www.columbia.edu/images/cu_logo.gif"
+                             width="353" height="49" alt="Columbia University in the City of New York"
+                             title="Columbia University in the City of New York" border="0"/>
+                    </a>
+                </div>
+
+                <!--
+                <div>
+                    <a href="#">
+                        <img src="../images/directory.gif"
+                             width="211" height="37" alt="Directories" title="Directories" border="0"/>
+                    </a>
+
+                </div>
+                -->
+
+                <div style="background-color: #e5e5e5;">
+                    <a href="#">
+                        <img class="img-responsive" src="../images/directory.gif"
+                             width="111" height="20" alt="Directories" title="Directories" border="0"/>
+                    </a>
+                </div>
+
+
+                <!--
+                <div style="margin: 0 12px 2px 12px;padding:0;
                 font-family:verdana, arial;
                 font-size:12px; font-weight: bold;
                 color:#333;">
-                Departmental Directory ("Classified") Search Results
+                    Departmental Directory ("Classified") Search Results
+                </div>
+                -->
+
+                <hr/>
+
+                <form class="form-inline" id="search-form">
+                    <div class="form-group">
+                        <label for="username">Departmental Directory ("Classified") Search</label>
+                        <input type="text" class="form-control" id="username"/>
+                        <button type="submit" id="bth-search"
+                                class="btn btn-primary">Search
+                        </button>
+                    </div>
+                </form>
+
+                <h1>To submit changes to this directory, send e-mail to directory-help@columbia.edu.</h1>
+
+                <div id="feedback"></div>
+
+                <table class="table" id="myTable"></table>
+
             </div>
 
-            <hr/>
-
-            <form class="form-inline" id="search-form">
-                <div class="form-group">
-                    <label for="username">New Search</label>
-                    <input type="text" class="form-control" id="username"/>
-                    <button type="submit" id="bth-search"
-                            class="btn btn-primary">Search
-                    </button>
-                </div>
-            </form>
-
-            <div id="feedback"></div>
-
-            <table class="table" id="myTable"></table>
-
-
-            <h1>To submit changes to this directory, send e-mail to directory-help@columbia.edu.</h1>
+            <!-- <div class="col-sm-2 sidenav"></div> -->
 
         </div>
-
-        <!-- <div class="col-sm-2 sidenav"></div> -->
-
     </div>
+
+    <footer class="container-fluid text-right" style="background-color: #2d2a62; padding-top: 8px;padding-bottom: 5px">
+            <p>Footer Text</p>
+    </footer>
+
 </div>
 
-
-<footer class="container-fluid text-center">
-    <p>Footer Text</p>
-</footer>
 
 </body>
 </html>

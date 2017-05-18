@@ -23,5 +23,4 @@ class Level1Service {
         return level1Repository.findByDirectoryNameLikeOrderByDirectoryName(name);
     }
 
-
 }
