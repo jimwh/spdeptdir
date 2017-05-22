@@ -28,10 +28,10 @@ function getLevel1(data) {
         }
     }
 
-
     row = bg + row + address + mailCode + data.phoneNumber + "&nbsp;&nbsp;" + data.tieLine + '</td></tr>';
     return row;
 }
+
 
 function fire_ajax_submit(searchTerm) {
 
@@ -68,13 +68,7 @@ function fire_ajax_submit(searchTerm) {
                 }
 
                 if (data[i].level == "LEVEL1") {
-                    gap = "<strong>" + data[i].directoryName + "</strong><br/>" +
-                        address + mailCode +
-                        "&nbsp;" + data[i].phoneNumber + "&nbsp;" + data[i].tieLine;
-                    bg = '<tr class="active"><td>';
-                    // row = bg + gap + '</td></tr>';
                     row = getLevel1(data[i]);
-
                 } else if (data[i].level == "LEVEL2") {
                     gap = "&nbsp;&nbsp;&nbsp;" + data[i].directoryName + "<br/>" +
                         "&nbsp;&nbsp;&nbsp;" + address + mailCode +
@@ -106,7 +100,6 @@ function fire_ajax_submit(searchTerm) {
 
             $('#myTable').html(html);
 
-            console.log("SUCCESS : ", data);
             $("#btn-search").prop("disabled", false);
         },
         error: function (e) {

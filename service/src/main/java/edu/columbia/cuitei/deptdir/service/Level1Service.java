@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-class Level1Service {
+public class Level1Service {
 
     @Resource(name="level1Repository")
     private Level1Repository level1Repository;
@@ -23,4 +23,8 @@ class Level1Service {
         return level1Repository.findByDirectoryNameLikeOrderByDirectoryName(name);
     }
 
+    @Transactional
+    public Level1 save(Level1 level1) {
+        return level1Repository.save(level1);
+    }
 }

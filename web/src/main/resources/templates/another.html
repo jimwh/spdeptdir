@@ -1,19 +1,129 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Department Directory</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="icon" type="image/png" href="../images/favicon-crown.png"/>
+    <link href="../css/deptdir.css" th:href="@{css/deptdir.css}" rel="stylesheet"/>
+
+    <style>
+        .container {
+            /* force override */
+            width: 950px !important;
+        }
+
+        .navbar {
+            background-color: #2d2a62
+        }
+
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+        .row.content {
+            height: 450px
+        }
+
+        /* Set gray background color and 100% height */
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+
+        /* Set black background color, white text and some padding */
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+        }
+
+        /* On small screens, set height to 'auto' for sidenav and grid */
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+
+            .row.content {
+                height: auto;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<p th:text="'Hello, ' + ${name} + '!'" />
-<table>
-    <tr>
-        <th>NAME</th>
-    </tr>
-    <tr th:each="prod : ${prods}">
-        <!--<td><h4 th:text="${user.email}"></h4></td>-->
-        <td th:text="${prod.directoryName}"></td>
-    </tr>
-</table>
+
+<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/deptdir.js"></script>
+
+<div class="container">
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://www.columbia.edu">CU Home</a>
+            </div>
+
+            <div class="nav navbar-nav navbar-right">
+                <li><a href="https://directory.columbia.edu/people/">Directory Home</a></li>
+                <li><a href="https://search.sites.columbia.edu/">Web Site Search</a></li>
+                <li><a href="http://www.columbia.edu/content/contact-us.html">Help</a></li>
+            </div>
+
+        </div>
+
+    </nav>
+
+    <div class="container-fluid text-center">
+        <div class="row content">
+
+            <div class="col-md-12 text-left">
+                <div style="padding-top: 8px; padding-bottom: 8px;">
+                    <a href="http://www.columbia.edu/">
+                        <img src="http://www.columbia.edu/images/cu_logo.gif"
+                             width="353" height="49" alt="Columbia University in the City of New York"
+                             title="Columbia University in the City of New York" border="0"/>
+                    </a>
+                </div>
+
+                <div style="background-color: #e5e5e5;">
+                    <a href="#">
+                        <img class="img-responsive" src="../images/directory.gif"
+                             width="111" height="20" alt="Directories" title="Directories" border="0"/>
+                    </a>
+                </div>
+
+                <h1>To submit changes to this directory, send e-mail to directory-help@columbia.edu.</h1>
+
+
+                <p th:text="'Hello, ' + ${name} + '!'" />
+                <table class="table">
+                    <tr>
+                        <th>NAME</th>
+                    </tr>
+                    <tr th:each="prod : ${prods}">
+                        <!--<td><h4 th:text="${user.email}"></h4></td>-->
+                        <td th:text="${prod.directoryName}"></td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="container-fluid text-right" style="background-color: #2d2a62; padding-top: 8px;padding-bottom: 5px">
+        <p>Footer Text</p>
+    </footer>
+
+</div>
+
+
 </body>
 </html>
