@@ -11,12 +11,12 @@ function getLevel1(data) {
     var row = "<strong>" + data.directoryName + "</strong>";
     var address = "";
     if (data.address != "") {
-        address = "</br>ADDRESS:&nbsp;&nbsp;" + data.address + ";";
+        address = "</br>Address:&nbsp;&nbsp;" + data.address;
     }
     var mailCode = "";
     if (data.mailCode != "") {
         if(address!="") {
-            mailCode = "&nbsp;&nbsp;MAILCODE:&nbsp;&nbsp;" + data.mailCode;
+            mailCode = "&nbsp;&nbsp;Mail Code:&nbsp;&nbsp;" + data.mailCode;
         }else {
             mailCode = "<br/>MAILCODE:&nbsp;&nbsp;" + data.mailCode;
         }
@@ -27,11 +27,127 @@ function getLevel1(data) {
             mailCode = "<br/>";
         }
     }
+    var phone="";
+    if( data.phoneNumber != "") {
+        phone = "&nbsp;&nbsp;Phone: &nbsp;&nbsp;"+data.phoneNumber + '&nbsp;&nbsp;';
+    }
+    var tieLine="";
+    if( data.tieLine != "") {
+        tieLine = "Tie Line: &nbsp;&nbsp;"+data.tieLine;
+    }
 
-    row = bg + row + address + mailCode + data.phoneNumber + "&nbsp;&nbsp;" + data.tieLine + '</td></tr>';
+    row = bg + row + address + mailCode + phone + '&nbsp;&nbsp;' + tieLine + '</td></tr>';
     return row;
 }
 
+function getLevel2(data) {
+    var bg = '<tr class="info"><td>';
+    // var row = "<strong>" + data.directoryName + "</strong>";
+    var row = '&nbsp;&nbsp;' + data.directoryName;
+
+    var address = "";
+    if (data.address != "") {
+        address = "</br>&nbsp;&nbsp;Address:&nbsp;&nbsp;" + data.address;
+    }
+    var mailCode = "";
+    if (data.mailCode != "") {
+        if(address!="") {
+            mailCode = "&nbsp;&nbsp;Mail Code:&nbsp;&nbsp;" + data.mailCode;
+        }else {
+            mailCode = "<br/>&nbsp;&nbsp;Mail Code:&nbsp;&nbsp;" + data.mailCode;
+        }
+    }else {
+        if(address!="") {
+            mailCode = "&nbsp;&nbsp;";
+        }else {
+            mailCode = "<br/>";
+        }
+    }
+    var phone="";
+    if( data.phoneNumber != "") {
+        phone = "&nbsp;&nbsp;Phone: &nbsp;&nbsp;"+data.phoneNumber + '&nbsp;&nbsp;';
+    }
+    var tieLine="";
+    if( data.tieLine != "") {
+        tieLine = "Tie Line: &nbsp;&nbsp;"+data.tieLine;
+    }
+
+    row = bg + row + address + mailCode + phone + '&nbsp;&nbsp;' + tieLine + '</td></tr>';
+    return row;
+}
+
+function getLevel3(data) {
+
+    var bg = '<tr class="success"><td>';
+
+    var row = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data.directoryName;
+
+    var address = "";
+    if (data.address != "") {
+        address = "</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address:&nbsp;&nbsp;" + data.address;
+    }
+    var mailCode = "";
+    if (data.mailCode != "") {
+        if(address!="") {
+            mailCode = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mail Code:&nbsp;&nbsp;" + data.mailCode;
+        }else {
+            mailCode = "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mail Code:&nbsp;&nbsp;" + data.mailCode;
+        }
+    }else {
+        if(address!="") {
+            mailCode = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        }else {
+            mailCode = "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        }
+    }
+    var phone="";
+    if( data.phoneNumber != "") {
+        phone = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone: &nbsp;&nbsp;"+data.phoneNumber + '&nbsp;&nbsp;';
+    }
+    var tieLine="";
+    if( data.tieLine != "") {
+        tieLine = "Tie Line: &nbsp;&nbsp;"+data.tieLine;
+    }
+
+    row = bg + row + address + mailCode + phone + '&nbsp;&nbsp;' + tieLine + '</td></tr>';
+    return row;
+}
+
+function getLevel4(data) {
+
+    var bg = '<tr class="warning"><td>';
+    var row = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data.directoryName;
+
+    var address = "";
+    if (data.address != "") {
+        address = "</br>&nbsp;&nbsp;Address:&nbsp;&nbsp;" + data.address;
+    }
+    var mailCode = "";
+    if (data.mailCode != "") {
+        if(address!="") {
+            mailCode = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mail Code:&nbsp;&nbsp;" + data.mailCode;
+        }else {
+            mailCode = "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mail Code:&nbsp;&nbsp;" + data.mailCode;
+        }
+    }else {
+        if(address!="") {
+            mailCode = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        }else {
+            mailCode = "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+        }
+    }
+    var phone="";
+    if( data.phoneNumber != "") {
+        phone = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone: &nbsp;&nbsp;"+data.phoneNumber + '&nbsp;&nbsp;';
+    }
+    var tieLine="";
+    if( data.tieLine != "") {
+        tieLine = "Tie Line: &nbsp;&nbsp;"+data.tieLine;
+    }
+
+    row = bg + row + address + mailCode + phone + '&nbsp;&nbsp;' + tieLine + '</td></tr>';
+    return row;
+}
 
 function fire_ajax_submit(searchTerm) {
 
@@ -49,57 +165,28 @@ function fire_ajax_submit(searchTerm) {
              + JSON.stringify(data, null, 4) + "</pre>";
              $('#feedback').html(json);
              */
-            $('#feedback').html('Your search for "' + searchTerm + '" returned ' + data.length + ' results.');
+            $('#feedback').html('Your search for <strong>"' + searchTerm + '"</strong> returned ' + data.length + ' results.');
 
             var html = "";
 
             for (var i = 0; i < data.length; i++) {
-                var gap = "";
-                var td = "";
-                var bg = "";
-                var address = "";
                 var row = "";
-                if (data[i].address != "") {
-                    address = "&nbsp;&nbsp;ADDRESS:&nbsp;" + data[i].address + ";";
-                }
-                var mailCode = "";
-                if (data[i].mailCode != "") {
-                    mailCode = "&nbsp;&nbsp;MAILCODE:&nbsp;" + data[i].mailCode;
-                }
 
                 if (data[i].level == "LEVEL1") {
                     row = getLevel1(data[i]);
                 } else if (data[i].level == "LEVEL2") {
-                    gap = "&nbsp;&nbsp;&nbsp;" + data[i].directoryName + "<br/>" +
-                        "&nbsp;&nbsp;&nbsp;" + address + mailCode +
-                        "&nbsp;" + data[i].phoneNumber + "&nbsp;" + data[i].tieLine;
-                    bg = '<tr class="info"><td>';
-                    row = bg + gap + '</td></tr>';
+                    row = getLevel2(data[i]);
                 } else if (data[i].level == "LEVEL3") {
-                    gap = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + data[i].directoryName +
-                        "&nbsp;&nbsp;&nbsp;" +
-                        address + mailCode +
-                        "&nbsp;" + data[i].phoneNumber + "&nbsp;" + data[i].tieLine;
-                    bg = '<tr class="success"><td>';
-                    row = bg + gap + '</td></tr>';
-
+                    row = getLevel3(data[i]);
                 } else if (data[i].level == "LEVEL4") {
-                    gap = "------------&nbsp;" + data[i].directoryName;
-                    bg = '<tr class="warning"><td>';
-                    row = bg + gap + '</td></tr>';
+                    row = getLevel4(data[i]);
                 }
-                // var row = $('<tr class="active"><td>' + gap + data[i].directoryName + '</td></tr>');
-                // var row = $('<tr class="active"><td>' + gap + '</td></tr>');
-                // var row = $(bg + gap + '</td></tr>');
-                // var row = bg + gap + '</td></tr>';
                 // $('#myTable').append(row);
-                //$('#myTable').html(row);
+                // $('#myTable').html(row);
                 html = html + row;
-
             }
 
             $('#myTable').html(html);
-
             $("#btn-search").prop("disabled", false);
         },
         error: function (e) {
