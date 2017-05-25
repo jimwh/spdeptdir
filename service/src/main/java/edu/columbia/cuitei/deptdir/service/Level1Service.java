@@ -1,6 +1,9 @@
 package edu.columbia.cuitei.deptdir.service;
 
+import edu.columbia.cuitei.deptdir.domain.DeptDirectory;
 import edu.columbia.cuitei.deptdir.domain.Level1;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 
@@ -27,4 +30,18 @@ public class Level1Service {
     public Level1 save(Level1 level1) {
         return level1Repository.save(level1);
     }
+
+    @Transactional
+    public Level1 findOne(Integer id) {
+        return level1Repository.findOne(id);
+    }
+
+    @Transactional
+    public List<DeptDirectory> findAll() {
+        final List<Level1>list=level1Repository.findAll();
+        final List<DeptDirectory> ls = new ArrayList<>();
+        ls.addAll(list);
+        return ls;
+    }
+
 }

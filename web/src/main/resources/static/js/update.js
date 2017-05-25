@@ -1,6 +1,6 @@
-var url = "/another/";
+var url = "/amend/";
 var editModalTarget = url + "loadEntity/";
-var tableTarget = url + "loadSomethingTable/";
+var tableTarget = url + "loadDeptDirectory/";
 
 function showEditModal(index) {
     var editUrl = editModalTarget + index;
@@ -20,11 +20,23 @@ function loadEntity(url) {
 function populateModal(data) {
     $('#update-id').val(data.id);
     $('#update-name').val(data.directoryName);
+    $('#update-address').val(data.address);
+    $('#update-mailCode').val(data.mailCode);
+    $('#update-phoneNumber').val(data.phoneNumber);
+    $('#update-tieLine').val(data.tieLine);
+    $('#update-parent').val(data.parent);
+    $('#update-level').val(data.level);
 }
 
 function clearModal() {
     $('#update-id').val('');
     $('#update-name').val('');
+    $('#update-address').val('');
+    $('#update-maildCode').val('');
+    $('#update-phoneNumber').val('');
+    $('#update-tieLine').val('');
+    $('#update-parent').val('');
+    $('#update-level').val('');
 }
 
 function closeModal(name) {
@@ -73,6 +85,13 @@ function updateTable(data) {
                 var row = $('<tr>').append(
                     $('<td>').text(e.id),
                     $('<td>').text(e.directoryName),
+                    $('<td>').text(e.address),
+                    $('<td>').text(e.mailCode),
+                    $('<td>').text(e.phoneNumber),
+                    $('<td>').text(e.tieLine),
+                    $('<td>').text(e.parent),
+                    $('<td>').text(e.level),
+
                     $('<td>').append(
                         "<a data-toggle='modal' data-target='#umodal' onclick=" +
                         edit + ">Edit</a>"

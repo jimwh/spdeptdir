@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <title>Department Directory</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="icon" type="image/png" href="../images/favicon-crown.png"/>
-    <link href="../css/deptdir.css" th:href="@{css/deptdir.css}" rel="stylesheet"/>
+    <link rel="icon" type="image/png" href="../../images/favicon-crown.png"/>
+    <link href="../../css/deptdir.css" th:href="@{css/deptdir.css}" rel="stylesheet"/>
 
     <style>
         .container {
@@ -55,6 +55,7 @@
             }
         }
     </style>
+
     <script>
         $(document).ready(function ($) {
             $("#edit-form").submit(function (event) {
@@ -63,8 +64,12 @@
             });
         });
     </script>
+
     <script th:src="@{/js/updat.js}"></script>
-    <!-- <script th:src="@{/js/something.js}"></script> -->
+    <script th:src="@{/js/deptDirectory.js}"></script>
+
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
+
 </head>
 
 <body>
@@ -120,40 +125,69 @@
                                 <h4 class="modal-title">Update Record</h4>
                             </div>
                             <div class="modal-body">
+
                                 <form id="edit-form" role="form"
                                       th:method="post"
-                                      th:action="@{/another/update}"
-                                      th:object="${prod}">
+                                      th:action="@{/amend/update}"
+                                      th:object="${deptDirectory}">
 
-<!--
                                     <input id="update-id"
                                            type="hidden"
                                            th:field="*{id}"
-                                           th:value="${prod.id}"/>
+                                           th:value="${deptDirectory.id}"/>
 
                                     <fieldset class="form-group">
                                         <label for="update-name">Name</label>
                                         <input th:field="*{directoryName}"
-                                               th:value="${prod.directoryName}"
+                                               th:value="${deptDirectory.directoryName}"
                                                class="form-control"
                                                id="update-name"
                                                type="text"
                                                placeholder="Name"/>
-                                    </fieldset>
--->
 
-                                    <input id="update-id"
-                                           type="hidden"
-                                           th:field="*{id}" />
-
-                                    <fieldset class="form-group">
-                                        <label for="update-name">Name</label>
-                                        <input th:field="*{directoryName}"
+                                        <label for="update-address">Address</label>
+                                        <input th:field="*{address}"
+                                               th:value="${deptDirectory.address}"
                                                class="form-control"
-                                               id="update-name"
+                                               id="update-address"
                                                type="text"
                                                placeholder="Name"/>
+
+                                        <label for="update-mailCode">MailCode</label>
+                                        <input th:field="*{mailCode}"
+                                               th:value="${deptDirectory.mailCode}"
+                                               class="form-control"
+                                               id="update-mailCode"
+                                               type="text"
+                                               placeholder="MailCode"/>
+
+                                        <label for="update-phoneNumber">PhoneNumber</label>
+                                        <input th:field="*{phoneNumber}"
+                                               th:value="${deptDirectory.phoneNumber}"
+                                               class="form-control"
+                                               id="update-phoneNumber"
+                                               type="text"
+                                               placeholder="PhoneNumber"/>
+
+
+                                        <label for="update-tieLine">TileLine</label>
+                                        <input th:field="*{tieLine}"
+                                               th:value="${deptDirectory.tieLine}"
+                                               class="form-control"
+                                               id="update-tieLine"
+                                               type="text"
+                                               placeholder="TieLine"/>
+
+                                        <label for="update-level">Level</label>
+                                        <input th:field="*{level}"
+                                               th:value="${deptDirectory.level}"
+                                               class="form-control"
+                                               id="update-level"
+                                               type="text"
+                                               placeholder="Level"/>
+
                                     </fieldset>
+
 
                                     <div class="form-group">
                                         <button class="btn btn-success" type="submit">Save</button>
@@ -183,50 +217,59 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                <a type="button" class="btn btn-danger" onclick="deleteEntity('another')">Delete</a>
+                                <a type="button" class="btn btn-danger"
+                                   onclick="deleteEntity('deptDirectory')">Delete</a>
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
 
-
-
+                <!--
                 <p th:text="'Hello, ' + ${name} + '!'" />
+                -->
+                <div class="container">
+                    <div id="something-list">
 
-                <table id="another-table" class="table table-responsive tab-condensed table-hover">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>NAME</th>
-                        <th>ADDRESS</th>
-                        <th>MAIL CODE</th>
-                        <th>PHONE</th>
-                        <th>TIE LINE</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                        <table id="another-table" class="table table-responsive tab-condensed table-hover">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>NAME</th>
+                                <th>ADDRESS</th>
+                                <th>MAIL CODE</th>
+                                <th>PHONE</th>
+                                <th>TIE LINE</th>
+                                <th>PARENT</th>
+                                <th>LEVEL</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
 
-                    <tr th:each="prod : ${prods}">
-                        <td th:text="${prod.id}"></td>
-                        <td th:text="${prod.directoryName}"></td>
-                        <td th:text="${prod.address}"></td>
-                        <td th:text="${prod.mailCode}"></td>
-                        <td th:text="${prod.phoneNumber}"></td>
-                        <td th:text="${prod.tieLine}"></td>
+                            <tbody id="table-body">
 
-                        <td>
-                            <a data-toggle="modal" data-target="#umodal"
-                               th:onclick="'showEditModal(' + ${prod.id} + ')'">Edit</a>
-                        </td>
-                        <td>
-                            <a data-toggle='modal' data-target='#dmodal'
-                               th:onclick="'showDeleteModal(' + ${prod.id} + ')'">Delete</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                            <tr th:each="deptDirectory : ${deptDirectories}">
+                                <td th:text="${deptDirectory.id}"></td>
+                                <td th:text="${deptDirectory.directoryName}"></td>
+                                <td th:text="${deptDirectory.address}"></td>
+                                <td th:text="${deptDirectory.mailCode}"></td>
+                                <td th:text="${deptDirectory.phoneNumber}"></td>
+                                <td th:text="${deptDirectory.tieLine}"></td>
+                                <td th:text="${deptDirectory.parent}"></td>
+                                <td th:text="${deptDirectory.level}"></td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#umodal"
+                                       th:onclick="'showEditModal(' + ${deptDirectory.id} + ')'">Edit</a>
+                                </td>
+                                <td>
+                                    <a data-toggle='modal' data-target='#dmodal'
+                                       th:onclick="'showDeleteModal(' + ${deptDirectory.id} + ')'">Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
             </div>
 

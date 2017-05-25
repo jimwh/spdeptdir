@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-class Level2Service {
+public class Level2Service {
 
     @Resource
     private Level2Repository level2Repository;
@@ -34,6 +34,21 @@ class Level2Service {
     @Transactional
     List<Level2> findAllByParent(List<Integer> parentList) {
         return level2Repository.findAllByParentInOrderByDirectoryName(parentList);
+    }
+
+    @Transactional
+    public Level2 findOne(Integer id) {
+        return level2Repository.findOne(id);
+    }
+
+
+    @Transactional
+    public List<DeptDirectory> findAll() {
+
+        final List<DeptDirectory> list=new ArrayList<>();
+        final List<Level2> ls = level2Repository.findAll();
+        list.addAll(ls);
+        return list;
     }
 
 }

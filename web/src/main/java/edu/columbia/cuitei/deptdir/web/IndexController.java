@@ -37,7 +37,6 @@ public class IndexController {
         model.addAttribute("prods", queryService.search("%"+name+"%"));
         return "another";
     }
-    */
     @GetMapping("/another")
     public String another(String name, Model model) {
         name = "arts";
@@ -52,5 +51,6 @@ public class IndexController {
     public void update(@ModelAttribute("prod") DeptDirectory prod) {
         // somethingService.save(something);
     }
+    */
 
 }

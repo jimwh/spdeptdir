@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = {"edu.columbia.cuitei.deptdir"})
-@EntityScan(basePackages = {"edu.columbia.cuitei.deptdir"})
+@EntityScan(basePackages = {"edu.columbia.cuitei.deptdir.domain"})
 @ComponentScan(basePackages = {"edu.columbia.cuitei.deptdir"})
 @EnableAutoConfiguration(exclude = {LiquibaseAutoConfiguration.class})
 public class Application extends SpringBootServletInitializer {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-class Level3Service {
+public class Level3Service {
 
     @Resource
     private Level3Repository level3Repository;
@@ -23,6 +23,12 @@ class Level3Service {
     @Transactional
     List<Level3> findAllByParentIn(List<Integer> list) {
         return level3Repository.findAllByParentIn(list);
+    }
+
+
+    @Transactional
+    public Level3 findOne(Integer id) {
+        return level3Repository.findOne(id);
     }
 
 }
