@@ -132,7 +132,7 @@
 
                                 <h4 class="modal-title">Update Record</h4>
                                 <!-- <span th:text="${deptDirectory.level}">Level</span> -->
-                                <h1 th:text="${deptDirectory.level}">level</h1>
+                                <!-- <h1 th:text="${deptDirectory.level}">level</h1> -->
 
                             </div>
                             <div class="modal-body">
@@ -203,6 +203,12 @@
                                                type="text"
                                                placeholder="Level"/>
                                         -->
+                                        <input id="update-level"
+                                               type="hidden"
+                                               th:field="*{level}"
+                                               th:value="${deptDirectory.level}"/>
+
+
                                     </fieldset>
 
 
