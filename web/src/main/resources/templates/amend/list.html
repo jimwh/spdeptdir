@@ -4,9 +4,22 @@
 <head>
     <title>Department Directory</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="/webjars/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script th:src="@{/js/update.js}"></script>
+    <script th:src="@{/js/deptDirectory.js}"></script>
+
+    <script th:src="@{/js/deptdir.js}"></script>
+
+
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
+
+
     <link rel="icon" type="image/png" href="../../images/favicon-crown.png"/>
-    <link href="../../css/deptdir.css" th:href="@{css/deptdir.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{css/deptdir.css}" />
 
     <style>
         .container {
@@ -65,18 +78,14 @@
         });
     </script>
 
-    <script th:src="@{/js/updat.js}"></script>
-    <script th:src="@{/js/deptDirectory.js}"></script>
-
-    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
 
 </head>
 
 <body>
 
-<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../js/deptdir.js"></script>
+
+
+
 
 <div class="container">
     <nav class="navbar navbar-inverse" role="navigation">
@@ -114,15 +123,17 @@
                     </a>
                 </div>
 
-                <h1>To submit changes to this directory, send e-mail to directory-help@columbia.edu.</h1>
-
                 <div th:id="umodal" class="modal fade" tabindex="-1" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                         aria-hidden="true">&times;</span></button>
+
                                 <h4 class="modal-title">Update Record</h4>
+                                <!-- <span th:text="${deptDirectory.level}">Level</span> -->
+                                <h1 th:text="${deptDirectory.level}">level</h1>
+
                             </div>
                             <div class="modal-body">
 
@@ -151,7 +162,7 @@
                                                class="form-control"
                                                id="update-address"
                                                type="text"
-                                               placeholder="Name"/>
+                                               placeholder="Address"/>
 
                                         <label for="update-mailCode">MailCode</label>
                                         <input th:field="*{mailCode}"
@@ -170,7 +181,7 @@
                                                placeholder="PhoneNumber"/>
 
 
-                                        <label for="update-tieLine">TileLine</label>
+                                        <label for="update-tieLine">Tie Line</label>
                                         <input th:field="*{tieLine}"
                                                th:value="${deptDirectory.tieLine}"
                                                class="form-control"
@@ -178,6 +189,12 @@
                                                type="text"
                                                placeholder="TieLine"/>
 
+
+
+                                        <label th:text="${deptDirectory.level}"></label>
+
+
+                                        <!--
                                         <label for="update-level">Level</label>
                                         <input th:field="*{level}"
                                                th:value="${deptDirectory.level}"
@@ -185,7 +202,7 @@
                                                id="update-level"
                                                type="text"
                                                placeholder="Level"/>
-
+                                        -->
                                     </fieldset>
 
 
@@ -193,6 +210,7 @@
                                         <button class="btn btn-success" type="submit">Save</button>
                                     </div>
                                 </form>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -227,8 +245,6 @@
                 <!--
                 <p th:text="'Hello, ' + ${name} + '!'" />
                 -->
-                <div class="container">
-                    <div id="something-list">
 
                         <table id="another-table" class="table table-responsive tab-condensed table-hover">
                             <thead>
@@ -268,8 +284,6 @@
                             </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
 
             </div>
 

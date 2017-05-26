@@ -44,11 +44,22 @@ public class Level2Service {
 
     @Transactional
     public List<DeptDirectory> findAll() {
-
         final List<DeptDirectory> list=new ArrayList<>();
         final List<Level2> ls = level2Repository.findAll();
         list.addAll(ls);
         return list;
+    }
+
+    @Transactional
+    public Level2 update(DeptDirectory deptDirectory) {
+        final Level2 level2 = findOne(deptDirectory.getId());
+        level2.setDirectoryName(deptDirectory.getDirectoryName());
+        level2.setAddress(deptDirectory.getAddress());
+        level2.setMailCode(deptDirectory.getMailCode());
+        level2.setPhoneType(deptDirectory.getPhoneType());
+        level2.setPhoneNumber(deptDirectory.getPhoneNumber());
+        level2.setTieLine(deptDirectory.getTieLine());
+        return level2Repository.save(level2);
     }
 
 }

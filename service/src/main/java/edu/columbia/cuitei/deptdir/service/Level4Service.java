@@ -1,5 +1,6 @@
 package edu.columbia.cuitei.deptdir.service;
 
+import edu.columbia.cuitei.deptdir.domain.DeptDirectory;
 import edu.columbia.cuitei.deptdir.domain.Level4;
 import java.util.List;
 import javax.annotation.Resource;
@@ -30,6 +31,18 @@ public class Level4Service {
     @Transactional
     public Level4 findOne(Integer id) {
         return level4Repository.findOne(id);
+    }
+
+    @Transactional
+    public Level4 update(DeptDirectory deptDirectory) {
+        final Level4 level4 = findOne(deptDirectory.getId());
+        level4.setDirectoryName(deptDirectory.getDirectoryName());
+        level4.setAddress(deptDirectory.getAddress());
+        level4.setMailCode(deptDirectory.getMailCode());
+        level4.setPhoneType(deptDirectory.getPhoneType());
+        level4.setPhoneNumber(deptDirectory.getPhoneNumber());
+        level4.setTieLine(deptDirectory.getTieLine());
+        return level4Repository.save(level4);
     }
 
 }

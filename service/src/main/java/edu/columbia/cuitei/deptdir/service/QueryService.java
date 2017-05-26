@@ -142,7 +142,7 @@ public class QueryService {
             }
         }
 
-        printData(deptDirectoryList);
+        // printData(deptDirectoryList);
         log.info("rows={}", deptDirectoryList.size());
         return deptDirectoryList;
     }
@@ -156,6 +156,7 @@ public class QueryService {
     private void fill(List<DeptDirectory>list, Set<Integer>parentIdSet, Set<Integer>idSet, Map<Integer, List<DeptDirectory>>map) {
         for (DeptDirectory deptDirectory : list) {
             final Integer parent = deptDirectory.getParent();
+            if(parent==null) { continue; }
             parentIdSet.add(parent);
             idSet.add(deptDirectory.getId());
             List<DeptDirectory> temp = map.get(parent);
@@ -179,4 +180,18 @@ public class QueryService {
         return level2ParentIdSet;
     }
 
+    public void update(DeptDirectory deptDirectory) {
+        log.info("level={}", deptDirectory.getLevel());
+        if( "LEVEL1".equals(deptDirectory.getLevel())) {
+            level1Service.update(deptDirectory);
+        }else if( "LEVEL2".equals(deptDirectory.getLevel())) {
+            level2Service.update(deptDirectory);
+        }
+        else if( "LEVEL3".equals(deptDirectory.getLevel())) {
+            level3Service.update(deptDirectory);
+        }
+        else if( "LEVEL4".equals(deptDirectory.getLevel())) {
+            level4Service.update(deptDirectory);
+        }
+    }
 }

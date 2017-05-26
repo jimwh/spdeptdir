@@ -1,6 +1,6 @@
 var url = "/amend/";
-var editModalTarget = url + "loadEntity/";
-var tableTarget = url + "loadDeptDirectory/";
+var editModalTarget = "/amend/loadEntity/";
+var tableTarget = "/amend/loadDeptDirectory/";
 
 function showEditModal(index) {
     var editUrl = editModalTarget + index;
@@ -49,10 +49,11 @@ function clearAndCloseModal(name) {
 }
 
 function postEdit() {
-    var prod = $('#edit-form').serialize();
+    var deptDirectory = $('#edit-form').serialize();
     var editUrl = url + 'update';
-    $.post(editUrl, prod, function (data) {
-        updateTable(data);
+    $.post(editUrl, deptDirectory, function (data) {
+        console.log('I am foo ....' + deptDirectory);
+        updateTable(deptDirectory);
     });
     clearAndCloseModal('#umodal');
 }
@@ -68,9 +69,16 @@ function deleteEntity(entity) {
 }
 
 function updateTable(data) {
+    if( data == null ) {
+        console.log('data is nullllllllllllllllllllllllllll');
+    }
+    else {
+        console.log('foo====' + data);
+    }
+
     $.ajax({
         dataType: "json",
-        url: tableTarget,
+        url: tableTarget + "/arts",
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -101,7 +109,7 @@ function updateTable(data) {
                         del + ">Delete</a>"
                     )
                 );
-                $('#something-table').append(row);
+                $('#another-table').append(row);
             });
         }
     });

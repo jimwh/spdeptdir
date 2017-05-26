@@ -1,5 +1,7 @@
 package edu.columbia.cuitei.deptdir.service;
 
+import edu.columbia.cuitei.deptdir.domain.DeptDirectory;
+import edu.columbia.cuitei.deptdir.domain.Level2;
 import edu.columbia.cuitei.deptdir.domain.Level3;
 import java.util.List;
 import javax.annotation.Resource;
@@ -29,6 +31,18 @@ public class Level3Service {
     @Transactional
     public Level3 findOne(Integer id) {
         return level3Repository.findOne(id);
+    }
+
+    @Transactional
+    public Level3 update(DeptDirectory deptDirectory) {
+        final Level3 level3 = findOne(deptDirectory.getId());
+        level3.setDirectoryName(deptDirectory.getDirectoryName());
+        level3.setAddress(deptDirectory.getAddress());
+        level3.setMailCode(deptDirectory.getMailCode());
+        level3.setPhoneType(deptDirectory.getPhoneType());
+        level3.setPhoneNumber(deptDirectory.getPhoneNumber());
+        level3.setTieLine(deptDirectory.getTieLine());
+        return level3Repository.save(level3);
     }
 
 }
