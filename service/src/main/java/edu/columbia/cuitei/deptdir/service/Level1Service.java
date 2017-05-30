@@ -57,4 +57,9 @@ public class Level1Service {
         level1.setTieLine(directory.getTieLine());
         return level1Repository.save(level1);
     }
+
+    @Transactional
+    public void delete(Directory d) {
+
+    }
 }

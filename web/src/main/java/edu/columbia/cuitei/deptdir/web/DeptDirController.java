@@ -86,14 +86,6 @@ public class DeptDirController {
         // queryService.update(directory);
     }
 
-    /*
-    @ResponseBody
-    @RequestMapping(value = "/amend/loadDeptDirectory")
-    public List<Directory> loadSomethingTable() {
-        log.info("load table.................../amend/loadDeptDirectory");
-        return level1Service.findAll();
-    }
-    */
     @ResponseBody
     @RequestMapping(value = "/amend/loadDirectory/{name}")
     public List<Directory> loadDirectory(@PathVariable("name") String name) {
@@ -129,7 +121,7 @@ public class DeptDirController {
     @RequestMapping(value = "amend/delete/{id}", method = RequestMethod.POST)
     public void delete(@PathVariable("id") Integer id) {
         log.info("hit delete .................");
-        // somethingService.delete(id);
+        queryService.delete(id);
     }
 
     private void print(Directory d) {

@@ -40,31 +40,8 @@ public class QueryService {
         if( level2List.isEmpty() ) {
             return directoryList;
         }
-        /*
-        for(Level2 level2: level2List) {
-            Integer parent=level2.getParent();
-            level2ParentIdSet.add(level2.getParent());
-            level2IdListSet.add(level2.getId());
-            List<Directory> temp = level1IdLevel2Map.get(parent);
-            if( temp == null ) {
-                temp = new ArrayList<>();
-                temp.add(level2);
-            }else {
-                temp.add(level2);
-            }
-            level1IdLevel2Map.put(parent, temp);
-        }
-        */
 
         fill(level2List, level2ParentIdSet, level2IdListSet, level1IdLevel2Map);
-        /*
-        final List<Level2> level2ListByParent = level2Service.findAllByParent(new ArrayList<>(level2ParentIdSet));
-        for(Level2 level2: level2ListByParent) {
-            log.info("level2: {}, {}", level2.getName(), level2.getParent());
-        }
-        level2List.clear();
-        level2List.addAll(level2ListByParent);
-        */
 
         // 3. find all level1 by id column that is level2's parent column
         // List<Level1> level1List=level1Service.findAll(level2Parent);
@@ -78,8 +55,6 @@ public class QueryService {
         final List<Integer> level3IdList = new ArrayList<>();
         final Map<Integer, List<Directory>> level2IdLevel3Map = new HashMap<>();
 
-        // private void fill(List<Directory>list, Set<Integer>parentIdSet, Set<Integer>idSet, Map<Integer, List<Directory>>map) {
-        // fill(level3List, null, level3IdList, level2IdLevel3Map);
 
         if( !level3List.isEmpty() ) {
             log.info("level3.size={} from level2IdList.size={}", level3List.size(),level2IdListSet.size());
@@ -203,4 +178,25 @@ public class QueryService {
         }
         return directory;
     }
+
+    public void delete(final Integer id) {
+        Directory d = level1Service.findOne(id);
+        if (d != null) {
+            level1Service.delete(d);
+        } else {
+            d = level2Service.findOne(id);
+            if (d != null) {
+                level2Service.delete(d);
+            } else {
+                d = level3Service.findOne(id);
+                if (d != null) {
+                    level3Service.delete(d);
+                } else {
+                    d = level4Service.findOne(id);
+                    level4Service.delete(d);
+                }
+            }
+        }
+    }
+
 }

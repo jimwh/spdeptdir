@@ -18,6 +18,7 @@ public class Directory {
     public void setId(final Integer id) { this.id=id; }
 
     @Column(nullable = false)
+
     private String name;
     public String getName() {
         return name;
