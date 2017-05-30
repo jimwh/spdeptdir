@@ -16,14 +16,14 @@ public class Level2Service {
     private Level2Repository level2Repository;
 
     @Transactional
-    List<Level2> findByDirectoryNameLike(String name) {
-        return level2Repository.findByDirectoryNameLikeOrderByDirectoryName(name);
+    List<Level2> findByNameLike(String name) {
+        return level2Repository.findByNameLikeOrderByName(name);
     }
 
     @Transactional
-    List<Directory> getByDirectoryNameLike(String name) {
+    List<Directory> getByNameLike(String name) {
         List<Directory> directoryList =new ArrayList<>();
-        List<Level2> list =  level2Repository.findByDirectoryNameLikeOrderByDirectoryName(name);
+        List<Level2> list =  level2Repository.findByNameLikeOrderByName(name);
         for(Level2 level2: list) {
             directoryList.add(level2);
         }
@@ -33,7 +33,7 @@ public class Level2Service {
 
     @Transactional
     List<Level2> findAllByParent(List<Integer> parentList) {
-        return level2Repository.findAllByParentInOrderByDirectoryName(parentList);
+        return level2Repository.findAllByParentInOrderByName(parentList);
     }
 
     @Transactional
@@ -53,7 +53,7 @@ public class Level2Service {
     @Transactional
     public Level2 update(Directory directory) {
         final Level2 level2 = findOne(directory.getId());
-        level2.setDirectoryName(directory.getDirectoryName());
+        level2.setName(directory.getName());
         level2.setAddress(directory.getAddress());
         level2.setMailCode(directory.getMailCode());
         level2.setPhoneType(directory.getPhoneType());

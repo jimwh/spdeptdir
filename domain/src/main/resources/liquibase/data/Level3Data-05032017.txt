@@ -1,4 +1,4 @@
-id|directory_name|parent|tie_line|address|mail_code|phone_type|phone_number
+id|name|parent|tie_line|address|mail_code|phone_type|phone_number
 1034193|FAX|331122||||FAX|212-854-8463
 1034194|OFFICE|331122||||OFFICE|212-854-8445
 273668|OFFICE|273667|MS* 4-3414|||OFFICE|212-854-3414

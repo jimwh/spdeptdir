@@ -34,9 +34,9 @@ public class Level4Service {
     }
 
     @Transactional
-    public Level4 update(Directory directory) {
+    public Level4 update(final Directory directory) {
         final Level4 level4 = findOne(directory.getId());
-        level4.setDirectoryName(directory.getDirectoryName());
+        level4.setName(directory.getName());
         level4.setAddress(directory.getAddress());
         level4.setMailCode(directory.getMailCode());
         level4.setPhoneType(directory.getPhoneType());

@@ -12,13 +12,13 @@
     -->
 
     <changeSet author="jh3389" id="load-level2-data">
-        <loadData schemaName="foobar"
+        <loadData schemaName="deptdir"
                   encoding="UTF-8"
                   file="src/main/resources/liquibase/data/Level2Data-05032017.txt"
                   separator="|"
                   tableName="level2">
             <column name="id" type="NUMERIC" />
-            <column name="directory_name" type="STRING" />
+            <column name="name" type="STRING" />
             <column name="parent"  type="NUMERIC"/>
             <column name="tie_line" type="STRING"/>
             <column name="address" type="STRING"/>

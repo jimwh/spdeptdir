@@ -1,4 +1,4 @@
-id|directory_name|parent|tie_line|address|mail_code|phone_type|phone_number
+id|name|parent|tie_line|address|mail_code|phone_type|phone_number
 273606|ACADEMIC NURSE, THE|600|MC* 5-3742|630 W168St||OFFICE|212-305-3742
 273609|ACCIDENTS  AND OTHER EMERGENCIES|600|||||
 273612|ADMINISTRATION, EXECUTIVE VICE PRESIDENT FOR|600|MS* 4-2871|313 Low|4329|OFFICE|212-854-2871

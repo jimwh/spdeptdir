@@ -8,7 +8,7 @@ $(document).ready(function () {
 
 function getLevel1(data) {
     var bg = '<tr class="active"><td>';
-    var row = "<strong>" + data.directoryName + "</strong>";
+    var row = "<strong>" + data.name + "</strong>";
     var address = "";
     if (data.address != "") {
         address = "</br>Address:&nbsp;&nbsp;" + data.address;
@@ -43,7 +43,7 @@ function getLevel1(data) {
 function getLevel2(data) {
     var bg = '<tr class="info"><td>';
     // var row = "<strong>" + data.directoryName + "</strong>";
-    var row = '&nbsp;&nbsp;' + data.directoryName;
+    var row = '&nbsp;&nbsp;' + data.name;
 
     var address = "";
     if (data.address != "") {
@@ -80,7 +80,7 @@ function getLevel3(data) {
 
     var bg = '<tr class="success"><td>';
 
-    var row = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data.directoryName;
+    var row = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data.name;
 
     var address = "";
     if (data.address != "") {
@@ -116,7 +116,7 @@ function getLevel3(data) {
 function getLevel4(data) {
 
     var bg = '<tr class="warning"><td>';
-    var row = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data.directoryName;
+    var row = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + data.name;
 
     var address = "";
     if (data.address != "") {

@@ -13,7 +13,7 @@ public class Level2 extends Directory {
         StringBuilder sb = new StringBuilder();
         sb.append(LEVEL).append("|")
                 .append(getId()).append("|")
-                .append(getDirectoryName()).append("|")
+                .append(getName()).append("|")
                 .append(getParent()).append("|")
                 .append(getTieLine()).append("|")
                 .append(getAddress()).append("|")

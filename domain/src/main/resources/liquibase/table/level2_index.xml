@@ -15,12 +15,12 @@
     </changeSet>
 
     <changeSet author="jh3389" id="directory_name_level2">
-        <createIndex catalogName="foobar"
+        <createIndex catalogName="deptdir"
                      indexName="directory_name_level2"
-                     schemaName="foobar"
+                     schemaName="deptdir"
                      tableName="level2"
                      unique="false">
-            <column name="directory_name" type="VARCHAR(150)"/>
+            <column name="name" type="VARCHAR(150)"/>
         </createIndex>
     </changeSet>
 

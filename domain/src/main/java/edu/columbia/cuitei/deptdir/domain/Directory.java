@@ -12,52 +12,38 @@ public class Directory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    @Column(nullable = false)
-    private String  directoryName;
-
-    @Column
-    private Integer parent;
-
-    @Column
-    private String tieLine;
-
-    @Column
-    private String address;
-
-    @Column
-    private String mailCode;
-
-    @Column
-    private String phoneType;
-
-    @Column
-    private String phoneNumber;
-
     public Integer getId() {
         return id;
     }
-    public void setId(Integer id) { this.id=id; }
+    public void setId(final Integer id) { this.id=id; }
 
-    public String getDirectoryName() {
-        return directoryName;
+    @Column(nullable = false)
+    private String name;
+    public String getName() {
+        return name;
     }
-    public void setDirectoryName(String directoryName) {
-        this.directoryName = directoryName;
+    public void setName(final String name) {
+        this.name = name;
     }
 
+    @Column
+    private Integer parent;
     public Integer getParent() {
         return parent;
     }
-    public void setParent(Integer parent) {
+    public void setParent(final Integer parent) {
         this.parent = parent;
     }
 
+    @Column
+    private String tieLine;
     public String getTieLine() { return tieLine; }
-    public void setTieLine(String tieLine) {
+    public void setTieLine(final String tieLine) {
         this.tieLine = tieLine;
     }
 
+    @Column
+    private String address;
     public String getAddress() {
         return address;
     }
@@ -65,29 +51,36 @@ public class Directory {
         this.address = address;
     }
 
+    @Column
+    private String mailCode;
     public String getMailCode() {
         return mailCode;
     }
-    public void setMailCode(String mailCode) {
+    public void setMailCode(final String mailCode) {
         this.mailCode = mailCode;
     }
 
+    @Column
+    private String phoneType;
     public String getPhoneType() {
         return phoneType;
     }
-    public void setPhoneType(String phoneType) {
+    public void setPhoneType(final String phoneType) {
         this.phoneType = phoneType;
     }
 
+    @Column
+    private String phoneNumber;
     public String getPhoneNumber() {
         return phoneNumber;
     }
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(final String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
+
     private transient String level;
     public String getLevel() {return level;}
-    public void setLevel(String level) { this.level= level;}
+    public void setLevel(final String level) { this.level= level;}
 
 }

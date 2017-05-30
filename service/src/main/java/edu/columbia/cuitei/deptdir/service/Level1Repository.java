@@ -9,8 +9,8 @@ import java.util.List;
 
 interface Level1Repository extends JpaRepository<Level1, Integer> {
 
-    @Query(value = "SELECT * FROM level1 WHERE id IN (:listOfId) ORDER BY directory_name", nativeQuery = true)
+    @Query(value = "SELECT * FROM level1 WHERE id IN (:listOfId) ORDER BY name", nativeQuery = true)
     List<Level1> getListByIdList(@Param("listOfId") List<Integer> listOfId);
 
-    List<Level1> findByDirectoryNameLikeOrderByDirectoryName(String searchTerm);
+    List<Level1> findByNameLikeOrderByName(String searchTerm);
 }

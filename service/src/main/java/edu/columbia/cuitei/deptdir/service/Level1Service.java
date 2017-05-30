@@ -25,8 +25,8 @@ public class Level1Service {
     }
 
     @Transactional
-    List<Level1> findByDirectoryNameLike(String name) {
-        return level1Repository.findByDirectoryNameLikeOrderByDirectoryName(name);
+    List<Level1> findByNameLike(String name) {
+        return level1Repository.findByNameLikeOrderByName(name);
     }
 
     @Transactional
@@ -49,7 +49,7 @@ public class Level1Service {
 
     public Level1 update(Directory directory) {
         final Level1 level1 = findOne(directory.getId());
-        level1.setDirectoryName(directory.getDirectoryName());
+        level1.setName(directory.getName());
         level1.setAddress(directory.getAddress());
         level1.setMailCode(directory.getMailCode());
         level1.setPhoneType(directory.getPhoneType());

@@ -52,7 +52,7 @@ public class DeptDirController {
     @PostMapping("/api/deptdir/addLevel1")
     public ResponseEntity<?> add(@RequestBody Level1 level1) {
         //validate level1 here
-        log.info("directoryName={}", level1.getDirectoryName());
+        log.info("directoryName={}", level1.getName());
         log.info("address={}", level1.getAddress());
         log.info("phoneNumber={}", level1.getPhoneNumber());
         level1Service.save(level1);
@@ -78,12 +78,12 @@ public class DeptDirController {
         return d;
     }
 
-    @ResponseBody
+
     @RequestMapping(value = "amend/update", method = RequestMethod.POST)
-    public void update(@ModelAttribute("directory") Directory directory) {
-        log.info("hit update ............");
-        print(directory);
-        queryService.update(directory);
+    @ResponseBody public Directory update(@ModelAttribute("directory") Directory directory) {
+        log.info("hit update id={}, name={}, level={}", directory.getId(), directory.getName(), directory.getLevel());
+        return queryService.update(directory);
+        // queryService.update(directory);
     }
 
     /*
@@ -133,6 +133,6 @@ public class DeptDirController {
     }
 
     private void print(Directory d) {
-        log.info("id={},name={},parent={},level={}",d.getId(),d.getDirectoryName(),d.getParent(),d.getLevel());
+        log.info("id={},name={},parent={},level={}",d.getId(),d.getName(),d.getParent(),d.getLevel());
     }
 }

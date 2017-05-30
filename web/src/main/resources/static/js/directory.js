@@ -1,4 +1,4 @@
-var names = ['id', 'directoryName', 'address', 'mailCode', 'phoneNumber', 'tieLine', 'parent', 'level'];
+var names = ['id', 'name', 'address', 'mailCode', 'phoneNumber', 'tieLine', 'parent', 'level'];
 
 function getNames() {
     return names;

@@ -25,21 +25,18 @@ public class QueryService {
     @Resource private Level3Service level3Service;
     @Resource private Level4Service level4Service;
 
-    public List<Directory> search(String searchTerm) {
+    public List<Directory> search(final String searchTerm) {
         final List<Directory> directoryList = new ArrayList<>();
-
 
         // 1. find from level1 first
         final Set<Integer> level2ParentIdSet=getTopLevelIdSetByName(searchTerm);
-        log.info("level1ParentId.size={}", level2ParentIdSet.size());
-
 
         // 2. find all level2 by directory name
         final Set<Integer>level2IdListSet=new TreeSet<>();
         final Map<Integer, List<Directory>> level1IdLevel2Map = new HashMap<>();
         // final List<Level2> level2List=level2Service.findByDirectoryNameLike(searchTerm);
         // using name like from level2 vs using parent id from level2 // that will have different level2 size
-        final List<Directory> level2List=level2Service.getByDirectoryNameLike(searchTerm);
+        final List<Directory> level2List=level2Service.getByNameLike(searchTerm);
         if( level2List.isEmpty() ) {
             return directoryList;
         }
@@ -59,17 +56,15 @@ public class QueryService {
         }
         */
 
-        //fill(List<Directory>list, Set<Integer>parentIdSet, Set<Integer>idListSet, Map<Integer, List<Directory>>map) {
         fill(level2List, level2ParentIdSet, level2IdListSet, level1IdLevel2Map);
         /*
         final List<Level2> level2ListByParent = level2Service.findAllByParent(new ArrayList<>(level2ParentIdSet));
         for(Level2 level2: level2ListByParent) {
-            log.info("level2: {}, {}", level2.getDirectoryName(), level2.getParent());
+            log.info("level2: {}, {}", level2.getName(), level2.getParent());
         }
         level2List.clear();
         level2List.addAll(level2ListByParent);
         */
-        //
 
         // 3. find all level1 by id column that is level2's parent column
         // List<Level1> level1List=level1Service.findAll(level2Parent);
@@ -152,7 +147,10 @@ public class QueryService {
         }
     }
 
-    private void fill(List<Directory>list, Set<Integer>parentIdSet, Set<Integer>idSet, Map<Integer, List<Directory>>map) {
+    private void fill(final List<Directory>list,
+                      final Set<Integer>parentIdSet,
+                      final Set<Integer>idSet,
+                      final Map<Integer,List<Directory>>map) {
         for (Directory directory : list) {
             final Integer parent = directory.getParent();
             if(parent==null) { continue; }
@@ -169,8 +167,8 @@ public class QueryService {
         }
     }
 
-    private Set<Integer>getTopLevelIdSetByName(String searchTerm) {
-        final List<Level1> topLikeList = level1Service.findByDirectoryNameLike(searchTerm);
+    private Set<Integer>getTopLevelIdSetByName(final String searchTerm) {
+        final List<Level1> topLikeList = level1Service.findByNameLike(searchTerm);
         final Set<Integer> level2ParentIdSet = new TreeSet<>();
         for (Level1 level1 : topLikeList) {
             level2ParentIdSet.add(level1.getId());
@@ -179,18 +177,30 @@ public class QueryService {
         return level2ParentIdSet;
     }
 
-    public void update(Directory directory) {
-        log.info("level={}", directory.getLevel());
+    public Directory update(final Directory directory) {
+
+        final Integer id = directory.getId();
         if( "LEVEL1".equals(directory.getLevel())) {
-            level1Service.update(directory);
-        }else if( "LEVEL2".equals(directory.getLevel())) {
-            level2Service.update(directory);
+            return level1Service.update(directory);
+        } else if( "LEVEL2".equals(directory.getLevel())) {
+            return level2Service.update(directory);
+        } else if( "LEVEL3".equals(directory.getLevel())) {
+            return level3Service.update(directory);
+        } else if( "LEVEL4".equals(directory.getLevel())) {
+            return level4Service.update(directory);
+        } else {
+            // if this level field is not editable, then won't get value
+            // so it have to find from d
+            if( level1Service.findOne(id) != null) {
+                return level1Service.update(directory);
+            } else if( level2Service.findOne(id)!= null) {
+                return level2Service.update(directory);
+            } else if( level3Service.findOne(id)!=null) {
+                return level3Service.update(directory);
+            } else if( level4Service.findOne(id)!=null) {
+                return level4Service.update(directory);
+            }
         }
-        else if( "LEVEL3".equals(directory.getLevel())) {
-            level3Service.update(directory);
-        }
-        else if( "LEVEL4".equals(directory.getLevel())) {
-            level4Service.update(directory);
-        }
+        return directory;
     }
 }

@@ -35,7 +35,7 @@ public class Level3Service {
     @Transactional
     public Level3 update(Directory directory) {
         final Level3 level3 = findOne(directory.getId());
-        level3.setDirectoryName(directory.getDirectoryName());
+        level3.setName(directory.getName());
         level3.setAddress(directory.getAddress());
         level3.setMailCode(directory.getMailCode());
         level3.setPhoneType(directory.getPhoneType());

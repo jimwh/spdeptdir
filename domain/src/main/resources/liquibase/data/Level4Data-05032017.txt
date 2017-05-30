@@ -1,4 +1,4 @@
-id|directory_name|parent|tie_line|address|mail_code|phone_type|phone_number
+id|name|parent|tie_line|address|mail_code|phone_type|phone_number
 274641|FAX|274640|MS* 4-2562|||FAX|212-854-2562
 274645|FAX|274644|MS* 4-1879|||FAX|212-854-1879
 274647|FAX|274646|MS* 4-8723|||FAX|212-854-8723

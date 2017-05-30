@@ -1,4 +1,4 @@
-id|directory_name|parent|tie_line|address|mail_code|phone_type|phone_number
+id|name|parent|tie_line|address|mail_code|phone_type|phone_number
 273610|MORNINGSIDE CAMPUS   99 OR|273609|MS* 4-5555|||OFFICE|212-854-5555
 273611|HEALTH SCIENCES CAMPUS|273609|MC* 5-7979|||OFFICE|212-305-7979
 273613|FAX|273612|MS* 4-7260|||FAX|212-854-7260

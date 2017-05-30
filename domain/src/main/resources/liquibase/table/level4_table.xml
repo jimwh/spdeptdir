@@ -7,19 +7,19 @@
 
     <!-- no key, no index for loading data purpose -->
     <changeSet author="jh3389" id="table4">
-        <createTable schemaName="foobar" tableName="level4">
+        <createTable schemaName="deptdir" tableName="level4">
             <column name="ID" type="INT">
                 <constraints unique="true" nullable="false"/>
             </column>
-            <column name="directory_name" type="VARCHAR(150)">
+            <column name="name" type="VARCHAR(150)">
                 <constraints nullable="false"/>
             </column>
             <column name="parent" type="INT"/>
-            <column name="tie_line" type="VARCHAR(50)"/>
             <column name="address" type="VARCHAR(50)"/>
             <column name="mail_code" type="VARCHAR(50)"/>
             <column name="phone_type" type="VARCHAR(50)"/>
             <column name="phone_number" type="VARCHAR(50)"/>
+            <column name="tie_line" type="VARCHAR(50)"/>
         </createTable>
     </changeSet>
 

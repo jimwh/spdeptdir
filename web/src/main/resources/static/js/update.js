@@ -19,7 +19,7 @@ function loadEntity(url) {
 
 function populateModal(data) {
     $('#update-id').val(data.id);
-    $('#update-name').val(data.directoryName);
+    $('#update-name').val(data.name);
     $('#update-address').val(data.address);
     $('#update-mailCode').val(data.mailCode);
     $('#update-phoneNumber').val(data.phoneNumber);
@@ -49,11 +49,10 @@ function clearAndCloseModal(name) {
 }
 
 function postEdit() {
-    var deptDirectory = $('#edit-form').serialize();
+    var directory = $('#edit-form').serialize();
     var editUrl = url + 'update';
-    $.post(editUrl, deptDirectory, function (data) {
-        console.log('I am foo ....' + deptDirectory);
-        updateTable(deptDirectory);
+    $.post(editUrl, directory, function (data) {
+        updateTable(data);
     });
     clearAndCloseModal('#umodal');
 }
@@ -69,12 +68,7 @@ function deleteEntity(entity) {
 }
 
 function updateTable(data) {
-    if( data == null ) {
-        console.log('data is nullllllllllllllllllllllllllll');
-    }
-    else {
-        console.log('foo====' + data);
-    }
+    console.log("update ...");
 
     $.ajax({
         dataType: "json",
@@ -92,7 +86,7 @@ function updateTable(data) {
                 var del = "'showDeleteModal(" + end;
                 var row = $('<tr>').append(
                     $('<td>').text(e.id),
-                    $('<td>').text(e.directoryName),
+                    $('<td>').text(e.name),
                     $('<td>').text(e.address),
                     $('<td>').text(e.mailCode),
                     $('<td>').text(e.phoneNumber),

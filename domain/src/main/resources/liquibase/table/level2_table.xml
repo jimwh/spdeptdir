@@ -7,11 +7,11 @@
 
     <!-- no key, no index for loading data purpose -->
     <changeSet author="jh3389" id="table2">
-        <createTable schemaName="foobar" tableName="level2">
+        <createTable schemaName="deptdir" tableName="level2">
             <column name="ID" type="INT">
                 <constraints unique="true" nullable="false"/>
             </column>
-            <column name="directory_name" type="VARCHAR(150)">
+            <column name="name" type="VARCHAR(150)">
                 <constraints nullable="false"/>
             </column>
             <column name="parent" type="INT"/>

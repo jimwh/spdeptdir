@@ -69,7 +69,6 @@
         }
     </style>
 
-    <!--
     <script>
         $(document).ready(function ($) {
             $("#edit-form").submit(function (event) {
@@ -78,7 +77,6 @@
             });
         });
     </script>
-    -->
 
 </head>
 
@@ -146,10 +144,15 @@
                                            th:field="*{id}"
                                            th:value="${directory.id}"/>
 
+                                    <input id="update-parent"
+                                           type="hidden"
+                                           th:field="*{parent}"
+                                           th:value="${directory.parent}"/>
+
                                     <fieldset class="form-group">
                                         <label for="update-name">Name</label>
-                                        <input th:field="*{directoryName}"
-                                               th:value="${directory.directoryName}"
+                                        <input th:field="*{name}"
+                                               th:value="${directory.name}"
                                                class="form-control"
                                                id="update-name"
                                                type="text"
@@ -190,7 +193,7 @@
 
 
                                         <!-- <label for="update-level">Level</label> -->
-
+                                        <!--
                                         <input disabled="disabled"
                                                th:field="*{level}"
                                                th:value="${directory.level}"
@@ -198,18 +201,22 @@
                                                id="update-level"
                                                type="text"
                                                placeholder="Level"/>
+                                        -->
 
-                                        <!--
                                         <input id="update-level"
                                                type="hidden"
                                                th:field="*{level}"
                                                th:value="${directory.level}"/>
-                                        -->
+
 
                                     </fieldset>
+
+                                    <!--
                                     <p th:utext="#{directory.level}">Level to our grocery store!</p>
                                     <p>Level is: <span th:text="${directory.level}"></span></p>
                                     <p>Level is: <span th:value="${directory.level}"></span></p>
+                                    -->
+
                                     <div class="form-group">
                                         <button class="btn btn-success" type="submit">Save</button>
                                     </div>
@@ -272,7 +279,7 @@
 
                     <tr th:each="directory : ${directories}">
                         <td th:text="${directory.id}"></td>
-                        <td th:text="${directory.directoryName}"></td>
+                        <td th:text="${directory.name}"></td>
                         <td th:text="${directory.address}"></td>
                         <td th:text="${directory.mailCode}"></td>
                         <td th:text="${directory.phoneNumber}"></td>
