@@ -1,6 +1,6 @@
 var url = "/amend/";
 var editModalTarget = "/amend/loadEntity/";
-var tableTarget = "/amend/loadDeptDirectory/";
+var tableTarget = "/amend/loadDirectory/";
 
 function showEditModal(index) {
     var editUrl = editModalTarget + index;

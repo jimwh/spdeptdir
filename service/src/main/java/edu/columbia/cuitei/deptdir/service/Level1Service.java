@@ -1,6 +1,6 @@
 package edu.columbia.cuitei.deptdir.service;
 
-import edu.columbia.cuitei.deptdir.domain.DeptDirectory;
+import edu.columbia.cuitei.deptdir.domain.Directory;
 import edu.columbia.cuitei.deptdir.domain.Level1;
 
 import java.util.ArrayList;
@@ -40,21 +40,21 @@ public class Level1Service {
     }
 
     @Transactional
-    public List<DeptDirectory> findAll() {
+    public List<Directory> findAll() {
         final List<Level1>list=level1Repository.findAll();
-        final List<DeptDirectory> ls = new ArrayList<>();
+        final List<Directory> ls = new ArrayList<>();
         ls.addAll(list);
         return ls;
     }
 
-    public Level1 update(DeptDirectory deptDirectory) {
-        final Level1 level1 = findOne(deptDirectory.getId());
-        level1.setDirectoryName(deptDirectory.getDirectoryName());
-        level1.setAddress(deptDirectory.getAddress());
-        level1.setMailCode(deptDirectory.getMailCode());
-        level1.setPhoneType(deptDirectory.getPhoneType());
-        level1.setPhoneNumber(deptDirectory.getPhoneNumber());
-        level1.setTieLine(deptDirectory.getTieLine());
+    public Level1 update(Directory directory) {
+        final Level1 level1 = findOne(directory.getId());
+        level1.setDirectoryName(directory.getDirectoryName());
+        level1.setAddress(directory.getAddress());
+        level1.setMailCode(directory.getMailCode());
+        level1.setPhoneType(directory.getPhoneType());
+        level1.setPhoneNumber(directory.getPhoneNumber());
+        level1.setTieLine(directory.getTieLine());
         return level1Repository.save(level1);
     }
 }

@@ -1,6 +1,6 @@
 package edu.columbia.cuitei.deptdir.web;
 
-import edu.columbia.cuitei.deptdir.domain.DeptDirectory;
+import edu.columbia.cuitei.deptdir.domain.Directory;
 import edu.columbia.cuitei.deptdir.domain.Level1;
 import edu.columbia.cuitei.deptdir.service.Level1Service;
 import edu.columbia.cuitei.deptdir.service.Level2Service;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 //@RestController
 @Controller
@@ -38,14 +37,14 @@ public class DeptDirController {
     @Resource private Level3Service level3Service;
     @Resource private Level4Service level4Service;
 
-    @ModelAttribute(value = "deptDirectory")
-    public DeptDirectory construct() {
-        return new DeptDirectory();
+    @ModelAttribute(value = "directory")
+    public Directory construct() {
+        return new Directory();
     }
 
     @GetMapping(value = "/api/deptdir/search/{term}")
     @ResponseBody
-    public List<DeptDirectory> getDeptDir(@PathVariable("term") String term) {
+    public List<Directory> getDeptDir(@PathVariable("term") String term) {
         log.info("term = {}", term);
         return queryService.search("%"+term+"%");
     }
@@ -64,9 +63,9 @@ public class DeptDirController {
 //////////////////////////////////////////////////////////////////////////////////////////
     @ResponseBody
     @GetMapping(value = "/amend/loadEntity/{id}")
-    public DeptDirectory loadEntity(@PathVariable("id") Integer id) {
+    public Directory loadEntity(@PathVariable("id") Integer id) {
         log.info("loadEntity/id = {}", id);
-        DeptDirectory d = level1Service.findOne(id);
+        Directory d = level1Service.findOne(id);
         if( d == null ) {
             d = level2Service.findOne(id);
             if (d == null) {
@@ -81,23 +80,23 @@ public class DeptDirController {
 
     @ResponseBody
     @RequestMapping(value = "amend/update", method = RequestMethod.POST)
-    public void update(@ModelAttribute("deptDirectory") DeptDirectory deptDirectory) {
+    public void update(@ModelAttribute("directory") Directory directory) {
         log.info("hit update ............");
-        print(deptDirectory);
-        queryService.update(deptDirectory);
+        print(directory);
+        queryService.update(directory);
     }
 
     /*
     @ResponseBody
     @RequestMapping(value = "/amend/loadDeptDirectory")
-    public List<DeptDirectory> loadSomethingTable() {
+    public List<Directory> loadSomethingTable() {
         log.info("load table.................../amend/loadDeptDirectory");
         return level1Service.findAll();
     }
     */
     @ResponseBody
-    @RequestMapping(value = "/amend/loadDeptDirectory/{name}")
-    public List<DeptDirectory> loadDeptDirectory(@PathVariable("name") String name) {
+    @RequestMapping(value = "/amend/loadDirectory/{name}")
+    public List<Directory> loadDirectory(@PathVariable("name") String name) {
         if(name == null) {
             name="arts";
             log.info("reset to arts");
@@ -109,7 +108,7 @@ public class DeptDirController {
     @GetMapping("amend/list")
     public String list(@RequestParam(value="name", defaultValue="arts") String name, Model model) {
         log.info("hit list with name={}", name);
-        model.addAttribute("deptDirectories", queryService.search("%"+name+"%"));
+        model.addAttribute("directories", queryService.search("%"+name+"%"));
         return "amend/list";
     }
 
@@ -133,7 +132,7 @@ public class DeptDirController {
         // somethingService.delete(id);
     }
 
-    private void print(DeptDirectory d) {
+    private void print(Directory d) {
         log.info("id={},name={},parent={},level={}",d.getId(),d.getDirectoryName(),d.getParent(),d.getLevel());
     }
 }

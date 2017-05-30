@@ -1,8 +1,7 @@
 package edu.columbia.cuitei.deptdir.service;
 
-import edu.columbia.cuitei.deptdir.domain.DeptDirectory;
+import edu.columbia.cuitei.deptdir.domain.Directory;
 import edu.columbia.cuitei.deptdir.domain.Level1;
-import edu.columbia.cuitei.deptdir.domain.Level2;
 import edu.columbia.cuitei.deptdir.domain.Level3;
 import edu.columbia.cuitei.deptdir.domain.Level4;
 import java.util.ArrayList;
@@ -26,8 +25,8 @@ public class QueryService {
     @Resource private Level3Service level3Service;
     @Resource private Level4Service level4Service;
 
-    public List<DeptDirectory> search(String searchTerm) {
-        final List<DeptDirectory> deptDirectoryList = new ArrayList<>();
+    public List<Directory> search(String searchTerm) {
+        final List<Directory> directoryList = new ArrayList<>();
 
 
         // 1. find from level1 first
@@ -37,19 +36,19 @@ public class QueryService {
 
         // 2. find all level2 by directory name
         final Set<Integer>level2IdListSet=new TreeSet<>();
-        final Map<Integer, List<DeptDirectory>> level1IdLevel2Map = new HashMap<>();
+        final Map<Integer, List<Directory>> level1IdLevel2Map = new HashMap<>();
         // final List<Level2> level2List=level2Service.findByDirectoryNameLike(searchTerm);
         // using name like from level2 vs using parent id from level2 // that will have different level2 size
-        final List<DeptDirectory> level2List=level2Service.getByDirectoryNameLike(searchTerm);
+        final List<Directory> level2List=level2Service.getByDirectoryNameLike(searchTerm);
         if( level2List.isEmpty() ) {
-            return deptDirectoryList;
+            return directoryList;
         }
         /*
         for(Level2 level2: level2List) {
             Integer parent=level2.getParent();
             level2ParentIdSet.add(level2.getParent());
             level2IdListSet.add(level2.getId());
-            List<DeptDirectory> temp = level1IdLevel2Map.get(parent);
+            List<Directory> temp = level1IdLevel2Map.get(parent);
             if( temp == null ) {
                 temp = new ArrayList<>();
                 temp.add(level2);
@@ -60,7 +59,7 @@ public class QueryService {
         }
         */
 
-        //fill(List<DeptDirectory>list, Set<Integer>parentIdSet, Set<Integer>idListSet, Map<Integer, List<DeptDirectory>>map) {
+        //fill(List<Directory>list, Set<Integer>parentIdSet, Set<Integer>idListSet, Map<Integer, List<Directory>>map) {
         fill(level2List, level2ParentIdSet, level2IdListSet, level1IdLevel2Map);
         /*
         final List<Level2> level2ListByParent = level2Service.findAllByParent(new ArrayList<>(level2ParentIdSet));
@@ -82,16 +81,16 @@ public class QueryService {
         // 4. find all level3 by level3's parent which is level2 id
         final List<Level3> level3List = level3Service.findAllByParentIn(new ArrayList<Integer>(level2IdListSet));
         final List<Integer> level3IdList = new ArrayList<>();
-        final Map<Integer, List<DeptDirectory>> level2IdLevel3Map = new HashMap<>();
+        final Map<Integer, List<Directory>> level2IdLevel3Map = new HashMap<>();
 
-        // private void fill(List<DeptDirectory>list, Set<Integer>parentIdSet, Set<Integer>idSet, Map<Integer, List<DeptDirectory>>map) {
+        // private void fill(List<Directory>list, Set<Integer>parentIdSet, Set<Integer>idSet, Map<Integer, List<Directory>>map) {
         // fill(level3List, null, level3IdList, level2IdLevel3Map);
 
         if( !level3List.isEmpty() ) {
             log.info("level3.size={} from level2IdList.size={}", level3List.size(),level2IdListSet.size());
             for(Level3 level3: level3List) {
                 Integer parent = level3.getParent();
-                List<DeptDirectory> list = level2IdLevel3Map.get(parent);
+                List<Directory> list = level2IdLevel3Map.get(parent);
                 if( list== null ) {
                     list = new ArrayList<>();
                 }
@@ -104,14 +103,14 @@ public class QueryService {
         // 5. find all level4 by level4 parent column which is level3 id
         log.info("level3IdList.size={}, id={}", level3IdList.size(), level3IdList.toArray());
         final List<Level4> level4List = level4Service.findAllByParentIn(level3IdList);
-        final Map<Integer, List<DeptDirectory>> level3IdLevel4Map = new HashMap<>();
+        final Map<Integer, List<Directory>> level3IdLevel4Map = new HashMap<>();
         final List<Integer> level4IdList = new ArrayList<>();
         if( !level4List.isEmpty() ) {
             log.info("level4.size={}", level4List.size());
             for(Level4 level4: level4List) {
                 level4IdList.add(level4.getId());
                 Integer parent = level4.getParent();
-                List<DeptDirectory> list = level3IdLevel4Map.get(parent);
+                List<Directory> list = level3IdLevel4Map.get(parent);
                 if( list== null ) {
                     list = new ArrayList<>();
                 }
@@ -122,19 +121,19 @@ public class QueryService {
 
         // 6. create a dept dir list
         for(Level1 level1: level1List) {
-            deptDirectoryList.add(level1);
-            final List<DeptDirectory> level2Data=level1IdLevel2Map.get(level1.getId());
+            directoryList.add(level1);
+            final List<Directory> level2Data=level1IdLevel2Map.get(level1.getId());
             if( level2Data != null ) {
-                for(DeptDirectory level2: level2Data) {
-                    deptDirectoryList.add(level2);
+                for(Directory level2: level2Data) {
+                    directoryList.add(level2);
 
-                    final List<DeptDirectory> level3ListData = level2IdLevel3Map.get(level2.getId());
+                    final List<Directory> level3ListData = level2IdLevel3Map.get(level2.getId());
                     if( level3ListData != null ) {
-                        for(DeptDirectory level3: level3ListData) {
-                            deptDirectoryList.add(level3);
-                            List<DeptDirectory> level4ListData = level3IdLevel4Map.get(level3.getId());
+                        for(Directory level3: level3ListData) {
+                            directoryList.add(level3);
+                            List<Directory> level4ListData = level3IdLevel4Map.get(level3.getId());
                             if( level4ListData != null ) {
-                                deptDirectoryList.addAll(level4ListData);
+                                directoryList.addAll(level4ListData);
                             }
                         }
                     }
@@ -142,29 +141,29 @@ public class QueryService {
             }
         }
 
-        // printData(deptDirectoryList);
-        log.info("rows={}", deptDirectoryList.size());
-        return deptDirectoryList;
+        // printData(directoryList);
+        log.info("rows={}", directoryList.size());
+        return directoryList;
     }
 
-    private void printData(List<DeptDirectory> list) {
-        for(DeptDirectory d: list) {
+    private void printData(List<Directory> list) {
+        for(Directory d: list) {
             log.info("{}", d.toString());
         }
     }
 
-    private void fill(List<DeptDirectory>list, Set<Integer>parentIdSet, Set<Integer>idSet, Map<Integer, List<DeptDirectory>>map) {
-        for (DeptDirectory deptDirectory : list) {
-            final Integer parent = deptDirectory.getParent();
+    private void fill(List<Directory>list, Set<Integer>parentIdSet, Set<Integer>idSet, Map<Integer, List<Directory>>map) {
+        for (Directory directory : list) {
+            final Integer parent = directory.getParent();
             if(parent==null) { continue; }
             parentIdSet.add(parent);
-            idSet.add(deptDirectory.getId());
-            List<DeptDirectory> temp = map.get(parent);
+            idSet.add(directory.getId());
+            List<Directory> temp = map.get(parent);
             if (temp == null) {
                 temp = new ArrayList<>();
-                temp.add(deptDirectory);
+                temp.add(directory);
             } else {
-                temp.add(deptDirectory);
+                temp.add(directory);
             }
             map.put(parent, temp);
         }
@@ -180,18 +179,18 @@ public class QueryService {
         return level2ParentIdSet;
     }
 
-    public void update(DeptDirectory deptDirectory) {
-        log.info("level={}", deptDirectory.getLevel());
-        if( "LEVEL1".equals(deptDirectory.getLevel())) {
-            level1Service.update(deptDirectory);
-        }else if( "LEVEL2".equals(deptDirectory.getLevel())) {
-            level2Service.update(deptDirectory);
+    public void update(Directory directory) {
+        log.info("level={}", directory.getLevel());
+        if( "LEVEL1".equals(directory.getLevel())) {
+            level1Service.update(directory);
+        }else if( "LEVEL2".equals(directory.getLevel())) {
+            level2Service.update(directory);
         }
-        else if( "LEVEL3".equals(deptDirectory.getLevel())) {
-            level3Service.update(deptDirectory);
+        else if( "LEVEL3".equals(directory.getLevel())) {
+            level3Service.update(directory);
         }
-        else if( "LEVEL4".equals(deptDirectory.getLevel())) {
-            level4Service.update(deptDirectory);
+        else if( "LEVEL4".equals(directory.getLevel())) {
+            level4Service.update(directory);
         }
     }
 }

@@ -3,7 +3,7 @@ package edu.columbia.cuitei.deptdir.domain;
 import javax.persistence.Entity;
 
 @Entity
-public class Level4 extends DeptDirectory {
+public class Level4 extends Directory {
 
     private static final String LEVEL = "LEVEL4";
     public String getLevel() { return LEVEL; }

@@ -1,6 +1,6 @@
 package edu.columbia.cuitei.deptdir.service;
 
-import edu.columbia.cuitei.deptdir.domain.DeptDirectory;
+import edu.columbia.cuitei.deptdir.domain.Directory;
 import edu.columbia.cuitei.deptdir.domain.Level2;
 
 import java.util.ArrayList;
@@ -21,13 +21,13 @@ public class Level2Service {
     }
 
     @Transactional
-    List<DeptDirectory> getByDirectoryNameLike(String name) {
-        List<DeptDirectory> deptDirectoryList=new ArrayList<>();
+    List<Directory> getByDirectoryNameLike(String name) {
+        List<Directory> directoryList =new ArrayList<>();
         List<Level2> list =  level2Repository.findByDirectoryNameLikeOrderByDirectoryName(name);
         for(Level2 level2: list) {
-            deptDirectoryList.add(level2);
+            directoryList.add(level2);
         }
-        return deptDirectoryList;
+        return directoryList;
     }
 
 
@@ -43,22 +43,22 @@ public class Level2Service {
 
 
     @Transactional
-    public List<DeptDirectory> findAll() {
-        final List<DeptDirectory> list=new ArrayList<>();
+    public List<Directory> findAll() {
+        final List<Directory> list=new ArrayList<>();
         final List<Level2> ls = level2Repository.findAll();
         list.addAll(ls);
         return list;
     }
 
     @Transactional
-    public Level2 update(DeptDirectory deptDirectory) {
-        final Level2 level2 = findOne(deptDirectory.getId());
-        level2.setDirectoryName(deptDirectory.getDirectoryName());
-        level2.setAddress(deptDirectory.getAddress());
-        level2.setMailCode(deptDirectory.getMailCode());
-        level2.setPhoneType(deptDirectory.getPhoneType());
-        level2.setPhoneNumber(deptDirectory.getPhoneNumber());
-        level2.setTieLine(deptDirectory.getTieLine());
+    public Level2 update(Directory directory) {
+        final Level2 level2 = findOne(directory.getId());
+        level2.setDirectoryName(directory.getDirectoryName());
+        level2.setAddress(directory.getAddress());
+        level2.setMailCode(directory.getMailCode());
+        level2.setPhoneType(directory.getPhoneType());
+        level2.setPhoneNumber(directory.getPhoneNumber());
+        level2.setTieLine(directory.getTieLine());
         return level2Repository.save(level2);
     }
 

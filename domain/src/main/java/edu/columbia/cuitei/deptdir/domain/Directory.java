@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class DeptDirectory {
+public class Directory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
