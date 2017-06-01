@@ -1,14 +1,14 @@
 package edu.columbia.cuitei.deptdir.domain;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
-public class Level2 extends Directory {
+public class Level2 extends Directory implements Serializable {
 
     private static final String LEVEL="LEVEL2";
 
+    /*
     @JoinColumn(name = "parent", referencedColumnName="parent", insertable=false, updatable=false)
     @ManyToOne(optional=false)
     private Level1 level1;
@@ -18,6 +18,8 @@ public class Level2 extends Directory {
     public void setLevel1(Level1 level1) {
         this.level1 = level1;
     }
+    */
+    //
 
     public String getLevel() { return LEVEL; }
     public void setLevel(String level) { super.setLevel(LEVEL); }

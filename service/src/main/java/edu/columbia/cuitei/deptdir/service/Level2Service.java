@@ -65,7 +65,10 @@ public class Level2Service {
 
     @Transactional
     public void delete(Directory d) {
-
+        level2Repository.delete(d.getId());
     }
 
+    public List<Level2>findAllByParent(Integer id) {
+        return level2Repository.findAllByParent(id);
+    }
 }

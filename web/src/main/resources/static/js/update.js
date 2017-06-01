@@ -59,7 +59,7 @@ function postEdit() {
 
 function deleteEntity(entity) {
     var input = $('#delete-id');
-    var url = '/' + entity + '/delete/' + input.val();
+    var url = '/amend/' + entity + '/delete/' + input.val();
     $.post(url, function (data) {
         updateTable(data);
     });

@@ -2,6 +2,7 @@ package edu.columbia.cuitei.deptdir.service;
 
 import edu.columbia.cuitei.deptdir.domain.Directory;
 import edu.columbia.cuitei.deptdir.domain.Level1;
+import edu.columbia.cuitei.deptdir.domain.Level2;
 import edu.columbia.cuitei.deptdir.domain.Level3;
 import edu.columbia.cuitei.deptdir.domain.Level4;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class QueryService {
@@ -25,6 +27,7 @@ public class QueryService {
     @Resource private Level3Service level3Service;
     @Resource private Level4Service level4Service;
 
+    @Transactional(readOnly=true)
     public List<Directory> search(final String searchTerm) {
         final List<Directory> directoryList = new ArrayList<>();
 
@@ -179,17 +182,24 @@ public class QueryService {
         return directory;
     }
 
+    @Transactional
     public void delete(final Integer id) {
         Directory d = level1Service.findOne(id);
         if (d != null) {
+            final Integer level1Id = d.getId();
+            deleteLevel2(level1Id);
             level1Service.delete(d);
         } else {
             d = level2Service.findOne(id);
             if (d != null) {
+                final Integer level2Id = d.getId();
+                deleteLevel3(level2Id);
                 level2Service.delete(d);
             } else {
                 d = level3Service.findOne(id);
                 if (d != null) {
+                    final Integer level3Id = d.getId();
+                    deleteLevel4(level3Id);
                     level3Service.delete(d);
                 } else {
                     d = level4Service.findOne(id);
@@ -199,4 +209,32 @@ public class QueryService {
         }
     }
 
+    void deleteLevel2(Integer id) {
+        final List<Level2> list = level2Service.findAllByParent(id);
+        for(Level2 level2: list) {
+            Integer level2Id = level2.getId();
+            deleteLevel3(level2Id);
+            level2Service.delete(level2);
+        }
+    }
+
+    void deleteLevel3(Integer id) {
+        final List<Level3> list = level3Service.findAllByParent(id);
+        for(Level3 level3: list) {
+            Integer level3Id = level3.getId();
+            deleteLevel4(level3Id);
+            level3Service.delete(level3);
+        }
+    }
+
+    void deleteLevel4(Integer id) {
+        final List<Level4> list = level4Service.findAllByParent(id);
+        for(Level4 level4: list) {
+            level4Service.delete(level4);
+        }
+    }
+
+    public void create(Directory directory) {
+
+    }
 }

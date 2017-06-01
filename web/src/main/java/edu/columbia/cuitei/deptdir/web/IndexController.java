@@ -14,36 +14,10 @@ public class IndexController {
     @Resource
     private QueryService queryService;
 
-    @GetMapping("/")
+    @GetMapping("/index.html")
     public String index() {
         log.info("hit index ...");
         return "index";
     }
-
-    // http://localhost:8080/another?name=User.
-    /*
-    @GetMapping("/another")
-    public String another(@RequestParam(value="name", required=false,
-            defaultValue="World") String name, Model model) {
-        log.info("hit another {} ...", name);
-        model.addAttribute("name", name);
-        model.addAttribute("prods", queryService.search("%"+name+"%"));
-        return "another";
-    }
-    @GetMapping("/another")
-    public String another(String name, Model model) {
-        name = "arts";
-        log.info("hit another {} ...", name);
-        model.addAttribute("name", name);
-        model.addAttribute("prods", queryService.search("%"+name+"%"));
-        return "another";
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "another/update", method = RequestMethod.POST)
-    public void update(@ModelAttribute("prod") Directory prod) {
-        // somethingService.save(something);
-    }
-    */
 
 }

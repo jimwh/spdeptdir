@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 //@RestController
 @Controller
@@ -83,7 +84,6 @@ public class DeptDirController {
     @ResponseBody public Directory update(@ModelAttribute("directory") Directory directory) {
         log.info("hit update id={}, name={}, level={}", directory.getId(), directory.getName(), directory.getLevel());
         return queryService.update(directory);
-        // queryService.update(directory);
     }
 
     @ResponseBody
@@ -104,27 +104,21 @@ public class DeptDirController {
         return "amend/list";
     }
 
-    /*
-    @RequestMapping(value = "something/create", method = RequestMethod.GET)
-    public ModelAndView create() {
-        return new ModelAndView("something/create");
-    }
-
-    @RequestMapping(value = "something/create", method = RequestMethod.POST)
-    public void create(@ModelAttribute(value = "something") Something something) {
-        somethingService.save(something);
-    }
-    */
-
-
     @ResponseBody
-    @RequestMapping(value = "amend/delete/{id}", method = RequestMethod.POST)
-    public void delete(@PathVariable("id") Integer id) {
-        log.info("hit delete .................");
+    @RequestMapping(value = "amend/directory/delete/{id}", method = RequestMethod.POST)
+    public void delete(@PathVariable("id") final Integer id) {
+        log.info("delete id = {}", id);
         queryService.delete(id);
     }
 
-    private void print(Directory d) {
-        log.info("id={},name={},parent={},level={}",d.getId(),d.getName(),d.getParent(),d.getLevel());
+    @RequestMapping(value = "directory/create", method = RequestMethod.GET)
+    public ModelAndView create() {
+        return new ModelAndView("directory/create");
     }
+
+    @RequestMapping(value = "directory/create", method = RequestMethod.POST)
+    public void create(@ModelAttribute(value = "directory") Directory directory) {
+        queryService.create(directory);
+    }
+
 }

@@ -47,7 +47,11 @@ public class Level3Service {
 
     @Transactional
     public void delete(Directory d) {
+        level3Repository.delete(d.getId());
+    }
 
+    public List<Level3>findAllByParent(Integer id) {
+        return level3Repository.findAllByParent(id);
     }
 
 }

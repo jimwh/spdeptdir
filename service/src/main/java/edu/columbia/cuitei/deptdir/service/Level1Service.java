@@ -60,6 +60,7 @@ public class Level1Service {
 
     @Transactional
     public void delete(Directory d) {
-
+        level1Repository.delete(d.getId());
     }
+
 }

@@ -17,4 +17,6 @@ interface Level2Repository extends JpaRepository<Level2, Integer> {
     List<Level2> findByNameLikeOrderByName(String searchTerm);
 
     List<Level2> findAllByParentInOrderByName(List<Integer> list);
+
+    List<Level2> findAllByParent(Integer parent);
 }
