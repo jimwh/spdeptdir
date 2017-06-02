@@ -1,4 +1,4 @@
-package edu.columbia.cuitei.deptdir.web;
+package edu.columbia.cuitei.deptdir.controller;
 
 import edu.columbia.cuitei.deptdir.service.QueryService;
 import javax.annotation.Resource;
@@ -14,10 +14,17 @@ public class IndexController {
     @Resource
     private QueryService queryService;
 
+    @GetMapping("/")
+    public String index0() {
+        log.info("hit index ...");
+        return "index";
+    }
+
     @GetMapping("/index.html")
     public String index() {
         log.info("hit index ...");
         return "index";
     }
+
 
 }

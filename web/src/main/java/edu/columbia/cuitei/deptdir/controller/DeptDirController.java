@@ -1,4 +1,4 @@
-package edu.columbia.cuitei.deptdir.web;
+package edu.columbia.cuitei.deptdir.controller;
 
 import edu.columbia.cuitei.deptdir.domain.Directory;
 import edu.columbia.cuitei.deptdir.domain.Level1;
@@ -78,7 +78,6 @@ public class DeptDirController {
         }
         return d;
     }
-
 
     @RequestMapping(value = "amend/update", method = RequestMethod.POST)
     @ResponseBody public Directory update(@ModelAttribute("directory") Directory directory) {

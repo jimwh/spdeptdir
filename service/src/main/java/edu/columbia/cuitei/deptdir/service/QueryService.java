@@ -186,8 +186,8 @@ public class QueryService {
     public void delete(final Integer id) {
         Directory d = level1Service.findOne(id);
         if (d != null) {
-            final Integer level1Id = d.getId();
-            deleteLevel2(level1Id);
+            // this is level1 id
+            deleteLevel2(id);
             level1Service.delete(d);
         } else {
             d = level2Service.findOne(id);
@@ -234,7 +234,7 @@ public class QueryService {
         }
     }
 
-    public void create(Directory directory) {
+    public void create(final Directory directory) {
 
     }
 }
