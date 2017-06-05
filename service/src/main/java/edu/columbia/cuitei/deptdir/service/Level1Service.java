@@ -30,8 +30,20 @@ public class Level1Service {
     }
 
     @Transactional
-    public Level1 save(Level1 level1) {
+    public Level1 save(final Level1 level1) {
         return level1Repository.save(level1);
+    }
+
+    public Level1 save(final Directory directory) {
+        final Level1 level1 = new Level1();
+        level1.setName(directory.getName());
+        level1.setAddress(directory.getAddress());
+        level1.setMailCode(directory.getMailCode());
+        level1.setParent(directory.getParent());
+        level1.setPhoneType(directory.getPhoneType());
+        level1.setPhoneNumber(directory.getPhoneNumber());
+        level1.setTieLine(directory.getTieLine());
+        return this.save(level1);
     }
 
     @Transactional
@@ -47,7 +59,7 @@ public class Level1Service {
         return ls;
     }
 
-    public Level1 update(Directory directory) {
+    public Level1 update(final Directory directory) {
         final Level1 level1 = findOne(directory.getId());
         level1.setName(directory.getName());
         level1.setAddress(directory.getAddress());

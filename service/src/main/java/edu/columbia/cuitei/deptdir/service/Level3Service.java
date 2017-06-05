@@ -44,6 +44,17 @@ public class Level3Service {
         return level3Repository.save(level3);
     }
 
+    @Transactional
+    public Level3 save(Directory directory) {
+        final Level3 level3 = new Level3();
+        level3.setName(directory.getName());
+        level3.setAddress(directory.getAddress());
+        level3.setMailCode(directory.getMailCode());
+        level3.setPhoneType(directory.getPhoneType());
+        level3.setPhoneNumber(directory.getPhoneNumber());
+        level3.setTieLine(directory.getTieLine());
+        return level3Repository.save(level3);
+    }
 
     @Transactional
     public void delete(Directory d) {

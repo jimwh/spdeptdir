@@ -46,6 +46,18 @@ public class Level4Service {
     }
 
     @Transactional
+    public Level4 save(final Directory directory) {
+        final Level4 level4 = new Level4();
+        level4.setName(directory.getName());
+        level4.setAddress(directory.getAddress());
+        level4.setMailCode(directory.getMailCode());
+        level4.setPhoneType(directory.getPhoneType());
+        level4.setPhoneNumber(directory.getPhoneNumber());
+        level4.setTieLine(directory.getTieLine());
+        return level4Repository.save(level4);
+    }
+
+    @Transactional
     public void delete(Directory d) {
         level4Repository.delete(d.getId());
     }

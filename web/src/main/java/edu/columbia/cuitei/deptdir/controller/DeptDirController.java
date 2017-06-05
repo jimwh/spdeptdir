@@ -79,11 +79,36 @@ public class DeptDirController {
         return d;
     }
 
+    /*
+    @RequestMapping(value = "amend/add", method = RequestMethod.POST)
+    @ResponseBody public Directory add(@ModelAttribute("directory") Directory directory) {
+        log.info("hit add id={}, name={}, level={}", directory.getId(), directory.getName(), directory.getLevel());
+        //return queryService.update(directory);
+        return new Directory();
+    }
+    */
+    @RequestMapping(value = "amend/add", method = RequestMethod.POST)
+    //@ResponseBody
+    public String add(@ModelAttribute("directory") Directory directory) {
+        log.info("hit add id={}, parent={}, name={}, level={}", directory.getId(), directory.getParent(), directory.getName(), directory.getLevel());
+        queryService.create(directory);
+        return "redirect:/amend/list?name=arts";
+    }
+
     @RequestMapping(value = "amend/update", method = RequestMethod.POST)
     @ResponseBody public Directory update(@ModelAttribute("directory") Directory directory) {
         log.info("hit update id={}, name={}, level={}", directory.getId(), directory.getName(), directory.getLevel());
         return queryService.update(directory);
     }
+
+    /*
+    @RequestMapping(value = "amend/update", method = RequestMethod.POST)
+    @ResponseBody public String update(@ModelAttribute("directory") Directory directory) {
+        log.info("hit update id={}, name={}, level={}", directory.getId(), directory.getName(), directory.getLevel());
+        queryService.update(directory);
+        return "redirect:/amend/list?name=arts";
+    }
+    */
 
     @ResponseBody
     @RequestMapping(value = "/amend/loadDirectory/{name}")
@@ -96,28 +121,34 @@ public class DeptDirController {
         return queryService.search("%"+name+"%");
     }
 
+    /*
     @GetMapping("amend/list")
-    public String list(@RequestParam(value="name", defaultValue="arts") String name, Model model) {
-        log.info("hit list with name={}", name);
-        model.addAttribute("directories", queryService.search("%"+name+"%"));
+    public String list(@RequestParam(value="searchTerm", defaultValue="arts") String searchTerm, Model model) {
+        log.info("hit list with name={}", searchTerm);
+        model.addAttribute("directories", queryService.search("%"+searchTerm+"%"));
         return "amend/list";
     }
+    */
+    @GetMapping("/amend/list")
+    public String getList(Model model) {
+        model.addAttribute("searchTerm", new String());
+        return "amend/list";
+    }
+
+    @PostMapping("/amend/list")
+    public String postList(@RequestParam(value="searchTerm") final String searchTerm, final Model model) {
+        log.info("hit list with searchTerm={}", searchTerm);
+        model.addAttribute("directories", queryService.search("%"+searchTerm+"%"));
+        model.addAttribute("searchTerm", searchTerm);
+        return "amend/list";
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "amend/directory/delete/{id}", method = RequestMethod.POST)
     public void delete(@PathVariable("id") final Integer id) {
         log.info("delete id = {}", id);
         queryService.delete(id);
-    }
-
-    @RequestMapping(value = "directory/create", method = RequestMethod.GET)
-    public ModelAndView create() {
-        return new ModelAndView("directory/create");
-    }
-
-    @RequestMapping(value = "directory/create", method = RequestMethod.POST)
-    public void create(@ModelAttribute(value = "directory") Directory directory) {
-        queryService.create(directory);
     }
 
 }

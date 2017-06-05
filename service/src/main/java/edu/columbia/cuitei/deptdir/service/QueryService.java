@@ -235,6 +235,15 @@ public class QueryService {
     }
 
     public void create(final Directory directory) {
+        if("LEVEL1".equals(directory.getLevel())){
+            level1Service.save(directory);
+        }else if("LEVEL2".equals(directory.getLevel())){
+            level2Service.save(directory);
+        }else if("LEVEL3".equals(directory.getLevel())){
+            level3Service.save(directory);
+        }else if("LEVEL4".equals(directory.getLevel())){
+            level4Service.save(directory);
+        }
 
     }
 }

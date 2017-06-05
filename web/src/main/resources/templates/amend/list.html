@@ -78,6 +78,17 @@
         });
     </script>
 
+    <!--
+    <script>
+        $(document).ready(function ($) {
+            $("#add-form").submit(function (event) {
+                event.preventDefault();
+                postAdd();
+            });
+        });
+    </script>
+    -->
+
 </head>
 
 <body>
@@ -118,6 +129,116 @@
                              width="111" height="20" alt="Directories" title="Directories" border="0"/>
                     </a>
                 </div>
+
+
+                <form class="form-inline" id="search-term-form" th:action="@{/amend/list}" method="post">
+                    <div class="form-group">
+                        <label for="searchTerm">Departmental Directory ("Classified") </label>
+                        <input type="text" class="form-control" name="searchTerm" id="searchTerm" />
+                        <button type="submit" id="bth-search"  class="btn btn-primary">Search
+                        </button>
+                    </div>
+                </form>
+
+                <!-- start of add modal -->
+
+                <div th:id="amodal" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Add Record</h4>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <form id="add-form" role="form"
+                                      th:method="post"
+                                      th:action="@{/amend/add}"
+                                      th:object="${directory}">
+
+                                    <input id="add-id"
+                                           type="hidden"
+                                           th:field="*{id}"
+                                           th:value="${directory.id}"/>
+
+                                    <input id="add-parent"
+                                           type="hidden"
+                                           th:field="*{parent}"
+                                           th:value="${directory.parent}"/>
+
+                                    <fieldset class="form-group">
+                                        <label for="add-name">Name</label>
+                                        <input th:field="*{name}"
+                                               th:value="${directory.name}"
+                                               class="form-control"
+                                               id="add-name"
+                                               type="text"
+                                               placeholder="Name"/>
+
+                                        <label for="add-address">Address</label>
+                                        <input th:field="*{address}"
+                                               th:value="${directory.address}"
+                                               class="form-control"
+                                               id="add-address"
+                                               type="text"
+                                               placeholder="Address"/>
+
+                                        <label for="add-mailCode">MailCode</label>
+                                        <input th:field="*{mailCode}"
+                                               th:value="${directory.mailCode}"
+                                               class="form-control"
+                                               id="add-mailCode"
+                                               type="text"
+                                               placeholder="MailCode"/>
+
+                                        <label for="add-phoneType">PhoneType</label>
+                                        <input th:field="*{phoneType}"
+                                               th:value="${directory.phoneType}"
+                                               class="form-control"
+                                               id="add-phoneType"
+                                               type="text"
+                                               placeholder="PhoneType"/>
+
+                                        <label for="add-phoneNumber">PhoneNumber</label>
+                                        <input th:field="*{phoneNumber}"
+                                               th:value="${directory.phoneNumber}"
+                                               class="form-control"
+                                               id="add-phoneNumber"
+                                               type="text"
+                                               placeholder="PhoneNumber"/>
+
+                                        <label for="add-tieLine">Tie Line</label>
+                                        <input th:field="*{tieLine}"
+                                               th:value="${directory.tieLine}"
+                                               class="form-control"
+                                               id="add-tieLine"
+                                               type="text"
+                                               placeholder="TieLine"/>
+
+                                        <input id="add-level"
+                                               type="hidden"
+                                               th:field="*{level}"
+                                               th:value="${directory.level}"/>
+
+                                    </fieldset>
+
+                                    <div class="form-group">
+                                        <button class="btn btn-success" type="submit">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                <!-- end of add modal -->
+
+
 
                 <div th:id="umodal" class="modal fade" tabindex="-1" role="dialog">
                     <div class="modal-dialog">
@@ -173,6 +294,14 @@
                                                id="update-mailCode"
                                                type="text"
                                                placeholder="MailCode"/>
+
+                                        <label for="update-phoneType">PhoneType</label>
+                                        <input th:field="*{phoneType}"
+                                               th:value="${directory.phoneType}"
+                                               class="form-control"
+                                               id="update-phoneType"
+                                               type="text"
+                                               placeholder="PhoneType"/>
 
                                         <label for="update-phoneNumber">PhoneNumber</label>
                                         <input th:field="*{phoneNumber}"
@@ -266,11 +395,15 @@
                         <th>NAME</th>
                         <th>ADDRESS</th>
                         <th>MAIL CODE</th>
+                        <th>PHONE TYPE</th>
                         <th>PHONE</th>
                         <th>TIE LINE</th>
                         <th>PARENT</th>
                         <th>LEVEL</th>
                         <th></th>
+                        <th></th>
+                        <th></th>
+
                         <th></th>
                     </tr>
                     </thead>
@@ -282,10 +415,19 @@
                         <td th:text="${directory.name}"></td>
                         <td th:text="${directory.address}"></td>
                         <td th:text="${directory.mailCode}"></td>
+                        <td th:text="${directory.phoneType}"></td>
                         <td th:text="${directory.phoneNumber}"></td>
                         <td th:text="${directory.tieLine}"></td>
                         <td th:text="${directory.parent}"></td>
                         <td th:text="${directory.level}"></td>
+
+                        <td th:text="${searchTerm}"></td>
+                        <td>
+                            <a data-toggle="modal" data-target="#amodal"
+                               th:onclick="'showAddModal(' + ${directory.id} + ')'">Add</a>
+                        </td>
+
+
                         <td>
                             <a data-toggle="modal" data-target="#umodal"
                                th:onclick="'showEditModal(' + ${directory.id} + ')'">Edit</a>
