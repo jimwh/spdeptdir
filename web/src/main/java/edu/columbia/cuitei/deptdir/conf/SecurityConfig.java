@@ -15,24 +15,17 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
-
 @Configuration
-// http://docs.spring.io/spring-boot/docs/current/reference/html/howto-security.html
-// Switch off the Spring Boot security configuration
-// @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Autowired
     private MyAccessDeniedHandler accessDeniedHandler;
-    //@Resource private MyAccessDeniedHandler accessDeniedHandler;
-
 
     @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private DataSource dataSource;
+    @Autowired private DataSource dataSource;
 
     @Value("${spring.queries.users-query}")
     private String usersQuery;
@@ -41,9 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String rolesQuery;
 
 
-    // roles admin allow to access /admin/**
-    // roles user allow to access /user/**
-    // custom 403 access denied handler
     /*
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -68,8 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.
-                authorizeRequests()
+        http.csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/api/deptdir/search/").permitAll()
                 .antMatchers("/api/deptdir/search/**").permitAll()
                 .antMatchers("/").permitAll()
@@ -100,18 +90,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     */
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*
-        auth.inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER")
-                .and()
-                .withUser("admin").password("password").roles("ADMIN");
-        */
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
                 .dataSource(dataSource)
-                .passwordEncoder(new BCryptPasswordEncoder());
-
+                .passwordEncoder(bCryptPasswordEncoder);
     }
 
 
