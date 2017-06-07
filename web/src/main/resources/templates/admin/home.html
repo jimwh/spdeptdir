@@ -16,8 +16,7 @@
 <div class="container">
 
     <form th:action="@{/logout}" method="get">
-        <button class="btn btn-md btn-danger btn-block" name="registration"
-                type="Submit">Logout
+        <button class="btn btn-md btn-danger btn-block" name="registration" type="Submit">Logout
         </button>
     </form>
 
@@ -30,7 +29,12 @@
                 <img th:src="@{/images/beer.jpg}" class="img-responsive center-block" width="400" height="400"
                      alt="Beer"/>
             </div>
+            <!--
             <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+            -->
+            <p class="admin-message-text text-center">
+                <a href="/amend/list/">Add/Edit/Delete</a>
+            </p>
         </div>
     </div>
 

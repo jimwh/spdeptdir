@@ -37,8 +37,10 @@ public class LoginController {
         return modelAndView;
     }
 
+    // https://cuit-1xtjdh1.ais.columbia.edu:8443/j_spring_cas_security_check has to be on CAS server
+
     @PostMapping("/registration")
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+    public ModelAndView createNewUser(@Valid final User user, final BindingResult bindingResult) {
         log.info("create new user...");
         final ModelAndView modelAndView=new ModelAndView();
         final User userExists = userService.findUserByEmail(user.getEmail());
@@ -58,10 +60,9 @@ public class LoginController {
 
     @GetMapping("/admin/home")
     public ModelAndView home() {
-
-        log.info("admin/home ...");
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        log.info("admin/home ...name={}", auth.getName());
         User user = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");

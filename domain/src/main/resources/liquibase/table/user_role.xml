@@ -8,10 +8,10 @@
     <changeSet author="jh3389" id="user_role">
         <createTable schemaName="deptdir" tableName="user_role">
             <column name="user_id" type="INT" >
-                <constraints nullable="false"/>
+                <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="role_id" type="INT">
-                <constraints nullable="false"/>
+                <constraints primaryKey="true" nullable="false"/>
             </column>
         </createTable>
     </changeSet>

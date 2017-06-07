@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="jh3389" id="users">
+        <createTable schemaName="deptdir" tableName="users">
+            <column name="username" type="VARCHAR(10)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="enabled" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="jh3389" id="authorities">
+        <createTable schemaName="deptdir" tableName="authorities">
+            <column name="username" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="jh3389" id="auth_unique">
+        <sql>
+            ALTER TABLE authorities ADD UNIQUE user_auth (username, authority);
+        </sql>
+    </changeSet>
+
+    <!--
+        constraint fk_authorities_users foreign key(username) references users(username)
+
+    <changeSet author="liquibase-docs" id="addForeignKeyConstraint-example">
+        <addForeignKeyConstraint baseColumnNames="person_id"
+            baseTableName="address"
+            constraintName="fk_address_person"
+            deferrable="true"
+            initiallyDeferred="true"
+            onDelete="CASCADE"
+            onUpdate="RESTRICT"
+            referencedColumnNames="id"
+            referencedTableName="person"/>
+    </changeSet>
+
+        ALTER TABLE address ADD CONSTRAINT fk_address_person
+        FOREIGN KEY (person_id) REFERENCES person (id)
+        ON UPDATE RESTRICT
+        ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED
+    -->
+
+    <changeSet author="jh3389" id="fk_constraint">
+        <addForeignKeyConstraint baseColumnNames="username"
+                                 baseTableName="authorities"
+                                 constraintName="fk_auth_users"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="username"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+</databaseChangeLog>

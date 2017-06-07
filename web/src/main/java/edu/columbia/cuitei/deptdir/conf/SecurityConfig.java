@@ -5,7 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.cas.authentication.CasAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -21,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Autowired
-    private MyAccessDeniedHandler accessDeniedHandler;
+    private MyAccessDeniedHandler myAccessDeniedHandler;
 
     @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -33,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.queries.roles-query}")
     private String rolesQuery;
 
+    @Value("${cas.server}")
+    private String casServer;
 
     /*
     @Override
@@ -57,8 +61,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        log.info("cas.server={}", casServer);
 
-        http.csrf().disable()
+        http
                 .authorizeRequests()
                 .antMatchers("/api/deptdir/search/").permitAll()
                 .antMatchers("/api/deptdir/search/**").permitAll()
@@ -102,5 +107,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/webjars");
         web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
     }
+
+/*
+    @Bean
+    public CasAuthenticationProvider casAuthenticationProvider() {
+        CasAuthenticationProvider casAuthenticationProvider = new CasAuthenticationProvider();
+        casAuthenticationProvider.setAuthenticationUserDetailsService(customUserDetailsService());
+        casAuthenticationProvider.setServiceProperties(serviceProperties());
+        casAuthenticationProvider.setTicketValidator(cas20ServiceTicketValidator());
+        casAuthenticationProvider.setKey("an_id_for_this_auth_provider_only");
+        return casAuthenticationProvider;
+    }
+*/
 
 }

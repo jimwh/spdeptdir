@@ -22,8 +22,11 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public User findUserByEmail(String email){
+    public User findUserByEmail(final String email) {
         return userRepository.findByEmail(email);
+    }
+    public User findUserByUni(final String uni) {
+        return userRepository.findByUni(uni);
     }
 
     @Transactional

@@ -25,4 +25,6 @@
     <include file="src/main/resources/liquibase/table/user_role.xml"/>
 
     <include file="src/main/resources/liquibase/table/insert_role.xml"/>
+
+    <include file="src/main/resources/liquibase/table/sp_sec_table.xml"/>
 </databaseChangeLog>

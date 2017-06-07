@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-//@RestController
 @Controller
 public class DeptDirController {
 
@@ -45,7 +44,7 @@ public class DeptDirController {
 
     @GetMapping(value = "/api/deptdir/search/{term}")
     @ResponseBody
-    public List<Directory> getDeptDir(@PathVariable("term") String term) {
+    public List<Directory> getDeptDir(@PathVariable("term") final String term) {
         log.info("term = {}", term);
         return queryService.search("%"+term+"%");
     }

@@ -30,7 +30,9 @@ public class QueryService {
     @Transactional(readOnly=true)
     public List<Directory> search(final String searchTerm) {
         final List<Directory> directoryList = new ArrayList<>();
-
+        if(searchTerm==null || "".equals(searchTerm)) {
+            return directoryList;
+        }
         // 1. find from level1 first
         final Set<Integer> level2ParentIdSet=getTopLevelIdSetByName(searchTerm);
 
@@ -50,7 +52,7 @@ public class QueryService {
         // List<Level1> level1List=level1Service.findAll(level2Parent);
         final List<Level1> level1List=level1Service.getListByListId(new ArrayList<Integer>(level2ParentIdSet));
         if( !level1List.isEmpty() ) {
-            log.info("level1.size={} from level2Parent.size={}", level1List.size(),level2ParentIdSet.size());
+            // log.info("level1.size={} from level2Parent.size={}", level1List.size(),level2ParentIdSet.size());
         }
 
         // 4. find all level3 by level3's parent which is level2 id
@@ -74,7 +76,7 @@ public class QueryService {
         }
 
         // 5. find all level4 by level4 parent column which is level3 id
-        log.info("level3IdList.size={}, id={}", level3IdList.size(), level3IdList.toArray());
+        // log.info("level3IdList.size={}, id={}", level3IdList.size(), level3IdList.toArray());
         final List<Level4> level4List = level4Service.findAllByParentIn(level3IdList);
         final Map<Integer, List<Directory>> level3IdLevel4Map = new HashMap<>();
         final List<Integer> level4IdList = new ArrayList<>();
