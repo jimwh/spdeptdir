@@ -1,7 +1,7 @@
 package edu.columbia.cuitei.deptdir.controller;
 
-import edu.columbia.cuitei.deptdir.domain.User;
-import edu.columbia.cuitei.deptdir.service.UserService;
+import edu.columbia.cuitei.deptdir.domain.Users;
+import edu.columbia.cuitei.deptdir.service.UsersService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -19,7 +19,7 @@ import javax.validation.Valid;
 public class LoginController {
 
     private static final Logger log = LoggerFactory.getLogger(LoginController.class);
-    @Resource private UserService userService;
+    @Resource private UsersService usersService;
 
     @GetMapping("/login")
     public String login() {
@@ -31,8 +31,8 @@ public class LoginController {
     public ModelAndView registration() {
         log.info("registration form...");
         final ModelAndView modelAndView = new ModelAndView();
-        final User user = new User();
-        modelAndView.addObject("user", user);
+        final Users users = new Users();
+        modelAndView.addObject("user", users);
         modelAndView.setViewName("registration");
         return modelAndView;
     }
@@ -40,19 +40,19 @@ public class LoginController {
     // https://cuit-1xtjdh1.ais.columbia.edu:8443/j_spring_cas_security_check has to be on CAS server
 
     @PostMapping("/registration")
-    public ModelAndView createNewUser(@Valid final User user, final BindingResult bindingResult) {
+    public ModelAndView createNewUser(@Valid final Users users, final BindingResult bindingResult) {
         log.info("create new user...");
         final ModelAndView modelAndView=new ModelAndView();
-        final User userExists = userService.findUserByEmail(user.getEmail());
-        if(userExists != null) {
+        final Users usersExists = usersService.findUserByEmail(users.getEmail());
+        if(usersExists != null) {
             bindingResult.rejectValue("email", "error.user", "There is already a user registered with the email provided");
         }
         if(bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
         }else {
-            userService.saveUser(user);
+            usersService.saveUser(users);
             modelAndView.addObject("successMessage", "User has been registered successfully");
-            modelAndView.addObject("user", new User());
+            modelAndView.addObject("user", new Users());
             modelAndView.setViewName("registration");
         }
         return modelAndView;
@@ -60,11 +60,11 @@ public class LoginController {
 
     @GetMapping("/admin/home")
     public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        final ModelAndView modelAndView = new ModelAndView();
+        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         log.info("admin/home ...name={}", auth.getName());
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        Users users = usersService.findUserByUsername(auth.getName());
+        modelAndView.addObject("userName", "Welcome " + users.getFirstName() + " " + users.getLastName() + " (" + users.getEmail() + ")");
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("admin/home");
         return modelAndView;

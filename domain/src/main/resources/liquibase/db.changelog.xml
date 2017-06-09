@@ -20,11 +20,7 @@
     <include file="src/main/resources/liquibase/data/load-level4-data.xml"/>
     <include file="src/main/resources/liquibase/table/level4_index.xml"/>
 
-    <include file="src/main/resources/liquibase/table/user.xml"/>
-    <include file="src/main/resources/liquibase/table/role.xml"/>
-    <include file="src/main/resources/liquibase/table/user_role.xml"/>
-
+    <include file="src/main/resources/liquibase/table/users_authorities.xml"/>
     <include file="src/main/resources/liquibase/table/insert_role.xml"/>
 
-    <include file="src/main/resources/liquibase/table/sp_sec_table.xml"/>
 </databaseChangeLog>

@@ -17,8 +17,8 @@ import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
-@Table(name="user")
-public class User {
+@Table(name="users")
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column
@@ -28,6 +28,24 @@ public class User {
     }
     public void setId(int id){
         this.id = id;
+    }
+
+    @Column(name = "username")
+    private String username;
+    public String getUsername() {
+        return this.username;
+    }
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    @Column(name="enable")
+    private boolean active;
+    public boolean getActive() {
+        return this.active;
+    }
+    public void setActive(boolean active){
+        this.active = active;
     }
 
     @Column(name = "email")
@@ -68,24 +86,7 @@ public class User {
         this.lastName = name;
     }
 
-    @Column(name = "uni")
-    private String uni;
-    public String getUni() {
-        return this.uni;
-    }
-    public void setUni(String uni){
-        this.uni = uni;
-    }
-
-    @Column(name="active")
-    private int active;
-    public int getActive() {
-        return this.active;
-    }
-    public void setActive(int active){
-        this.active = active;
-    }
-
+    /*
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
@@ -95,5 +96,6 @@ public class User {
     public void setRoles(Set<Role> roles){
         this.roles = roles;
     }
+    */
 
 }

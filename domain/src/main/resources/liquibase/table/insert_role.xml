@@ -7,8 +7,11 @@
 
     <changeSet author="jh3389" id="insert_role">
         <sql>
-            INSERT INTO role VALUES (1, 'ADMIN');
-            INSERT INTO role VALUES (2, 'USER');
+            INSERT INTO users(id, username, password, enabled, first_name, last_name,email) VALUES (null, 'jh3389', 'research0', True, 'fred','gary', 'fred@gary.com');
+            INSERT INTO users(id, username, password, enabled, first_name, last_name,email) VALUES (null, 'rscl1002', 'research0', True,'foo','bar', 'foo@bar.com');
+
+            INSERT INTO authorities(id, username, authority) VALUES (null, 'jh3389', 'ADMIN');
+            INSERT INTO authorities(id, username, authority) VALUES (null, 'rscl1002', 'ADMIN');
         </sql>
     </changeSet>
 

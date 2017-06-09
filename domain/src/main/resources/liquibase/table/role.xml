@@ -13,5 +13,4 @@
             <column name="role" type="VARCHAR(8)" />
         </createTable>
     </changeSet>
-
 </databaseChangeLog>

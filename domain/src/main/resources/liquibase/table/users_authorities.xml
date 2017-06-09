@@ -5,23 +5,42 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
+    <!-- for spring security -->
     <changeSet author="jh3389" id="users">
         <createTable schemaName="deptdir" tableName="users">
-            <column name="username" type="VARCHAR(10)">
+            <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="password" type="VARCHAR(255)"/>
+
+            <column name="username" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="password" type="VARCHAR(50)"/>
+
             <column name="enabled" type="BOOLEAN">
                 <constraints nullable="false"/>
             </column>
+
+            <column name="first_name" type="VARCHAR(30)" />
+
+            <column name="last_name" type="VARCHAR(30)" />
+
+            <column name="email" type="VARCHAR(50)" />
+
         </createTable>
     </changeSet>
 
     <changeSet author="jh3389" id="authorities">
         <createTable schemaName="deptdir" tableName="authorities">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
             <column name="username" type="VARCHAR(10)">
                 <constraints nullable="false"/>
             </column>
+
             <column name="authority" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
@@ -56,12 +75,12 @@
     -->
 
     <changeSet author="jh3389" id="fk_constraint">
-        <addForeignKeyConstraint baseColumnNames="username"
+        <addForeignKeyConstraint baseColumnNames="id"
                                  baseTableName="authorities"
                                  constraintName="fk_auth_users"
                                  onDelete="CASCADE"
                                  onUpdate="RESTRICT"
-                                 referencedColumnNames="username"
+                                 referencedColumnNames="id"
                                  referencedTableName="users"/>
     </changeSet>
 

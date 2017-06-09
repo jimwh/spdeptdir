@@ -4,8 +4,13 @@
 <head>
     <title>Department Directory</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="icon" type="image/png" href="../images/favicon-crown.png"/>
+
     <link href="../css/deptdir.css" th:href="@{css/deptdir.css}" rel="stylesheet"/>
 
     <style>
@@ -59,9 +64,10 @@
 
 <body>
 
-<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!--
 <script type="text/javascript" src="../js/deptdir.js"></script>
+-->
 
 <div class="container">
     <nav class="navbar navbar-inverse" role="navigation">
@@ -100,20 +106,48 @@
                     </a>
                 </div>
 
+                <!--
                 <form class="form-inline" id="search-form">
                     <div class="form-group">
-                        <label for="username">Departmental Directory ("Classified") Search</label>
-                        <input type="text" class="form-control" id="username"/>
-                        <button type="submit" id="bth-search"
-                                class="btn btn-primary">Search
+                        <label for="term">Departmental Directory ("Classified") Search</label>
+                        <input type="text" class="form-control" id="term"/>
+                        <button type="submit" id="bth-search" class="btn btn-primary">Search
+                        </button>
+                    </div>
+                </form>
+                -->
+                <form class="form-inline" id="pub-search-form" th:action="@{/search}" method="get">
+                    <div class="form-group">
+                        <label for="term">Departmental Directory ("Classified") </label>
+                        <input type="text" class="form-control" name="term" id="term" />
+                        <button type="submit" id="pub-search-btn"  class="btn btn-primary">Search
                         </button>
                     </div>
                 </form>
 
+
+
                 <h1>To submit changes to this directory, send e-mail to directory-help@columbia.edu.</h1>
 
-                <div id="feedback"></div>
-                <table class="table" id="myTable"></table>
+
+                <!--
+                <div id="feedback"><span th:utext="${feedback}"></span></div>
+                -->
+                <!-- <div><span th:utext="${feedback}"></span></div> -->
+
+                <table id="search-table" class="table table-responsive tab-condensed table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="search-table-body">
+                    <tr th:each="directory : ${directories}">
+                        <td th:text="${directory.id}"></td>
+                    </tr>
+                    </tbody>
+                </table>
 
             </div>
 

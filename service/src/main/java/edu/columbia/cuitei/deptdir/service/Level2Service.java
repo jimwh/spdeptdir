@@ -6,6 +6,8 @@ import edu.columbia.cuitei.deptdir.domain.Level2;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
+
+import edu.columbia.cuitei.deptdir.domain.Level2Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

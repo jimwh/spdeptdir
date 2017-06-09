@@ -4,6 +4,8 @@ import edu.columbia.cuitei.deptdir.domain.Directory;
 import edu.columbia.cuitei.deptdir.domain.Level4;
 import java.util.List;
 import javax.annotation.Resource;
+
+import edu.columbia.cuitei.deptdir.domain.Level4Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
