@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class DeptDirController {
@@ -150,29 +149,37 @@ public class DeptDirController {
         queryService.delete(id);
     }
 
-
     @GetMapping("/search")
-    public String pubSearchPage(@RequestParam(value="term", required = false) final String term, final Model model) {
+    public String publicSearch(@RequestParam(value="term", required = false) final String term, final Model model) {
         log.info("hit search page with term={}", term);
         if(term==null || "".equals(term) ) {
             model.addAttribute("feedback", "");
-            return "search";
         } else {
             final List<Directory> list = queryService.search("%" + term + "%");
             model.addAttribute("directories", list);
             model.addAttribute("searchTerm", term);
-            final String feedback = String.format("Your search for <strong>\"%s\"</strong> returned %d results.", term, list.size());
-            model.addAttribute("feedback", feedback);
+            if( list.isEmpty() ) {
+                final String feedback = String.format("Your search for <strong>\"%s\"</strong> returned no results.", term);
+                model.addAttribute("feedback", feedback);
+            }else {
+                final String feedback = String.format("Your search for <strong>\"%s\"</strong> returned %d results.", term, list.size());
+                model.addAttribute("feedback", feedback);
+            }
         }
+
         return "search";
     }
 
-    /*
-    @GetMapping("search/")
-    public String moreSlash() {
-        log.info("slash...");
+    @GetMapping("/search.html")
+    public String searchHtml() {
+        log.info("search.html...");
         return "search";
     }
-    */
+
+    @GetMapping("/search/")
+    public String trailingSlash() {
+        log.info("trailing slash...");
+        return "redirect:/search";
+    }
 
 }

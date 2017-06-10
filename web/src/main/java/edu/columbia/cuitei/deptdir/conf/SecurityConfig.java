@@ -105,7 +105,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/deptdir/search/**").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/search").permitAll()
+                .antMatchers("/search/**?").permitAll()
                 .antMatchers("/search/**").permitAll()
+                .antMatchers("/search.html").permitAll()
 
                 .antMatchers("/index.html").permitAll()
 

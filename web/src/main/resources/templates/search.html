@@ -130,9 +130,9 @@
                 <h1>To submit changes to this directory, send e-mail to directory-help@columbia.edu.</h1>
 
 
-                <!--
+
                 <div id="feedback"><span th:utext="${feedback}"></span></div>
-                -->
+
                 <!-- <div><span th:utext="${feedback}"></span></div> -->
 
                 <table id="search-table" class="table table-responsive tab-condensed table-hover">
@@ -144,7 +144,14 @@
 
                     <tbody id="search-table-body">
                     <tr th:each="directory : ${directories}">
-                        <td th:text="${directory.id}"></td>
+
+                        <div th:switch="${directory.level}">
+                            <td th:case="LEVEL1" th:text="${directory.id}" class="LEVEL1"><strong></strong></td>
+                            <td th:case="LEVEL2" th:text="${directory.name}"></td>
+                            <td th:case="LEVEL3" th:text="${directory.name}"></td>
+                            <td th:case="LEVEL4" th:text="${directory.name}"></td>
+                        </div>
+
                     </tr>
                     </tbody>
                 </table>
