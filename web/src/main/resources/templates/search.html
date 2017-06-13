@@ -146,10 +146,10 @@
                     <tr th:each="directory : ${directories}">
 
                         <div th:switch="${directory.level}">
-                            <td th:case="LEVEL1" th:text="${directory.id}" class="LEVEL1"><strong></strong></td>
-                            <td th:case="LEVEL2" th:text="${directory.name}"></td>
-                            <td th:case="LEVEL3" th:text="${directory.name}"></td>
-                            <td th:case="LEVEL4" th:text="${directory.name}"></td>
+                            <td th:case="LEVEL1" th:utext="${directory.name}" class="LEVEL1"></td>
+                            <td th:case="LEVEL2" th:utext="${directory.name}" class="LEVEL2"></td>
+                            <td th:case="LEVEL3" th:utext="${directory.name}" class="LEVEL3"></td>
+                            <td th:case="LEVEL4" th:utext="${directory.name}" class="LEVEL4"></td>
                         </div>
 
                     </tr>
