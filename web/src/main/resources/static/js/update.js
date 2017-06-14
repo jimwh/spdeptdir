@@ -2,6 +2,12 @@ var url = "/amend/";
 var editModalTarget = "/amend/loadEntity/";
 var tableTarget = "/amend/loadDirectory/";
 
+function showAddTopModal() {
+    var add_url = "/amend/addtop";
+    // loadEntity(editUrl);
+    loadAddEntity(add_url);
+}
+
 function showAddModal(index) {
     var editUrl = editModalTarget + index;
     // loadEntity(editUrl);

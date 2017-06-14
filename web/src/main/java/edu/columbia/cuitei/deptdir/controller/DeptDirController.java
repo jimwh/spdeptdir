@@ -9,7 +9,7 @@ import edu.columbia.cuitei.deptdir.service.Level4Service;
 import edu.columbia.cuitei.deptdir.service.QueryService;
 import java.util.List;
 import javax.annotation.Resource;
-
+import javax.validation.Valid;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,16 +80,21 @@ public class DeptDirController {
         return d;
     }
 
-    /*
-    @RequestMapping(value = "amend/add", method = RequestMethod.POST)
-    @ResponseBody public Directory add(@ModelAttribute("directory") Directory directory) {
-        log.info("hit add id={}, name={}, level={}", directory.getId(), directory.getName(), directory.getLevel());
-        //return queryService.update(directory);
-        return new Directory();
+    @ResponseBody
+    @GetMapping(value = "/amend/addtop")
+    public Directory addTop() {
+        log.info("add top level ...");
+        final Directory d = new Level1();
+        return d;
     }
-    */
+
+    @PostMapping(value = "/amend/addtop")
+    public String addTop(@Valid final Directory directory, final BindingResult bindingResult) {
+        log.info("add top level name={}", directory.getName());
+        return "redirect:/amend/list";
+    }
+
     @RequestMapping(value = "amend/add", method = RequestMethod.POST)
-    //@ResponseBody
     public String add(@ModelAttribute("directory") Directory directory) {
         log.info("hit add id={}, parent={}, name={}, level={}", directory.getId(), directory.getParent(), directory.getName(), directory.getLevel());
         queryService.create(directory);
@@ -100,15 +106,6 @@ public class DeptDirController {
         log.info("hit update id={}, name={}, level={}", directory.getId(), directory.getName(), directory.getLevel());
         return queryService.update(directory);
     }
-
-    /*
-    @RequestMapping(value = "amend/update", method = RequestMethod.POST)
-    @ResponseBody public String update(@ModelAttribute("directory") Directory directory) {
-        log.info("hit update id={}, name={}, level={}", directory.getId(), directory.getName(), directory.getLevel());
-        queryService.update(directory);
-        return "redirect:/amend/list?name=arts";
-    }
-    */
 
     @ResponseBody
     @RequestMapping(value = "/amend/loadDirectory/{name}")
