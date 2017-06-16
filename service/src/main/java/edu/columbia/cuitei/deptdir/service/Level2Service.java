@@ -68,6 +68,7 @@ public class Level2Service {
     public Level2 save(final Directory directory) {
         final Level2 level2 = new Level2();
         level2.setName(directory.getName());
+        level2.setParent(directory.getParent());
         level2.setAddress(directory.getAddress());
         level2.setMailCode(directory.getMailCode());
         level2.setPhoneType(directory.getPhoneType());

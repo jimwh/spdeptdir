@@ -41,7 +41,7 @@ public class LoginController {
 
     @PostMapping("/registration")
     public ModelAndView createNewUser(@Valid final Users users, final BindingResult bindingResult) {
-        log.info("create new user...");
+        log.info("createChild new user...");
         final ModelAndView modelAndView=new ModelAndView();
         final Users usersExists = usersService.findUserByEmail(users.getEmail());
         if(usersExists != null) {

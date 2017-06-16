@@ -4,8 +4,7 @@ var tableTarget = "/amend/loadDirectory/";
 
 function showAddTopModal() {
     var add_url = "/amend/addtop";
-    // loadEntity(editUrl);
-    loadAddEntity(add_url);
+    load_add_top_entity(add_url);
 }
 
 function showAddModal(index) {
@@ -24,6 +23,12 @@ function showDeleteModal(index) {
     $('#delete-id').val(index);
 }
 
+function load_add_top_entity(url) {
+    $.getJSON(url, {}, function (data) {
+        populate_top_modal(data, names);
+    });
+}
+
 function loadAddEntity(url) {
     $.getJSON(url, {}, function (data) {
         populateAddModal(data, names);
@@ -34,6 +39,18 @@ function loadEntity(url) {
     $.getJSON(url, {}, function (data) {
         populateModal(data, names);
     });
+}
+
+function populate_top_modal(data) {
+    $('#top-id').val(data.id);
+    $('#top-name').val(data.name);
+    $('#top-address').val(data.address);
+    $('#top-mailCode').val(data.mailCode);
+    $('#top-phoneType').val(data.phoneType);
+    $('#top-phoneNumber').val(data.phoneNumber);
+    $('#top-tieLine').val(data.tieLine);
+    $('#top-parent').val(data.parent);
+    $('#top-level').val(data.level);
 }
 
 function populateAddModal(data) {

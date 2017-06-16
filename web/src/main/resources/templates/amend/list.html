@@ -141,7 +141,8 @@
                 </form>
 
                 <div>
-                    <a data-toggle="modal" data-target="#addTopModal"
+                    <a data-toggle="modal"
+                       data-target="#addTopModal"
                        data-backdrop="static"
                        data-keyboard="false"
                        th:onclick="'showAddTopModal()'">Add a top level record</a>
@@ -152,78 +153,79 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title">Add Top Level Record</h4>
                             </div>
 
                             <div class="modal-body">
 
-                                <form id="add-top-form" role="form"
+                                <form id="add-top-form"
+                                      role="form"
                                       th:method="post"
                                       th:action="@{/amend/addtop}"
                                       th:object="${directory}">
 
-                                    <input id="add-id"
+                                    <input id="top-id"
                                            type="hidden"
                                            th:field="*{id}"
                                            th:value="${directory.id}"/>
 
-                                    <input id="add-parent"
+                                    <input id="top-parent"
                                            type="hidden"
                                            th:field="*{parent}"
                                            th:value="${directory.parent}"/>
 
                                     <fieldset class="form-group">
-                                        <label for="add-name">Name</label>
+                                        <label for="top-name">Name</label>
                                         <input th:field="*{name}"
                                                th:value="${directory.name}"
                                                class="form-control"
-                                               id="add-name"
+                                               id="top-name"
                                                type="text"
                                                placeholder="Name"/>
 
-                                        <label for="add-address">Address</label>
+                                        <label for="top-address">Address</label>
                                         <input th:field="*{address}"
                                                th:value="${directory.address}"
                                                class="form-control"
-                                               id="add-address"
+                                               id="top-address"
                                                type="text"
                                                placeholder="Address"/>
 
-                                        <label for="add-mailCode">MailCode</label>
+                                        <label for="top-mailCode">MailCode</label>
                                         <input th:field="*{mailCode}"
                                                th:value="${directory.mailCode}"
                                                class="form-control"
-                                               id="add-mailCode"
+                                               id="top-mailCode"
                                                type="text"
                                                placeholder="MailCode"/>
 
-                                        <label for="add-phoneType">PhoneType</label>
+                                        <label for="top-phoneType">PhoneType</label>
                                         <input th:field="*{phoneType}"
                                                th:value="${directory.phoneType}"
                                                class="form-control"
-                                               id="add-phoneType"
+                                               id="top-phoneType"
                                                type="text"
                                                placeholder="PhoneType"/>
 
-                                        <label for="add-phoneNumber">PhoneNumber</label>
+                                        <label for="top-phoneNumber">PhoneNumber</label>
                                         <input th:field="*{phoneNumber}"
                                                th:value="${directory.phoneNumber}"
                                                class="form-control"
-                                               id="add-phoneNumber"
+                                               id="top-phoneNumber"
                                                type="text"
                                                placeholder="PhoneNumber"/>
 
-                                        <label for="add-tieLine">Tie Line</label>
+                                        <label for="top-tieLine">Tie Line</label>
                                         <input th:field="*{tieLine}"
                                                th:value="${directory.tieLine}"
                                                class="form-control"
-                                               id="add-tieLine"
+                                               id="top-tieLine"
                                                type="text"
                                                placeholder="TieLine"/>
 
-                                        <input id="add-level"
+                                        <input id="top-level"
                                                type="hidden"
                                                th:field="*{level}"
                                                th:value="${directory.level}"/>
@@ -246,23 +248,25 @@
                 <!-- end of add top modal dialog -->
 
 
-                <!-- start of add modal -->
+                <!-- start of add child modal -->
 
                 <div th:id="amodal" class="modal fade" tabindex="-1" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Add Record</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">Add Child Record</h4>
                             </div>
 
                             <div class="modal-body">
 
-                                <form id="add-form" role="form"
+                                <form id="add-form"
+                                      role="form"
                                       th:method="post"
                                       th:action="@{/amend/add}"
                                       th:object="${directory}">
+
 
                                     <input id="add-id"
                                            type="hidden"
@@ -365,6 +369,8 @@
                                       th:method="post"
                                       th:action="@{/amend/update}"
                                       th:object="${directory}">
+
+                                    <div th:text="${directory.id}"></div>
 
                                     <input id="update-id"
                                            type="hidden"

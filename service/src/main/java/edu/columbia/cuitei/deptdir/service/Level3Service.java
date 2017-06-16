@@ -12,30 +12,29 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class Level3Service {
 
-    @Resource
-    private Level3Repository level3Repository;
+    @Resource private Level3Repository level3Repository;
 
+    /*
     @Transactional
     public List<Level3> findAll() { return level3Repository.findAll(); }
-
-    @Transactional
-    public Level3 findById(Integer id) {
+    @Transactional public Level3 findById(Integer id) {
         return level3Repository.findOne(id);
     }
+    */
 
     @Transactional
-    List<Level3> findAllByParentIn(List<Integer> list) {
+    List<Level3> findAllByParentIn(final List<Integer> list) {
         return level3Repository.findAllByParentIn(list);
     }
 
 
     @Transactional
-    public Level3 findOne(Integer id) {
+    public Level3 findOne(final Integer id) {
         return level3Repository.findOne(id);
     }
 
     @Transactional
-    public Level3 update(Directory directory) {
+    public Level3 update(final Directory directory) {
         final Level3 level3 = findOne(directory.getId());
         level3.setName(directory.getName());
         level3.setAddress(directory.getAddress());
@@ -47,9 +46,10 @@ public class Level3Service {
     }
 
     @Transactional
-    public Level3 save(Directory directory) {
+    public Level3 save(final Directory directory) {
         final Level3 level3 = new Level3();
         level3.setName(directory.getName());
+        level3.setParent(directory.getParent());
         level3.setAddress(directory.getAddress());
         level3.setMailCode(directory.getMailCode());
         level3.setPhoneType(directory.getPhoneType());
@@ -59,11 +59,11 @@ public class Level3Service {
     }
 
     @Transactional
-    public void delete(Directory d) {
+    public void delete(final Directory d) {
         level3Repository.delete(d.getId());
     }
 
-    public List<Level3>findAllByParent(Integer id) {
+    public List<Level3>findAllByParent(final Integer id) {
         return level3Repository.findAllByParent(id);
     }
 

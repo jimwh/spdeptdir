@@ -16,11 +16,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Service
 public class QueryService {
 
     private static final Logger log = LoggerFactory.getLogger(QueryService.class);
+
+    private static final String LEVEL1="LEVEL1";
+    private static final String LEVEL2="LEVEL2";
+    private static final String LEVEL3="LEVEL3";
+    private static final String LEVEL4="LEVEL4";
 
     @Resource private Level1Service level1Service;
     @Resource private Level2Service level2Service;
@@ -30,7 +36,7 @@ public class QueryService {
     @Transactional(readOnly=true)
     public List<Directory> search(final String searchTerm) {
         final List<Directory> directoryList = new ArrayList<>();
-        if(searchTerm==null || "".equals(searchTerm)) {
+        if( StringUtils.isEmpty(searchTerm) ) {
             return directoryList;
         }
         // 1. find from level1 first
@@ -42,7 +48,10 @@ public class QueryService {
         // final List<Level2> level2List=level2Service.findByDirectoryNameLike(searchTerm);
         // using name like from level2 vs using parent id from level2 // that will have different level2 size
         final List<Directory> level2List=level2Service.getByNameLike(searchTerm);
-        if( level2List.isEmpty() ) {
+        if( level2List.isEmpty() && !level2ParentIdSet.isEmpty()) {
+            log.info("there is no level 2 data");
+            final List<Level1> topLikeList = level1Service.findByNameLike(searchTerm);
+            directoryList.addAll(topLikeList);
             return directoryList;
         }
 
@@ -94,7 +103,7 @@ public class QueryService {
             }
         }
 
-        // 6. create a dept dir list
+        // 6. createChild a dept dir list
         for(Level1 level1: level1List) {
             directoryList.add(level1);
             final List<Directory> level2Data=level1IdLevel2Map.get(level1.getId());
@@ -116,15 +125,8 @@ public class QueryService {
             }
         }
 
-        // printData(directoryList);
         log.info("rows={}", directoryList.size());
         return directoryList;
-    }
-
-    private void printData(List<Directory> list) {
-        for(Directory d: list) {
-            log.info("{}", d.toString());
-        }
     }
 
     private void fill(final List<Directory>list,
@@ -160,17 +162,18 @@ public class QueryService {
     public Directory update(final Directory directory) {
 
         final Integer id = directory.getId();
-        if( "LEVEL1".equals(directory.getLevel())) {
+        final String level = directory.getLevel();
+        if( LEVEL1.equals(level)) {
             return level1Service.update(directory);
-        } else if( "LEVEL2".equals(directory.getLevel())) {
+        } else if( LEVEL2.equals(level)) {
             return level2Service.update(directory);
-        } else if( "LEVEL3".equals(directory.getLevel())) {
+        } else if( LEVEL3.equals(level)) {
             return level3Service.update(directory);
-        } else if( "LEVEL4".equals(directory.getLevel())) {
+        } else if( LEVEL4.equals(level)) {
             return level4Service.update(directory);
         } else {
-            // if this level field is not editable, then won't get value
-            // so it have to find from d
+            // if this level field is not editable at front, then won't get this value
+            // so it has to find from d
             if( level1Service.findOne(id) != null) {
                 return level1Service.update(directory);
             } else if( level2Service.findOne(id)!= null) {
@@ -211,7 +214,7 @@ public class QueryService {
         }
     }
 
-    void deleteLevel2(Integer id) {
+    void deleteLevel2(final Integer id) {
         final List<Level2> list = level2Service.findAllByParent(id);
         for(Level2 level2: list) {
             Integer level2Id = level2.getId();
@@ -220,7 +223,7 @@ public class QueryService {
         }
     }
 
-    void deleteLevel3(Integer id) {
+    void deleteLevel3(final Integer id) {
         final List<Level3> list = level3Service.findAllByParent(id);
         for(Level3 level3: list) {
             Integer level3Id = level3.getId();
@@ -229,23 +232,40 @@ public class QueryService {
         }
     }
 
-    void deleteLevel4(Integer id) {
+    void deleteLevel4(final Integer id) {
         final List<Level4> list = level4Service.findAllByParent(id);
         for(Level4 level4: list) {
             level4Service.delete(level4);
         }
     }
 
-    public void create(final Directory directory) {
-        if("LEVEL1".equals(directory.getLevel())){
-            level1Service.save(directory);
-        }else if("LEVEL2".equals(directory.getLevel())){
+    public void createChild(final Directory directory) {
+        directory.setParent(directory.getId());
+        if(LEVEL1.equals(directory.getLevel())){
             level2Service.save(directory);
-        }else if("LEVEL3".equals(directory.getLevel())){
+        }else if(LEVEL2.equals(directory.getLevel())){
             level3Service.save(directory);
-        }else if("LEVEL4".equals(directory.getLevel())){
+        }else if(LEVEL3.equals(directory.getLevel())){
+            level4Service.save(directory);
+        }else if(LEVEL4.equals(directory.getLevel())){
             level4Service.save(directory);
         }
-
     }
+
+
+    public Directory getDirectoryById(final Integer id) {
+        log.info("loadEntity/id = {}", id);
+        Directory d = level1Service.findOne(id);
+        if( d == null ) {
+            d = level2Service.findOne(id);
+            if (d == null) {
+                d = level3Service.findOne(id);
+                if (d == null) {
+                    d = level4Service.findOne(id);
+                }
+            }
+        }
+        return d;
+    }
+
 }

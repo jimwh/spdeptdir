@@ -136,23 +136,20 @@
                 <!-- <div><span th:utext="${feedback}"></span></div> -->
 
                 <table id="search-table" class="table table-responsive tab-condensed table-hover">
-                    <thead>
-                    <tr>
-                        <th></th>
-                    </tr>
-                    </thead>
-
+                    <thead><tr><th></th></tr></thead>
                     <tbody id="search-table-body">
+
                     <tr th:each="directory : ${directories}">
 
-                        <div th:switch="${directory.level}">
+                        <span th:switch="${directory.level}">
                             <td th:case="LEVEL1" th:utext="${directory.name}" class="LEVEL1"></td>
                             <td th:case="LEVEL2" th:utext="${directory.name}" class="LEVEL2"></td>
                             <td th:case="LEVEL3" th:utext="${directory.name}" class="LEVEL3"></td>
                             <td th:case="LEVEL4" th:utext="${directory.name}" class="LEVEL4"></td>
-                        </div>
+                        </span>
 
                     </tr>
+
                     </tbody>
                 </table>
 

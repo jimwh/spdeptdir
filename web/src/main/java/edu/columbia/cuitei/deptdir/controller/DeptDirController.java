@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DeptDirController {
 
     private static final Logger log = LoggerFactory.getLogger(DeptDirController.class);
+    private static final String Space2 = "&nbsp;&nbsp;";
     @Resource private QueryService queryService;
     @Resource private Level1Service level1Service;
     @Resource private Level2Service level2Service;
@@ -54,30 +55,17 @@ public class DeptDirController {
     @PostMapping("/api/deptdir/addLevel1")
     public ResponseEntity<?> add(@RequestBody Level1 level1) {
         //validate level1 here
-        log.info("directoryName={}", level1.getName());
-        log.info("address={}", level1.getAddress());
-        log.info("phoneNumber={}", level1.getPhoneNumber());
         level1Service.save(level1);
         return new ResponseEntity("level1 added", new HttpHeaders(), HttpStatus.OK);
     }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
     @ResponseBody
     @GetMapping(value = "/amend/loadEntity/{id}")
     public Directory loadEntity(@PathVariable("id") Integer id) {
         log.info("loadEntity/id = {}", id);
-        Directory d = level1Service.findOne(id);
-        if( d == null ) {
-            d = level2Service.findOne(id);
-            if (d == null) {
-                d = level3Service.findOne(id);
-                if (d == null) {
-                    d = level4Service.findOne(id);
-                }
-            }
-        }
-        return d;
+        return queryService.getDirectoryById(id);
     }
 
     @ResponseBody
@@ -89,16 +77,23 @@ public class DeptDirController {
     }
 
     @PostMapping(value = "/amend/addtop")
-    public String addTop(@Valid final Directory directory, final BindingResult bindingResult) {
+    public String addTop(@Valid final Directory directory, final BindingResult bindingResult) throws Exception {
         log.info("add top level name={}", directory.getName());
+        if( StringUtils.isBlank(directory.getName())) {
+            throw new Exception("foo.............");
+        }
+        level1Service.save(directory);
         return "redirect:/amend/list";
     }
 
     @RequestMapping(value = "amend/add", method = RequestMethod.POST)
-    public String add(@ModelAttribute("directory") Directory directory) {
+    public String addChild(@ModelAttribute("directory") final Directory directory) throws Exception {
         log.info("hit add id={}, parent={}, name={}, level={}", directory.getId(), directory.getParent(), directory.getName(), directory.getLevel());
-        queryService.create(directory);
-        return "redirect:/amend/list?name=arts";
+        if( StringUtils.isBlank(directory.getName()) || directory.getParent()==null) {
+            throw new Exception("name & parent id cannot be empty.");
+        }
+        queryService.createChild(directory);
+        return "redirect:/amend/list";
     }
 
     @RequestMapping(value = "amend/update", method = RequestMethod.POST)
@@ -118,16 +113,8 @@ public class DeptDirController {
         return queryService.search("%"+name+"%");
     }
 
-    /*
-    @GetMapping("amend/list")
-    public String list(@RequestParam(value="searchTerm", defaultValue="arts") String searchTerm, Model model) {
-        log.info("hit list with name={}", searchTerm);
-        model.addAttribute("directories", queryService.search("%"+searchTerm+"%"));
-        return "amend/list";
-    }
-    */
     @GetMapping("/amend/list")
-    public String getList(Model model) {
+    public String getList(final Model model) {
         model.addAttribute("searchTerm", new String());
         return "amend/list";
     }
@@ -182,79 +169,75 @@ public class DeptDirController {
         return "redirect:/search";
     }
 
-    private void formatName(List<Directory> list) {
+    private void formatName(final List<Directory> list) {
         for (Directory d : list) {
-            if( "LEVEL1".equals(d.getLevel())) {
+            final String level = d.getLevel();
+            if( "LEVEL1".equals(level) || "LEVEL2".equals(level)) {
                 formatLevel1Name(d);
+            }
+            else if("LEVEL3".equals(d.getLevel())){
+                formatLevel3Name(d);
             }
         }
     }
 
-    private void formatLevel1Name(Directory d) {
+    private void formatLevel1Name(final Directory d) {
         String address = d.getAddress();
         if( !StringUtils.isBlank(address) ) {
-            //address = "</br>Address:&nbsp;&nbsp;" + address;
-            address = "\n  " + address;
+            address = Space2 + address;
         }
         String mailCode = d.getMailCode();
         if( !StringUtils.isBlank(mailCode)) {
-            //mailCode = "&nbsp;&nbsp;Mail Code:&nbsp;&nbsp;" + mailCode;
-            mailCode = " Mail Code:  " + mailCode;
+            mailCode = Space2 + "Mail Code: " + mailCode;
         }
 
         String phone = d.getPhoneNumber();
         if( !StringUtils.isBlank(phone)) {
-            //phone = "&nbsp;&nbsp;Phone: &nbsp;&nbsp;"+ phone + "&nbsp;&nbsp;";
-            phone = "  Phone:  "+ phone + "  ";
+            phone = Space2 + "Phone: "+ phone + "  ";
         }
 
         String tieLine  = d.getTieLine();
         if( !StringUtils.isBlank(tieLine)) {
-            //tieLine = "Tie Line: &nbsp;&nbsp;"+ tieLine;
-            tieLine = "Tie Line:   "+ tieLine;
+            tieLine = Space2 + "Tie Line: "+ tieLine;
         }
 
-        //String name = d.getName() + address + mailCode + phone + "&nbsp;&nbsp;" + tieLine;
-        String name = d.getName() + "<br>" + address + mailCode + phone + "  " + tieLine;
+        final String name = String.format("%s<br>%s%s%s  %s",d.getName(),address,mailCode,phone,tieLine);
+        if("LEVEL2".equals(d.getLevel())) {
+            d.setName(String.format("%s%s", Space2, name));
+        }else {
+            d.setName(name);
+        }
+
+
+    }
+
+    private void formatLevel3Name(final Directory d) {
+        String address = d.getAddress();
+        if( !StringUtils.isBlank(address) ) {
+            address = "\n  " + address;
+        }
+        String mailCode = d.getMailCode();
+        if( !StringUtils.isBlank(mailCode)) {
+            mailCode = Space2 + " Mail Code:  " + mailCode;
+        }
+
+        String phone = d.getPhoneNumber();
+        if( !StringUtils.isBlank(phone)) {
+            if( !"fax".equalsIgnoreCase(d.getName())) {
+                phone = Space2 + "Phone:  " + phone;
+            }else {
+                d.setName("FAX:");
+            }
+        }
+
+        String tieLine  = d.getTieLine();
+        if( !StringUtils.isBlank(tieLine)) {
+            tieLine = Space2 + "Tie Line:   "+ tieLine;
+        }
+
+        final String name = String.format("%s%s %s&nbsp;%s%s%s  %s",Space2,Space2,d.getName(),address,mailCode,phone,tieLine);
         d.setName(name);
 
     }
 
-
-    /*
-    function getLevel1(data) {
-    var bg = '<tr class="active"><td>';
-    var row = "<strong>" + data.name + "</strong>";
-    var address = "";
-    if (data.address != "") {
-        address = "</br>Address:&nbsp;&nbsp;" + data.address;
-    }
-    var mailCode = "";
-    if (data.mailCode != "") {
-        if(address!="") {
-            mailCode = "&nbsp;&nbsp;Mail Code:&nbsp;&nbsp;" + data.mailCode;
-        }else {
-            mailCode = "<br/>MAILCODE:&nbsp;&nbsp;" + data.mailCode;
-        }
-    }else {
-        if(address!="") {
-            mailCode = "&nbsp;&nbsp;";
-        }else {
-            mailCode = "<br/>";
-        }
-    }
-    var phone="";
-    if( data.phoneNumber != "") {
-        phone = "&nbsp;&nbsp;Phone: &nbsp;&nbsp;"+data.phoneNumber + '&nbsp;&nbsp;';
-    }
-    var tieLine="";
-    if( data.tieLine != "") {
-        tieLine = "Tie Line: &nbsp;&nbsp;"+data.tieLine;
-    }
-
-    row = bg + row + address + mailCode + phone + '&nbsp;&nbsp;' + tieLine + '</td></tr>';
-    return row;
-}
-
-     */
 }
