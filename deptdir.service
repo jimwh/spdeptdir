@@ -1,0 +1,16 @@
+[Unit]
+Description=dept dir Spring Boot application
+After=syslog.target
+
+[Service]
+User=jh3389
+# The configuration file application.properties should be here:
+WorkingDirectory=/home/jh3389/dev/myapp
+ExecStart=/usr/bin/java -Dspring.profiles.active=local -jar /home/jh3389/dev/myapp/deptdir.jar
+SuccessExitStatus=143
+TimeoutStopSec=10
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
