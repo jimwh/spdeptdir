@@ -12,42 +12,22 @@
     <artifactId>domain</artifactId>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-core -->
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
             <version>3.5.3</version>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        -->
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.40</version>
-            <!--<version>6.0.6</version>-->
         </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
-            <!--
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            -->
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            -->
-
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
@@ -57,10 +37,10 @@
                         <phase>process-resources</phase>
                         <configuration>
                             <changeLogFile>src/main/resources/liquibase/db.changelog.xml</changeLogFile>
+                            <!-- in your .m2 settings -->
                             <url>${databaseConnectionUrl}</url>
                             <username>${databaseUserName}</username>
                             <password>${databasePassword}</password>
-                            <!--<skip>${liquibase.skip}</skip>-->
                         </configuration>
                         <goals>
                             <goal>update</goal>
@@ -69,13 +49,6 @@
                 </executions>
             </plugin>
 
-            <!-- https://mvnrepository.com/artifact/org.liquibase/liquibase-maven-plugin
-            <dependency>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.5.3</version>
-            </dependency>
-            -->
         </plugins>
     </build>
 

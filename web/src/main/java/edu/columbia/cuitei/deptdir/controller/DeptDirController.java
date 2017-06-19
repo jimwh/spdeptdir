@@ -80,15 +80,17 @@ public class DeptDirController {
     public String addTop(@Valid final Directory directory, final BindingResult bindingResult) throws Exception {
         log.info("add top level name={}", directory.getName());
         if( StringUtils.isBlank(directory.getName())) {
-            throw new Exception("foo.............");
+            throw new Exception("The directory name cannot be empty.");
         }
         level1Service.save(directory);
         return "redirect:/amend/list";
     }
 
-    @RequestMapping(value = "amend/add", method = RequestMethod.POST)
-    public String addChild(@ModelAttribute("directory") final Directory directory) throws Exception {
-        log.info("hit add id={}, parent={}, name={}, level={}", directory.getId(), directory.getParent(), directory.getName(), directory.getLevel());
+
+    @PostMapping(value = "/amend/add")
+    public String addChild(final Directory directory) throws Exception {
+    //public String addChild(@ModelAttribute("directory") final Directory directory) throws Exception {
+        log.info("post mapping addChild id={}, parent={}, name={}, level={}", directory.getId(), directory.getParent(), directory.getName(), directory.getLevel());
         if( StringUtils.isBlank(directory.getName()) || directory.getParent()==null) {
             throw new Exception("name & parent id cannot be empty.");
         }
@@ -96,9 +98,10 @@ public class DeptDirController {
         return "redirect:/amend/list";
     }
 
-    @RequestMapping(value = "amend/update", method = RequestMethod.POST)
+
+    @PostMapping(value = "/amend/update")
     @ResponseBody public Directory update(@ModelAttribute("directory") Directory directory) {
-        log.info("hit update id={}, name={}, level={}", directory.getId(), directory.getName(), directory.getLevel());
+        log.info("UPDATE: id={}, name={}, level={}", directory.getId(), directory.getName(), directory.getLevel());
         return queryService.update(directory);
     }
 
@@ -109,7 +112,7 @@ public class DeptDirController {
             name="arts";
             log.info("reset to arts");
         }
-        log.info("load table.................../amend/loadDeptDirectory...{}", name);
+        log.info("load table .../amend/loadDeptDirectory...{}", name);
         return queryService.search("%"+name+"%");
     }
 
@@ -127,12 +130,11 @@ public class DeptDirController {
         return "amend/list";
     }
 
-
-    @ResponseBody
-    @RequestMapping(value = "amend/directory/delete/{id}", method = RequestMethod.POST)
-    public void delete(@PathVariable("id") final Integer id) {
-        log.info("delete id = {}", id);
+    @GetMapping(value = "/amend/directory/delete/{id}")
+    public String delete(@PathVariable("id") final Integer id) {
+        log.info("DELETE directory by id = {}", id);
         queryService.delete(id);
+        return "amend/list";
     }
 
     @GetMapping("/search")

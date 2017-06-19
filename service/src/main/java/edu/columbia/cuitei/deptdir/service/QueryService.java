@@ -41,6 +41,9 @@ public class QueryService {
         }
         // 1. find from level1 first
         final Set<Integer> level2ParentIdSet=getTopLevelIdSetByName(searchTerm);
+        if(level2ParentIdSet.isEmpty()){
+            return directoryList;
+        }
 
         // 2. find all level2 by directory name
         final Set<Integer>level2IdListSet=new TreeSet<>();
@@ -240,14 +243,16 @@ public class QueryService {
     }
 
     public void createChild(final Directory directory) {
+        final String level = directory.getLevel();
         directory.setParent(directory.getId());
-        if(LEVEL1.equals(directory.getLevel())){
+
+        if(LEVEL1.equals(level)){
             level2Service.save(directory);
-        }else if(LEVEL2.equals(directory.getLevel())){
+        }else if(LEVEL2.equals(level)){
             level3Service.save(directory);
-        }else if(LEVEL3.equals(directory.getLevel())){
+        }else if(LEVEL3.equals(level)){
             level4Service.save(directory);
-        }else if(LEVEL4.equals(directory.getLevel())){
+        }else if(LEVEL4.equals(level)){
             level4Service.save(directory);
         }
     }

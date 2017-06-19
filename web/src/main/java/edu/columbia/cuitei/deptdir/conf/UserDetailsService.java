@@ -49,15 +49,4 @@ public class UserDetailsService extends JdbcDaoImpl {
         return createUserDetails(username, user, grantedAuthorityList);
     }
 
-    /*
-    @Transactional(propagation=Propagation.REQUIRED)
-    private void updateLastLoginDate(String userId) {
-        //	Assert.isTrue(TransactionSynchronizationManager.isSynchronizationActive(), "Transaction must be running");
-        RascalUser rascalUser = rascalUserService.findByUserId(userId);
-        rascalUser.setLastLogonDate(new Date());
-        rascalUserService.save(rascalUser);
-        rascalPermissionsManager.createPrincipleSid(userId);
-    }
-    */
-
 }

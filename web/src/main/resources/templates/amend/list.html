@@ -14,10 +14,6 @@
 
     <script th:src="@{/js/deptdir.js}"></script>
 
-    <!--
-    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
-    -->
-
     <link rel="icon" type="image/png" href="../../images/favicon-crown.png"/>
     <link rel="stylesheet" th:href="@{/css/deptdir.css}"/>
 
@@ -69,25 +65,25 @@
         }
     </style>
 
-    <script>
-        $(document).ready(function ($) {
-            $("#edit-form").submit(function (event) {
-                event.preventDefault();
-                postEdit();
-            });
-        });
-    </script>
 
-    <!--
     <script>
         $(document).ready(function ($) {
-            $("#add-form").submit(function (event) {
-                event.preventDefault();
-                postAdd();
+            $("#edit-submit-btn").on("click", function() {
+                $("#edit-form").submit(function (event) {
+                    event.preventDefault();
+                    postEdit();
+                });
             });
+
+            $("#add-submit-btn").on("click", function() {
+                $("#add-form").submit(function (event) {
+                    event.preventDefault();
+                    postAdd();
+                });
+            });
+
         });
     </script>
-    -->
 
 </head>
 
@@ -135,8 +131,7 @@
                     <div class="form-group">
                         <label for="searchTerm">Departmental Directory ("Classified") </label>
                         <input type="text" class="form-control" name="searchTerm" id="searchTerm" />
-                        <button type="submit" id="bth-search"  class="btn btn-primary">Search
-                        </button>
+                        <button type="submit" id="bth-search"  class="btn btn-primary">Search</button>
                     </div>
                 </form>
 
@@ -233,7 +228,7 @@
                                     </fieldset>
 
                                     <div class="form-group">
-                                        <button class="btn btn-success" type="submit">Save</button>
+                                        <button id="top-submit-btn" class="btn btn-success" type="submit">Save</button>
                                     </div>
                                 </form>
                             </div>
@@ -266,7 +261,6 @@
                                       th:method="post"
                                       th:action="@{/amend/add}"
                                       th:object="${directory}">
-
 
                                     <input id="add-id"
                                            type="hidden"
@@ -335,7 +329,7 @@
                                     </fieldset>
 
                                     <div class="form-group">
-                                        <button class="btn btn-success" type="submit">Save</button>
+                                        <button id="add-submit-btn" class="btn btn-success" type="submit">Save</button>
                                     </div>
                                 </form>
                             </div>
@@ -358,9 +352,6 @@
                                         aria-hidden="true">&times;</span></button>
 
                                 <h4 class="modal-title">Update Record</h4>
-
-                                <!-- <span th:text="${directory.level}">Level</span> -->
-                                <!-- <h1 th:text="${directory.level}">level</h1> -->
 
                             </div>
                             <div class="modal-body">
@@ -433,17 +424,6 @@
                                                placeholder="TieLine"/>
 
 
-                                        <!-- <label for="update-level">Level</label> -->
-                                        <!--
-                                        <input disabled="disabled"
-                                               th:field="*{level}"
-                                               th:value="${directory.level}"
-                                               class="form-control"
-                                               id="update-level"
-                                               type="text"
-                                               placeholder="Level"/>
-                                        -->
-
                                         <input id="update-level"
                                                type="hidden"
                                                th:field="*{level}"
@@ -452,14 +432,8 @@
 
                                     </fieldset>
 
-                                    <!--
-                                    <p th:utext="#{directory.level}">Level to our grocery store!</p>
-                                    <p>Level is: <span th:text="${directory.level}"></span></p>
-                                    <p>Level is: <span th:value="${directory.level}"></span></p>
-                                    -->
-
                                     <div class="form-group">
-                                        <button class="btn btn-success" type="submit">Save</button>
+                                        <button id="edit-submit-btn" class="btn btn-success" type="submit">Save</button>
                                     </div>
                                 </form>
 
@@ -496,12 +470,9 @@
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
 
-                <!--
-                <p th:text="'Hello, ' + ${name} + '!'" />
-                -->
 
                 <table id="another-table" class="table table-responsive tab-condensed table-hover">
-                    <thead th:if="${directories}">
+                    <thead th:unless="${#lists.isEmpty(directories)}">
                     <tr>
                         <th>ID</th>
                         <th>NAME</th>

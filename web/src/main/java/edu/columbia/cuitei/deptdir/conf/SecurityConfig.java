@@ -23,13 +23,10 @@ import javax.sql.DataSource;
 
 import org.jasig.cas.client.validation.Saml11TicketValidator;
 
-
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
-
-    // @Autowired private MyAccessDeniedHandler myAccessDeniedHandler;
 
     @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -98,8 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/")
-                .permitAll()
+                .antMatchers("/").permitAll()
 
                 .antMatchers("/api/deptdir/search/").permitAll()
                 .antMatchers("/api/deptdir/search/**").permitAll()
@@ -111,8 +107,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/index.html").permitAll()
 
-                .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
+                //.antMatchers("/login").permitAll()
+                //.antMatchers("/registration").permitAll()
+
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
 
                 .antMatchers("/login", "/logout", "/admin/home").authenticated().antMatchers("/filtered")

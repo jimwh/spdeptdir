@@ -51,6 +51,7 @@ public class Level4Service {
     public Level4 save(final Directory directory) {
         final Level4 level4 = new Level4();
         level4.setName(directory.getName());
+        level4.setParent(directory.getParent());
         level4.setAddress(directory.getAddress());
         level4.setMailCode(directory.getMailCode());
         level4.setPhoneType(directory.getPhoneType());

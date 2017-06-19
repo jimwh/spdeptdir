@@ -73,7 +73,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <!-- <version>6.0.6</version> -->
             <version>5.1.40</version>
         </dependency>
 
@@ -89,6 +88,7 @@
     </plugins>
     </build>
 
+    <!--
     <profiles>
         <profile>
             <id>development</id>
@@ -99,17 +99,11 @@
                 </property>
             </activation>
             <properties>
-                <!-- TOMCAT Properties
-                <tomcat.manager>https://dev.deptdir.columbia.edu:8443/manager/text</tomcat.manager>
-                 -->
-                <tomcat.home>/opt/apache-tomcat</tomcat.home>
-                <server.name>${env}</server.name>
                 <databaseUserName>deptdir</databaseUserName>
                 <databaseConnectionUrl>jdbc:mysql://devhost:3306/foobar</databaseConnectionUrl>
-                <siteDeploymentURL>scp://dev.deptdir.columbia.edu:/deptdir/site/</siteDeploymentURL>
             </properties>
         </profile>
-
     </profiles>
+    -->
 
 </project>

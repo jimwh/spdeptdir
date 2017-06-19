@@ -99,6 +99,8 @@ function clearAndCloseModal(name) {
 }
 
 function postEdit() {
+    console.log("postEdit ...");
+
     var directory = $('#edit-form').serialize();
     var editUrl = url + 'update';
     $.post(editUrl, directory, function (data) {
@@ -108,24 +110,27 @@ function postEdit() {
 }
 
 function postAdd() {
+    console.log("postAdd ...");
     var directory = $('#add-form').serialize();
     /* /amend/add */
     var editUrl = url + 'add';
     $.post(editUrl, directory, function (data) {
         updateTable(data);
     });
-    clearAndCloseModal('#umodal');
+    clearAndCloseModal('#amodal');
 }
 
 function deleteEntity(entity) {
+    console.log("delete entity by id ...");
     var input = $('#delete-id');
-    var url = '/amend/' + entity + '/delete/' + input.val();
-    $.post(url, function (data) {
-        updateTable(data);
+    var url = '/amend/directory/delete/' + input.val();
+    $.get(url, function (data) {
+        // updateTable(data);
     });
     closeModal('#dmodal');
     input.val('');
 }
+
 
 function updateTable(data) {
     console.log("update ...");
