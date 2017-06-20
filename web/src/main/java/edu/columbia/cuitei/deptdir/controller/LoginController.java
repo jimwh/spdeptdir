@@ -27,6 +27,12 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout() {
+        log.info("logout form...");
+        return "redirect:/search";
+    }
+
     @GetMapping("/registration")
     public ModelAndView registration() {
         log.info("registration form...");
@@ -36,8 +42,6 @@ public class LoginController {
         modelAndView.setViewName("registration");
         return modelAndView;
     }
-
-    // https://cuit-1xtjdh1.ais.columbia.edu:8443/j_spring_cas_security_check has to be on CAS server
 
     @PostMapping("/registration")
     public ModelAndView createNewUser(@Valid final Users users, final BindingResult bindingResult) {

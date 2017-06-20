@@ -26,7 +26,7 @@ public class Level1 extends Directory implements Serializable {
     public void setLevel(String level) { super.setLevel(LEVEL); }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         sb.append(LEVEL).append("|")
                 .append(getId()).append("|")
                 .append(getName()).append("|")

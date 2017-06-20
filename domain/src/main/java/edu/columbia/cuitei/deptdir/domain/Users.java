@@ -39,7 +39,7 @@ public class Users {
         this.username = username;
     }
 
-    @Column(name="enable")
+    @Column(name="enabled")
     private boolean active;
     public boolean getActive() {
         return this.active;

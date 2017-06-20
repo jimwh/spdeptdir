@@ -19,20 +19,17 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
     private static final Logger logger = LoggerFactory.getLogger(MyAccessDeniedHandler.class);
 
     @Override
-    public void handle(HttpServletRequest httpServletRequest,
-                       HttpServletResponse httpServletResponse,
-                       AccessDeniedException e) throws IOException, ServletException {
+    public void handle(final HttpServletRequest httpServletRequest,
+                       final HttpServletResponse httpServletResponse,
+                       final AccessDeniedException e) throws IOException, ServletException {
 
-        Authentication auth
+        final Authentication auth
                 = SecurityContextHolder.getContext().getAuthentication();
-
         if (auth != null) {
             logger.info("User '" + auth.getName()
                     + "' attempted to access the protected URL: "
                     + httpServletRequest.getRequestURI());
         }
-
         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "error/403");
-
     }
 }

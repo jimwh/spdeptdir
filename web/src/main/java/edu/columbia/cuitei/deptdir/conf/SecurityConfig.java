@@ -28,12 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
-    @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired private DataSource dataSource;
-
-    // @Value("${spring.queries.users-query}") private String usersQuery;
-    // @Value("${spring.queries.roles-query}") private String rolesQuery;
+    @Autowired
+    private DataSource dataSource;
 
     @Value("${cas.server}")
     private String casServer;
@@ -46,69 +45,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new JdbcTemplate(dataSource);
     }
 
-    /*
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/", "/index", "/api/deptdir/search/**", "/about", "amend/list", "/amend/list", "amend/**", "/**").permitAll()
-                .antMatchers("/admin/**").hasAnyRole("ADMIN")
-                .antMatchers("/user/**").hasAnyRole("USER")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
-    }
-    */
-    /*
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        log.info("cas.server={}", casServer);
-        http
-                .authorizeRequests()
-                .antMatchers("/api/deptdir/search/").permitAll()
-                .antMatchers("/api/deptdir/search/**").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/index.html").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-                .authenticated().and().csrf().disable().formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/home")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
-    }
-    */
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-
                 .antMatchers("/api/deptdir/search/").permitAll()
                 .antMatchers("/api/deptdir/search/**").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/search").permitAll()
-                .antMatchers("/search/**?").permitAll()
-                .antMatchers("/search/**").permitAll()
-                .antMatchers("/search.html").permitAll()
 
-                .antMatchers("/index.html").permitAll()
-
-                //.antMatchers("/login").permitAll()
-                //.antMatchers("/registration").permitAll()
+                .antMatchers("/","/search","/search/**","/search.html").permitAll()
 
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
 
@@ -143,7 +89,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
     }
 
-
     @Bean
     public ServiceProperties serviceProperties() {
         log.info("hostName={}", hostName);
@@ -153,12 +98,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return serviceProperties;
     }
 
-    /*
-    @Bean
-    public AuthenticationUserDetailsService<CasAssertionAuthenticationToken> customUserDetailsService() {
-        return new UserDetailsService();
-    }
-    */
     @Bean
     public UserDetailsService customUserDetailsService() {
         return new UserDetailsService(jdbcTemplate());
@@ -199,8 +138,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public CasAuthenticationFilter casAuthenticationFilter() throws Exception {
-
-        CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
+        final CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
         casAuthenticationFilter.setAuthenticationManager(authenticationManager());
         casAuthenticationFilter.setFilterProcessesUrl("/j_spring_cas_security_check");
         casAuthenticationFilter.setSessionAuthenticationStrategy(sessionStrategy());
